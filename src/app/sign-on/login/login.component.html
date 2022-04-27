@@ -1,0 +1,28 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<simple-card-form *transloco="let t; read: 'son'">
+	<div id="personimage"></div>
+	<h2>{{ t('signOn') }}</h2>
+	<form [formGroup]="form" (ngSubmit)="onSubmit()">
+		<mat-form-field class="full-width margin-bottom">
+			<mat-label>{{ t('emailOrUser') }}</mat-label>
+			<input matInput type="email" [formControl]="form.get('email')" autocomplete="username">
+			<mat-error *ngIf="form.get('email').hasError('required')">
+				{{ t('errEmailUser') }}.
+			</mat-error>
+		</mat-form-field>
+		<mat-form-field class="full-width">
+			<mat-label>{{ t('pw') }}</mat-label>
+			<input matInput [formControl]="form.get('password')" type="password" autocomplete="current-password">
+			<mat-error *ngIf="form.get('password').hasError('required')">
+				{{ t('errPw') }}.
+			</mat-error>
+		</mat-form-field>
+		<div class="reset-pwd margin-bottom"><a [routerLink]="'forgot-password' | route" routerLinkActive="active">
+			{{ t('forgotPw') }}?</a></div>
+		<mat-error class="error" *ngIf="errorMsg">{{ errorMsg }}</mat-error>
+		<button mat-raised-button type="submit" color="primary" class="full-width" [disabled]="form.invalid">
+			{{ t('signOnBtn') }}</button>
+	</form>
+	<p class="register-text">{{ t('newHere') }} <a [routerLink]="'register' | route">{{ t('regNow') }}</a>.</p>
+</simple-card-form>

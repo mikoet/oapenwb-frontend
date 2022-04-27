@@ -1,0 +1,28 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+
+<!-- Logo -->
+
+<div>
+	<mat-button-toggle-group name="tonguePair" aria-label="TODO" [(value)]="selectedTonguePair">
+		<mat-button-toggle value="nds-de">de</mat-button-toggle>
+		<mat-button-toggle value="nds-en">en</mat-button-toggle>
+		<mat-button-toggle value="nds-nl">nl</mat-button-toggle>
+		<!--<mat-button-toggle *ngFor="let pair of baseConfig.dictionarySettings.tonguePairs" [value]="pair.id">
+			{{pair.tongue2.locale}}</mat-button-toggle>-->
+	</mat-button-toggle-group>
+
+	<br />
+
+	<mat-form-field class="searchField" style="margin-top: 0.7rem;">
+		<input id="searchText" name="search" matInput type="search" autocomplete="off" autofocus
+			placeholder="Wat wult du nå söken?" [(ngModel)]="searchValue"
+			(keyup.enter)="executeSearch()" />
+		<button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="TODO Clear" (click)="clearSearch()">
+			<mat-icon>close</mat-icon>
+		</button>
+		<button mat-button matSuffix mat-icon-button aria-label="TODO Search" (click)="executeSearch()">
+			<mat-icon>search</mat-icon>
+		</button>
+	</mat-form-field>
+</div>

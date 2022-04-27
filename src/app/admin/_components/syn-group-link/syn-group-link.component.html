@@ -1,0 +1,32 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<mat-form-field *transloco="let ta; read: 'admin'" style="width: 100%;">
+	<mat-label>{{ ta('synGroup') }}</mat-label>
+	<mat-select [formControl]="linkCtrl" [compareWith]="selectionCompare" [panelClass]="getPanelClass()" (selectionChange)="selectionChanged($event)">
+		<mat-select-trigger [innerHTML]="formatPresentation(this.synGroup?.presentation)">
+		</mat-select-trigger>
+		<mat-option>
+			<ngx-mat-select-search [formControl]="linkFilteringCtrl" [searching]="searching"
+				placeholderLabel="{{ ta('search') }}" noEntriesFoundLabel="{{ ta('noLexemesFound') }}">
+			</ngx-mat-select-search>
+		</mat-option>
+		<mat-option [value]="null">({{ ta('none') }})</mat-option>
+		<mat-optgroup label="{{ ta('synGroupsFound') }}" *ngIf="showSynGroupSection">
+			<mat-option multiLineOption *ngFor="let synGroup of filteredSynGroups | async"
+					[value]="{ type: 'SynGroup', id: synGroup.id, text: synGroup.presentation }">
+				<h3 mat-line>{{ synGroup.desription }}</h3>
+				<!-- Wul ni funktioneren: <p mat-line [innerHTML]="formatPresentation(synGroup.presentation)"></p>-->
+				<p mat-line [innerHTML]="formatPresentation(synGroup.presentation)"></p>
+			</mat-option>
+		</mat-optgroup>
+
+		<mat-optgroup label="{{ ta('lexemesFound') }}" *ngIf="showLexemeSection">
+			<mat-optgroup *ngFor="let lexeme of filteredLexemes | async" [label]="buildCaption(lexeme)">
+				<mat-option *ngFor="let sememe of lexeme.sememes; index as i"
+						[value]="{ type: 'Sememe', id: sememe.id, text: buildSememeName(sememe, i), lexeme: lexeme.main }">
+					{{ buildSememeName(sememe, i) }}
+				</mat-option>
+			</mat-optgroup>
+		</mat-optgroup>
+	</mat-select>
+</mat-form-field>

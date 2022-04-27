@@ -1,0 +1,33 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<mat-form-field class="row1 col2 full-width">
+	<mat-label *transloco="let t; scope: 'admin'; read: 'admin'">{{ t('categories') }}</mat-label>
+	<mat-select #itemSelect="matSelect" multiple [formControl]="itemsControl" (selectionChange)="selectionChanged($event)"
+			(blur)="onTouch()" (valueChange)="onChange($event)">
+		<mat-select-trigger *transloco="let ta; scope: 'abbr'; read: 'abbr'">
+			<span *ngIf="itemsControl.value?.length > 0">
+				{{ itemsControl.value?.length > 1
+					? ta(uitID_abbr(itemsControl.value[0])) + ','
+					: ta(uitID_abbr(itemsControl.value[0])) }}
+			</span>
+			<span *ngIf="itemsControl.value?.length > 1">
+				{{ itemsControl.value?.length > 2
+					? ta(uitID_abbr(itemsControl.value[1])) + ','
+					: ta(uitID_abbr(itemsControl.value[1])) }}
+			</span>
+			<span *ngIf="itemsControl.value?.length > 2">
+				{{ itemsControl.value?.length > 3
+					? ta(uitID_abbr(itemsControl.value[2])) + ','
+					: ta(uitID_abbr(itemsControl.value[2])) }}
+			</span>
+			<span *ngIf="itemsControl.value?.length > 3" class="additional-selection">
+				<span *transloco="let t; scope: 'admin'; read: 'admin'">
+					(+{{ itemsControl.value.length - 3 }} {{ itemsControl.value?.length === 4 ? t('other') : t('others') }})
+				</span>
+			</span>
+		</mat-select-trigger>
+		<mat-option *ngFor="let item of items" [value]="item.id" class="optIndent-{{ item.level }}">
+			<span *transloco="let tf; scope: 'full'; read: 'full'">{{ tf(item.uitID_full) }}</span>
+		</mat-option>
+	</mat-select>
+</mat-form-field>

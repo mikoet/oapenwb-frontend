@@ -1,0 +1,12 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let td; read: 'dyn'">
+	<h2 mat-dialog-title>{{ td(uitIdTitle) }}</h2>
+	<mat-dialog-content class="mat-typography">
+		<span class="lineBreakTT">{{ td(uitIdContent) }}</span>
+	</mat-dialog-content>
+	<mat-dialog-actions align="end" *transloco="let tadm; scope: 'admin'; read: 'admin'">
+		<button mat-flat-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>{{ tadm('no') }}</button>
+		<button mat-flat-button [mat-dialog-close]="true">{{ tadm('yes') }}</button>
+	</mat-dialog-actions>
+</div>

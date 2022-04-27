@@ -1,0 +1,156 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let t; scope: 'admin'; read: 'admin'">
+
+	<div class="grid-container sememe-choice">
+		<mat-form-field>
+			<mat-label>{{ t('chooseSememe') }}</mat-label>
+			<mat-select (selectionChange)="sememeSelected($event)" [value]="selectedSememe" [compareWith]="sememeCompare"
+					[disabled]="disableSelection()">
+				<ng-container *ngFor="let sememe of sememes; index as i">
+					<mat-option *ngIf="sememe.apiAction != 'Delete'" [value]="i">
+						<span>{{ prepare(sememeNames[i], transloco) }}</span>
+						<ng-container *ngIf="i != selectedSememe">
+							<!-- Show the error count -->
+							<span [matBadge]="sememe['__errorCount']" [matBadgeHidden]="!sememe['__errorCount'] || sememe['__errorCount'] < 1" matBadgeColor="warn" matBadgeOverlap="false"></span>
+						</ng-container>
+					</mat-option>
+				</ng-container>
+			</mat-select>
+		</mat-form-field>
+
+		<button mat-stroked-button type="button" class="grid-centered" (click)="addSememe()" [disabled]="!canAddSememe()">+</button>
+		<button mat-stroked-button type="button" class="grid-centered" (click)="removeSememe()" [disabled]="!canRemoveSememe()">-</button>
+
+		<span *ngIf="isDevMode && showChangeData">
+			tracked: {{ trackChanges }}<br>
+			changed: {{ changed }}
+		</span>
+	</div>
+
+	<mat-divider></mat-divider>
+	<div [formGroup]="sememeForm">
+		<div class="grid-container lexeme-tab">
+
+			<mat-form-field class="row1 col1">
+				<mat-label>{{ t('internalName') }}</mat-label>
+				<input matInput formControlName="internalName" maxlength="32">
+				<mat-hint align="end">{{sememeForm.get('internalName').value?.length}} / 32</mat-hint>
+			</mat-form-field>
+
+			<mat-slide-toggle class="row1 col2 center-vertical" formControlName="active">{{ t('active') }}</mat-slide-toggle>
+
+			<mat-form-field class="row2 col1 colspan2">
+				<mat-label>{{ t('variants') }}</mat-label>
+				<mat-select formControlName="variantIDs" multiple>
+					<mat-option *ngFor="let variant of variants; index as i" [value]="variant?.id">
+						{{ variantNames[i] }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<admin-dialects-select #dialectsSelect class="row3 col1 colspan2" formControlName="dialectIDs" [langID]="basedOnLanguage">
+			</admin-dialects-select>
+
+			<mat-form-field class="row2 col3">
+				<mat-label>{{ t('levels') }}</mat-label>
+				<mat-select formControlName="levelIDs" multiple>
+					<mat-select-trigger *transloco="let ta; scope: 'abbr'; read: 'abbr'">
+						<span *ngIf="levelsControl.value?.length > 0">
+							{{ levelsControl.value?.length > 1
+								? ta(level_uitID_abbr(levelsControl.value[0])) + ','
+								: ta(level_uitID_abbr(levelsControl.value[0])) }}
+						</span>
+						<span *ngIf="levelsControl.value?.length > 1">
+							{{ levelsControl.value?.length > 2
+								? ta(level_uitID_abbr(levelsControl.value[1])) + ','
+								: ta(level_uitID_abbr(levelsControl.value[1])) }}
+						</span>
+						<span *ngIf="levelsControl.value?.length > 2">
+							{{ levelsControl.value?.length > 3
+								? ta(level_uitID_abbr(levelsControl.value[2])) + ','
+								: ta(level_uitID_abbr(levelsControl.value[2])) }}
+						</span>
+						<span *ngIf="levelsControl.value?.length > 3" class="additional-selection">
+							<span *transloco="let t; scope: 'admin'; read: 'admin'">
+								(+{{ levelsControl.value.length - 3 }} {{ levelsControl.value?.length === 4 ? t('other') : t('others') }})
+							</span>
+						</span>
+					</mat-select-trigger>
+					<mat-option *ngFor="let level of data.store.levels.values" [value]="level.id">
+						<span *transloco="let t; scope: 'full'; read: 'full'">{{ t(level.uitID) }}</span>
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<admin-hierarchical-select #categoriesSelect class="row3 col3" formControlName="categoryIDs">
+			</admin-hierarchical-select>
+
+		</div>
+
+		<div *ngIf="specificsType == 'Verb'">
+			<mat-divider></mat-divider>
+			<h4 class="editorSubHeading">{{ t('verbSpecific') }}</h4>
+			<div class="grid-container lexeme-tab" [formGroup]="specificsForm">
+
+				<admin-lexeme-link #lexemeLink class="row1 col1" formControlName="caseGovernment" labelUitID="caseGovernment"
+					[typeID]="caseGovType?.id" [langID]="basedOnLanguage"></admin-lexeme-link>
+
+			</div>
+		</div>
+
+		<mat-divider></mat-divider>
+		<h4 class="editorSubHeading">{{ t('synSettings') }}</h4>
+		<div class="grid-container lexeme-tab" [formGroup]="synGroupForm">
+
+			<admin-syn-group-link #synGroupLink class="row1 col1 colspan3" [formControl]="synGroupCtrl" [langID]="basedOnLanguage"
+				[sememeID]="selectedSememeID()" (synGroupChange)="synGroupChange($event)"></admin-syn-group-link><!-- [disableControl]="disableShowVariantDetailsFrom()" -->
+
+			<mat-form-field class="row2 col1 colspan3">
+				<mat-label>{{ t('description') }}</mat-label>
+				<textarea matInput rows="3" formControlName="description" maxlength="4096"></textarea>
+			</mat-form-field>
+
+			<!--<button class="row3 col4 center-vertical" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+				<mat-icon>edit</mat-icon>
+			</button>-->
+
+			<div class="row3 col1 colspan3" *ngIf="!!sgSememes() && sgSememes().length > 0">
+				<mat-label style="font-weight: 550;">{{ t('sememes') }}</mat-label>
+				<lemma [content]="sgSememes()"></lemma>
+			</div>
+
+			<div class="row4 col1 colspan3" *ngIf="!!sgPresentation() && sgPresentation().length > 0">
+				<mat-label style="font-weight: 550;">{{ t('presentation') }}</mat-label>
+				<lemma [content]="sgPresentation()"></lemma>
+			</div>
+
+		</div>
+
+		<mat-divider></mat-divider>
+		<h4 class="editorSubHeading">{{ t('specification') }}</h4>
+		<div class="grid-container lexeme-tab">
+
+			<mat-form-field class="row1 col1">
+				<mat-label>{{ t('fillSpec') }}</mat-label>
+				<mat-select formControlName="fillSpec" (selectionChange)="fillSpecSelected($event)" [compareWith]="fillSpecCompare">
+					<mat-option value="1">{{ t('fillSpec:noSpec') }}</mat-option>
+					<mat-option value="2">{{ t('fillSpec:fromTemplate') }}</mat-option>
+					<mat-option value="3">{{ t('fillSpec:manually') }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field class="row1 col2">
+				<mat-label>{{ t('specTemplate') }}</mat-label>
+				<input matInput formControlName="specTemplate">
+			</mat-form-field>
+
+			<mat-form-field class="row1 col3">
+				<mat-label>{{ t('spec') }}</mat-label>
+				<input matInput formControlName="spec">
+			</mat-form-field>
+
+		</div>
+
+	</div>
+</div>

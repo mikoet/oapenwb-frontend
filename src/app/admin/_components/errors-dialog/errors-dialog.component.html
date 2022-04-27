@@ -1,0 +1,13 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let td; read: 'derr'">
+	<h2 mat-dialog-title>{{ td('title') }}</h2>
+	<mat-dialog-content class="mat-typography">
+		<ul>
+			<li *ngFor="let message of messages">{{ getText(message) }}</li>
+		</ul>
+	</mat-dialog-content>
+	<mat-dialog-actions align="end" *transloco="let tadm; scope: 'admin'; read: 'admin'">
+		<button mat-flat-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>{{ tadm('close') }}</button>
+	</mat-dialog-actions>
+</div>

@@ -1,0 +1,55 @@
+// SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+// SPDX-License-Identifier: AGPL-3.0-only
+#main-tb {
+	box-shadow: 0 5px 7px -3px rgba(0,0,0,.2);
+	position: relative;
+	z-index:  1000;
+	/*box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12);*/
+}
+
+.example-container {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.example-is-mobile .example-toolbar {
+	position: fixed;
+	z-index: 2;
+}
+
+h1.example-app-name {
+	margin-left: 8px;
+}
+
+mat-sidenav {
+	width: 240px;
+	box-shadow: 5px 0 5px -3px rgba(0,0,0,.15);
+	/*position: relative;*/
+	z-index:  999;
+}
+
+mat-sidenav-content {
+	padding: 0rem;
+}
+
+/* TODO these names are not very professional :-) */
+.example-sidenav-container {
+	/* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+	   causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+	flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+	/* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+	   `<body>` to be our scrolling element for mobile layouts. */
+	flex: 1 0 auto;
+}
+
+.example-spacer {
+	flex: 1 1 auto;
+}

@@ -1,0 +1,44 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+
+<!-- Global translations -->
+<div *transloco="let t">
+	<p></p>
+</div>
+
+<!-- Translations for scope administration area -->
+<div *transloco="let tadm; scope: 'admin'; read: 'admin'">
+	<div>
+		<p>{{ tadm('baseData') }}</p>
+		<p>{{ tadm('orthographies') }}</p>
+		<p>{{ tadm('languages') }}</p>
+		<p>{{ tadm('langPairs') }}</p>
+		<p>{{ tadm('loMappings') }}</p>
+		<p>{{ tadm('lexemeTypes') }}</p>
+		<p>{{ tadm('lexemeFormTypes') }}</p>
+		<p>{{ tadm('typeLangConfigs') }}</p>
+		<p>{{ tadm('lemmaTemplates') }}</p>
+		<p>{{ tadm('categories') }}</p>
+		<p>{{ tadm('unitLevels') }}</p>
+	</div>
+	<div>
+		<p>{{ tadm('contents') }}</p>
+		<p>{{ tadm('lexemes') }}</p>
+	</div>
+	<div>
+		<p>{{ tadm('ui') }}</p>
+		<p>{{ tadm('uiLanguages') }}</p>
+		<p>{{ tadm('uiScopes') }}</p>
+		<p>{{ tadm('uiTranslations') }}</p>
+		<p>{{ tadm('uiResultCategories') }}</p>
+	</div>
+	<div>
+		<p>{{ tadm('lexemeFormType') }}</p>
+	</div>
+	<div>
+		<p>{{ tadm('msg:lexemeSaved') }}</p>
+		<p>{{ tadm('msg:lexemeNotSaved') }}</p>
+	</div>
+
+	<p>{{ tadm('new') }}</p>
+</div>

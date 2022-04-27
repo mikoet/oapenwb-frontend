@@ -1,0 +1,150 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let t; read: 'admin'" class="margin-view">
+	<h1 class="entity-headline">{{ t('lemmaTemplates') }}</h1>
+
+	<mat-card *ngIf="errors.length > 0" style="overflow: auto;">
+		<button style="float: right;" mat-icon-button attr.aria-label="{{ t('close') }}" (click)="resetErrors()"><mat-icon>close</mat-icon></button>
+		<mat-error *ngFor="let error of errors" class="error">{{error}}</mat-error>
+	</mat-card>
+	<br *ngIf="errors.length > 0">
+	<mat-card>
+		<section>
+			<form [formGroup]="entityForm" #formDirective="ngForm" (ngSubmit)="onSubmit()" autocomplete="off">
+				<div class="grid-container" style="grid-template-columns: repeat(4, 1fr);">
+					<mat-form-field>
+						<input matInput formControlName="name" placeholder="{{ t('name') }}" maxlength="32">
+						<mat-hint align="start"><strong>{{ t('lmt:name') }}</strong> </mat-hint>
+						<mat-hint align="end">{{entityForm.get('name').value?.length}} / 32</mat-hint>
+					</mat-form-field>
+
+					<mat-form-field>
+						<mat-label>{{ t('lexemeType') }}</mat-label>
+						<mat-select formControlName="lexemeTypeID">
+							<mat-option *ngFor="let lexemeType of data.store.lexemeTypes.values" [value]="lexemeType.id">
+								{{ lexemeType.name }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+
+					<mat-form-field class="row2 col1">
+						<mat-label>{{ t('language') }}</mat-label>
+						<mat-select formControlName="langID">
+							<mat-option>–</mat-option>
+							<mat-option *ngFor="let lang of data.store.languages.values" [value]="lang.id">
+								{{ lang.locale }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+
+					<admin-dialects-select #dialectsSelect class="row2 col2" formControlName="dialectIDs" [langID]="dialectsBasedOnLanguage">
+					</admin-dialects-select>
+
+					<mat-form-field class="row2 col3">
+						<mat-label>{{ t('orthography') }}</mat-label>
+						<mat-select formControlName="orthographyID">
+							<mat-option>–</mat-option>
+							<mat-option *ngFor="let ortho of data.store.orthographies.values" [value]="ortho.id">
+								{{ ortho.description }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+
+					<mat-form-field class="row3 col1">
+						<input matInput formControlName="preText" placeholder="{{ t('preText') }}" maxlength="128">
+						<mat-hint align="end">{{entityForm.get('preText').value?.length}} / 128</mat-hint>
+					</mat-form-field>
+
+					<mat-form-field class="row3 col2">
+						<input matInput formControlName="mainText" placeholder="{{ t('mainText') }}" maxlength="256">
+						<mat-hint align="end">{{entityForm.get('mainText').value?.length}} / 256</mat-hint>
+					</mat-form-field>
+
+					<mat-form-field class="row3 col3">
+						<input matInput formControlName="postText" placeholder="{{ t('postText') }}" maxlength="128">
+						<mat-hint align="end">{{entityForm.get('postText').value?.length}} / 128</mat-hint>
+					</mat-form-field>
+
+					<mat-form-field class="row3 col4">
+						<input matInput formControlName="alsoText" placeholder="{{ t('alsoText') }}" maxlength="128">
+						<mat-hint align="end">{{entityForm.get('alsoText').value?.length}} / 128</mat-hint>
+					</mat-form-field>
+
+				</div>
+				<div class="grid-container btn-container">
+					<div></div>
+					<button mat-raised-button type="button" color="secondary" (click)="onClear()">{{ t('clear') }}</button>
+					<button mat-raised-button type="submit" color="primary" [disabled]="entityForm.invalid">{{ !isUpdate ? t('create') : t('update') }}</button>
+				</div>
+			</form>
+		</section>
+	</mat-card>
+	<br>
+	<mat-card>
+		<section>
+			<div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+				<mat-form-field>
+					<mat-label>{{ t('filter') }}</mat-label>
+					<input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterValue"
+						placeholder="{{ t('filterExample') }}">
+					<button mat-button *ngIf="filterValue" matSuffix mat-icon-button attr.aria-label="{{ t('clear') }}"
+						(click)="filterValue=''; applyFilter(null);" attr.aria-label="{{ t('emptyField') }}">
+						<mat-icon>close</mat-icon>
+					</button>
+				</mat-form-field>
+			</div>
+		</section>
+		<section>
+			<div class="table-container">
+				<table mat-table [dataSource]="dataSource" class="data-table">
+
+					<ng-container matColumnDef="name">
+						<th mat-header-cell *matHeaderCellDef>{{ t('name') }}</th>
+						<td mat-cell *matCellDef="let row">{{ row.name === null ? '–' : row.name }}</td>
+					</ng-container>
+
+					<ng-container matColumnDef="lexemeTypeID">
+						<th mat-header-cell *matHeaderCellDef>{{ t('lexemeType') }}</th>
+						<td mat-cell *matCellDef="let row">
+							{{ row.lexemeTypeID === null ? '–' : getLexemeTypeName(row.lexemeTypeID) }}</td>
+					</ng-container>
+
+					<ng-container matColumnDef="langID">
+						<th mat-header-cell *matHeaderCellDef>{{ t('language') }}</th>
+						<td mat-cell *matCellDef="let row">
+							{{ row.langID === null ? '–' : getLanguageName(row.langID) }}</td>
+					</ng-container>
+	
+					<ng-container matColumnDef="dialectIDs">
+						<th mat-header-cell *matHeaderCellDef>{{ t('dialects') }}</th>
+						<td mat-cell *matCellDef="let row">
+							{{ row.dialectIDs === null ? '–' : getDialectsString(row.dialectIDs) }}</td>
+					</ng-container>
+
+					<ng-container matColumnDef="orthographyID">
+						<th mat-header-cell *matHeaderCellDef>{{ t('orthography') }}</th>
+						<td mat-cell *matCellDef="let row">
+							{{ row.orthographyID === null ? '–' : getOrthographyName(row.orthographyID) }}</td>
+					</ng-container>
+
+					<ng-container matColumnDef="actions">
+						<th mat-header-cell *matHeaderCellDef>{{ t('action') }}</th>
+						<td mat-cell *matCellDef="let row">
+							<button mat-icon-button color="primary" attr.aria-label="{{ t('editEntry') }}"
+								(click)="onEditRow(row)">
+								<mat-icon>edit</mat-icon>
+							</button>
+							<button mat-icon-button color="primary" attr.aria-label="{{ t('deleteEntry') }}"
+								(click)="onDeleteRow(row)">
+								<mat-icon>delete</mat-icon>
+							</button>
+						</td>
+					</ng-container>
+
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+			</div>
+		</section>
+	</mat-card>
+</div>

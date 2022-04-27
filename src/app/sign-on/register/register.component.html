@@ -1,0 +1,65 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<simple-card-form>
+	<h2>Registrering</h2>
+	<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="on">
+		<p>Du kanst dat wöördebook aktiv bruken un as byspil wöörde vöärslån, audiobyspillen houglåden or med ander brukerslüde disketeren.</p>
+		<mat-form-field class="full-width margin-bottom">
+			<input matInput [formControl]="form.get('firstname')" placeholder="Vörname">
+			<mat-error *ngIf="form.get('firstname').hasError('required')">
+				Dyn vörname is vannöden.
+			</mat-error>
+		</mat-form-field>
+		<mat-form-field class="full-width margin-bottom">
+			<input matInput [formControl]="form.get('lastname')" placeholder="Achtername">
+			<mat-error *ngIf="form.get('lastname').hasError('required')">
+				Dyn achtername is vannöden.
+			</mat-error>
+		</mat-form-field>
+		<mat-form-field class="full-width margin-bottom">
+			<input matInput [formControl]="form.get('username')" placeholder="Brukername">
+			<mat-hint align="start">De brukername is optionaal</mat-hint>
+		</mat-form-field>
+		<mat-form-field class="full-width margin-bottom">
+			<input matInput type="email" [formControl]="form.get('email')" placeholder="E-mail">
+			<mat-error *ngIf="form.get('email').hasError('pattern') && !form.get('email').hasError('required')">
+				Geav en korrekte e-mail-adresse in.
+			</mat-error>
+			<mat-error *ngIf="form.get('email').hasError('required')">
+				En e-mail is vannöden.
+			</mat-error>
+		</mat-form-field>
+		<mat-form-field class="full-width margin-bottom">
+			<input matInput [formControl]="form.get('token')" placeholder="Registreerkode">
+			<mat-error *ngIf="form.get('token').hasError('required')">
+				En registreerkode is vannöden.
+			</mat-error>
+		</mat-form-field>
+		<mat-form-field class="full-width">
+			<input matInput [formControl]="form.get('password')" id="password" type="password" autocomplete="new-password" minlength="10" placeholder="Paswoord">
+			<mat-error *ngIf="form.get('password').hasError('required')">
+				En paswoord is vannöden.
+			</mat-error>
+			<mat-error *ngIf="form.get('password').hasError('minlength')">
+				Dyn paswoord bruukt minst 10 teakens.
+			</mat-error>
+		</mat-form-field>
+		<mat-form-field class="full-width">
+			<input matInput [formControl]="form.get('password2')" id="password2" type="password" autocomplete="new-password" placeholder="Paswoord wedderdoon">
+			<mat-error *ngIf="form.get('password2').hasError('matching')">
+				De paswöörde möätet öävereyn weasen.
+			</mat-error>
+		</mat-form-field>
+		<div class="checkbox-div">
+			<mat-checkbox [formControl]="form.get('compliance')" class="full-width">
+				Ik willige in, dat ik allens akceptere wat jy van my wüllet. Beade skikket my gau jouw kontonummer to.
+			</mat-checkbox>
+			<mat-error *ngIf="form.get('compliance').hasError('requiredTrue')">
+				De inwilliging is vannöden.
+			</mat-error>
+		</div>
+		<mat-error class="error" *ngIf="errorMsg">{{errorMsg}}</mat-error>
+		<button mat-raised-button type="submit" color="primary" class="full-width" [disabled]="form.invalid">Registreren</button>
+	</form>
+	<p class="register-text">Du bist al registrered? <a [routerLink]="'login' | route">Anmelden</a>.</p>
+</simple-card-form>

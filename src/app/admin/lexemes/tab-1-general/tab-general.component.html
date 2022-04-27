@@ -1,0 +1,74 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let t; read: 'admin'" [formGroup]="generalForm">
+
+	<div class="grid-container lexeme-tab">
+		<!--<h4 class="editorSubHeading">{{ t('lemma') }}</h4>-->
+	
+		<mat-form-field>
+			<mat-label>{{ t('id') }}</mat-label>
+			<input matInput type="number" formControlName="id">
+		</mat-form-field>
+	
+		<mat-form-field class="row2 col1" *transloco="let tf; scope: 'full', read: 'full'">
+			<mat-label>{{ t('lexemeType') }}</mat-label>
+			<mat-select formControlName="typeID" (selectionChange)="typeSelected($event)" [disableControl]="!enableTypeIdAndLangId()">
+				<mat-option *ngFor="let type of data.store.lexemeTypes.values" [value]="type.id">
+					{{ tf(type.uitID) }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	
+		<mat-form-field class="row2 col2" *transloco="let tf; scope: 'full', read: 'full'">
+			<mat-label>{{ t('language') }}</mat-label>
+			<mat-select formControlName="langID" (selectionChange)="languageSelected($event)" [disableControl]="!enableTypeIdAndLangId()">
+				<mat-option *ngFor="let lang of data.store.languages.values" [value]="lang.id">
+					{{ tf(lang.uitID) }}<!-- + ' (' + lang.locale + ')' -->
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	
+		<!--<mat-slide-toggle #changeToggle class="row2 col3 center-vertical" matTooltip="{{ t('tabGeneral:allowChange:tt') }}"
+				(change)="changeToggleChanged($event)" [disabled]="changeToggleDisabled()">
+			{{ t('tabGeneral:allowChange') }}
+		</mat-slide-toggle>-->
+	
+		<admin-lexeme-link #lexemeLink class="row3 col1" formControlName="showVariantDetailsFrom" [disableControl]="disableShowVariantDetailsFrom()"
+			[typeID]="getTypeID()" [langID]="getLangID()">
+		</admin-lexeme-link>
+
+		<mat-form-field class="row3 col2">
+			<mat-label>{{ t('parserID') }}</mat-label>
+			<input matInput formControlName="parserID" [disableControl]="disableParserID()">
+		</mat-form-field>
+
+		<mat-form-field class="row4 col1 colspan3">
+			<mat-label>{{ t('tags') }}</mat-label>
+			<mat-chip-list #tagsList aria-label="Tags input" formControlName="tags">
+				<mat-chip *ngFor="let tag of tags" [selectable]="areTagsEditable" [removable]="areTagsEditable" (removed)="removeTag(tag)">
+					{{ tag }}<mat-icon matChipRemove *ngIf="areTagsEditable">cancel</mat-icon>
+				</mat-chip>
+				<input #tagInput [formControl]="tagCtrl" [matAutocomplete]="auto" [matChipInputFor]="tagsList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+					(matChipInputTokenEnd)="addTag($event)">
+			</mat-chip-list>
+			<mat-autocomplete #auto="matAutocomplete" (optionSelected)="tagSelected($event)">
+				<mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+					{{ tag }}
+				</mat-option>
+			</mat-autocomplete>
+		</mat-form-field>
+
+		<mat-form-field class="row5 col1 colspan3">
+			<mat-label>{{ t('notes') }}</mat-label>
+			<textarea matInput rows="8" formControlName="notes"></textarea>
+		</mat-form-field>
+	
+		<mat-slide-toggle class="row7 col1 center-vertical" formControlName="active">{{ t('active') }}</mat-slide-toggle>
+	
+		<span *ngIf="isDevMode && showChangeData">
+			tracked: {{ trackChanges }}<br>
+			changed: {{ changed }}
+		</span>
+
+	</div>
+</div>

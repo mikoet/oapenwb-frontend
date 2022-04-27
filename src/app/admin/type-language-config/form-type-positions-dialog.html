@@ -1,0 +1,49 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let td; read: 'dftpa'">
+	<h2 mat-dialog-title>{{ td('title') }}</h2>
+	<mat-dialog-content class="mat-typography">
+		<div class="grid-container ftContainer">
+			<div><h3>{{ td('placed') }}</h3></div>
+			<div><h3>{{ td('available') }}</h3></div>
+			<div><h3 *transloco="let tadm; scope: 'admin'; read: 'admin'">{{ tadm('actions') }}</h3></div>
+			<div class="listContainer">
+				<div cdkDropList #placedList="cdkDropList" [cdkDropListData]="placed" [cdkDropListConnectedTo]="[availabeList]"
+					class="list" (cdkDropListDropped)="drop($event)">
+					<div class="box" *ngFor="let item of placed; index as i" cdkDrag
+							[ngClass]="{'topBox': i !== 0 && (i+1) % 3 === 1, 'bottomBox': (i+1) % 3 === 0}">
+						<div class="custom-placeholder" *cdkDragPlaceholder></div>
+						<div *ngIf="item !== null; else emptyItem1">{{i+1}}. {{ getFormTypeText(item.formTypeID) }}</div>
+						<ng-template #emptyItem1>
+							<span>{{ td('empty') }}</span>
+						</ng-template>
+					</div>
+				</div>
+			</div>
+			<div class="listContainer">
+				<div cdkDropList #availabeList="cdkDropList" [cdkDropListData]="available" [cdkDropListConnectedTo]="[placedList]"
+					class="list" (cdkDropListDropped)="drop($event)">
+					<div class="box" *ngFor="let formType of available" cdkDrag>
+						<div class="custom-placeholder" *cdkDragPlaceholder></div>
+						<div *ngIf="formType !== null; else emptyItem2">
+							<span *transloco="let tf; scope: 'formType'; read: 'formType'">
+								{{ tf(formType.uitID) }} ({{ formType.position+1 }})</span>
+						</div>
+						<ng-template #emptyItem2 >
+							<span>{{ td('empty') }}</span>
+						</ng-template>
+					</div>
+				</div>
+			</div>
+			<div class="grid-container btnContainer">
+				<button mat-stroked-button type="button" (click)="addAll()">{{ td('addAll') }}</button>
+				<button mat-stroked-button type="button" (click)="addEmpty()">{{ td('addEmpty') }}</button>
+				<button mat-stroked-button type="button" (click)="reset()" *transloco="let tadm; scope: 'admin'; read: 'admin'">{{ tadm('reset') }}</button>
+			</div>
+		</div>
+	</mat-dialog-content>
+	<mat-dialog-actions align="end" *transloco="let tadm; scope: 'admin'; read: 'admin'">
+		<button mat-flat-button mat-dialog-close>{{ tadm('cancel') }}</button>
+		<button mat-flat-button color="primary" [mat-dialog-close]="placed" cdkFocusInitial>{{ tadm('apply') }}</button>
+	</mat-dialog-actions>
+</div>

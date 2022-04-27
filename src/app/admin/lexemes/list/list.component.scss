@@ -1,0 +1,55 @@
+// SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+// SPDX-License-Identifier: AGPL-3.0-only
+
+div.scrollable {
+	min-width: 250px;
+	overflow: auto;
+	height: calc(100vh - (4 * 64px));
+}
+
+.active {
+	color: #54a035;
+}
+
+.inactive {
+	color: #d5192e;
+}
+
+.pageInfo {
+	font-size: 0.9rem;
+}
+
+// For the list entries
+/* VDEP: These settings could be depending on the version of Angular Material that is used
+   and are currently tested with version 9.2.0 */
+.mat-list-base .mat-list-item.mat-2-line,
+.mat-list-base .mat-list-option.mat-2-line {
+	height: 56px;
+}
+.mat-list-base .mat-list-option {
+	font-size: 14px;
+}
+.mat-list-base .mat-list-option .mat-line:nth-child(n + 2) {
+	font-size: 12px;
+}
+/* End */
+
+/* TODO temporary stuff */
+/*.example-radio-group {
+	display: flex;
+	flex-direction: column;
+	margin: 15px 0;
+}*/
+
+.example-radio-button {
+	margin: 5px;
+}
+
+.example-radio-group {
+	display: inline-flex;
+	flex-direction: column;
+}
+
+.example-selected-value {
+	margin: 15px 0;
+}

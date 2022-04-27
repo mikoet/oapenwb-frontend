@@ -1,0 +1,9 @@
+// SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+// SPDX-License-Identifier: AGPL-3.0-only
+
+@import "../../../../theme/admin-variables";
+
+.lexeme-forms {
+	grid-template-columns: minmax(170px, 240px) minmax(170px, 240px) minmax(170px, 240px);
+	margin: $editor-subheading-margin;
+}

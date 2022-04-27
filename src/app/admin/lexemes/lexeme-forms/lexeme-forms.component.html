@@ -1,0 +1,11 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div class="grid-container lexeme-forms" [formGroup]="formGroup">
+	<div formArrayName="lexemeForms" *ngFor="let posForm of positionedForms">
+		<lexeme-form *ngIf="posForm !== null; else emptyForm" [uitID]="posForm.formType.uitID"
+			[state]="posForm.form?.state" [formControlName]="posForm.index" [mandatory]="posForm.formType?.mandatory"></lexeme-form>
+		<ng-template #emptyForm>
+			<div></div>
+		</ng-template>
+	</div>
+</div>

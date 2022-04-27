@@ -1,0 +1,9 @@
+/*
+ * Example file for production use. Fill in propper URL data.
+ */
+
+export const environment = {
+	baseUrl: 'http://dev.ule.dk',
+	apiUrl: 'https://api-dev.ule.dk',
+	production: true
+};

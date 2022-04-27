@@ -1,0 +1,93 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let t; scope: 'admin'; read: 'admin'">
+
+	<div class="grid-container variant-choice">
+		<mat-form-field>
+			<mat-label>{{ t('chooseVariant') }}</mat-label>
+			<mat-select (selectionChange)="variantSelected($event)" [value]="selectedVariant" [compareWith]="variantCompare"
+					[disabled]="disableSelection()">
+				<ng-container *ngFor="let variant of _variants; index as i">
+					<mat-option *ngIf="variant.apiAction != 'Delete'" [value]="i">
+						<span>{{ variantNames[i] }}</span>
+						<ng-container *ngIf="i != selectedVariant">
+							<span [matBadge]="variant['__errorCount']" [matBadgeHidden]="!variant['__errorCount'] || variant['__errorCount'] < 1" matBadgeColor="warn" matBadgeOverlap="false"></span>
+						</ng-container>
+					</mat-option>
+				</ng-container>
+			</mat-select>
+		</mat-form-field>
+
+		<button mat-stroked-button type="button" class="grid-centered" (click)="addVariant()" [disabled]="!canAddVariant()">+</button>
+		<button mat-stroked-button type="button" class="grid-centered" (click)="removeVariant()" [disabled]="!canRemoveVariant()">-</button>
+
+		<span *ngIf="isDevMode && showChangeData">
+			tracked: {{ trackChanges }}<br>
+			changed: {{ changed }}
+		</span>
+	</div>
+	<mat-divider></mat-divider>
+	<div class="grid-container lexeme-tab" [formGroup]="variantsForm">
+
+		<mat-form-field class="row1 col1" *transloco="let tf; scope: 'full'; read: 'full'">
+			<mat-label>{{ t('orthography') }}</mat-label>
+			<mat-select formControlName="orthographyID">
+				<mat-option *ngFor="let ortho of getOrthographies()" [value]="ortho.id">
+					{{ tf(ortho.uitID) + ' (' + ortho.abbreviation + ')' }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<admin-dialects-select #dialectsSelect class="row1 col2" formControlName="dialectIDs" [langID]="basedOnLanguage"></admin-dialects-select>
+
+		<mat-slide-toggle class="row1 col3 center-vertical" formControlName="active">{{ t('active') }}</mat-slide-toggle>
+
+	</div>
+	<mat-divider></mat-divider>
+	<h4 class="editorSubHeading">{{ t('lemma') }}</h4>
+	<div class="grid-container lexeme-tab" [formGroup]="lemmaForm">
+
+		<mat-form-field class="row1 col1">
+			<mat-label>{{ t('fillLemma') }}</mat-label>
+			<mat-select formControlName="fillLemma" (selectionChange)="fillLemmaSelected($event)" [compareWith]="fillLemmaCompare">
+				<mat-option value="-2">{{ t('fillLemma:automatically') }}</mat-option>
+				<mat-option value="-1">{{ t('fillLemma:manually') }}</mat-option>
+				<mat-divider *ngIf="getTemplates().length > 0"></mat-divider>
+				<mat-optgroup label="{{ t('fromTemplate') }}" *ngIf="getTemplates().length > 0">
+					<mat-option *ngFor="let template of getTemplates()" [value]="template.id">
+						{{ getTemplateString(template) }}
+					</mat-option>
+				</mat-optgroup>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field class="row2 col1">
+			<mat-label>{{ t('preText') }}</mat-label>
+			<input matInput formControlName="pre">
+		</mat-form-field>
+
+		<mat-form-field class="row2 col2">
+			<mat-label>{{ t('mainText') }}</mat-label>
+			<input matInput formControlName="main">
+		</mat-form-field>
+
+		<mat-form-field class="row2 col3">
+			<mat-label>{{ t('postText') }}</mat-label>
+			<input matInput formControlName="post">
+		</mat-form-field>
+
+		<mat-form-field class="row3 col1">
+			<mat-label>{{ t('alsoText') }}</mat-label>
+			<input matInput formControlName="also">
+		</mat-form-field>
+
+	</div>
+	<mat-divider></mat-divider>
+	<h4 class="editorSubHeading">{{ t('wordForms') }}</h4>
+	<div *ngIf="isTypeAndLanguageSet(); else wfElse">
+		<lexeme-forms #lexemeForms></lexeme-forms>
+	</div>
+	<ng-template #wfElse>
+		<div class="noWordForms">{{ t('typeAndLanguageNotSet') }}.</div>
+	</ng-template>
+</div>

@@ -1,0 +1,22 @@
+// SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+// SPDX-License-Identifier: AGPL-3.0-only
+
+.component {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+/*.textField {
+	flex-grow: 4;
+}*/
+
+.textField {
+	flex: 1 1 auto;
+}
+
+.stateField {
+	flex: 0 0 auto;
+	margin-left: 0.34rem;
+	margin-right: 0.1rem;
+}

@@ -1,0 +1,19 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<mat-card class="simple-card" *transloco="let t; read: 'son'">
+	<header>
+		{{ t('title') }}
+	</header>
+	<section>
+		<ng-content></ng-content>
+	</section>
+</mat-card>
+<footer *transloco="let t; read: 'son'">
+	<nav>
+		<ul>
+			<li><a [routerLink]="'data-privacy' | route">{{ t('dataPrivacy') }}</a></li>
+			<li><a [routerLink]="'terms-of-use' | route">{{ t('termsOfUse') }}</a></li>
+			<li><a [routerLink]="'imprint' | route">{{ t('imprint') }}</a></li>
+		</ul>
+	</nav>
+</footer>

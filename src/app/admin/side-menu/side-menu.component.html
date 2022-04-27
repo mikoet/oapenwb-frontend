@@ -1,0 +1,13 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+
+<!--
+<mat-selection-list [multiple]="false" (selectionChange)="onSelection($event)">
+	<mat-list-option #menulist routerLink="." *ngFor="let nav of navItems" [value]="nav.key">
+		{{nav.label}}
+	</mat-list-option>
+</mat-selection-list>
+-->
+<!--<app-nav-menu *ngIf="!showTopMenu" [nodes]="topMenuNarrowNodes" [currentNode]="currentNodes?.TopBarNarrow" [isWide]="false"></app-nav-menu>-->
+<!-- [isWide]="dockSideNav" -->
+<app-nav-menu [nodes]="sideNavNodes" [currentNode]="currentNodes?.SideNav" isWide="true"></app-nav-menu>

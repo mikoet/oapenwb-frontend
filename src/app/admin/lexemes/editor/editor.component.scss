@@ -1,0 +1,28 @@
+// SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+// SPDX-License-Identifier: AGPL-3.0-only
+
+.scrollable {
+	min-width: 150px;
+	min-height: 400px;
+	/*max-height: calc(100vh - 2*64px);*/
+	overflow: scroll;
+}
+
+[hidden] {
+	display: none !important;
+}
+
+/*
+.mat-tab-group > .mat-tab-header > .mat-tab-label-container > .mat-tab-list > .mat-tab
+labels {
+		.mat-tab-label[role^='tab'] {
+			min-width: 72px !important;
+			padding: 0 28px !important;
+	}
+}
+*/
+
+::ng-deep .mat-tab-label {
+	min-width: 72px !important;
+	padding: 0 28px !important;
+}

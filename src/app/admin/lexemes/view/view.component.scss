@@ -1,0 +1,48 @@
+// SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+// SPDX-License-Identifier: AGPL-3.0-only
+
+.container {
+	display: grid;
+	grid-template-columns: minmax(300px, 300px) 1fr;
+	grid-template-rows: auto 1fr;
+	height: 100vh;
+	max-height: 100vh;
+	background-color: yellow;
+}
+
+.mat-toolbar-action:not(:last-child) {
+	margin-right: 12px;
+}
+.mat-toolbar-action + h1 {
+	margin-left: 12px;
+}
+
+.header {
+	grid-column: 1 / 3;
+	grid-row: 1;
+}
+
+.left-column {
+	width: 300px;
+}
+
+.list {
+	grid-column: 1;
+	grid-row: 2;
+	height: 100%;
+}
+
+.divider {
+	background-color: whitesmoke;
+	display: block;
+	flex-basis: auto;
+	flex-grow: 0;
+	flex-shrink: 0;
+	position: relative;
+	width: 4px;
+	z-index: 2;
+	cursor: col-resize;
+}
+
+.editor {
+}

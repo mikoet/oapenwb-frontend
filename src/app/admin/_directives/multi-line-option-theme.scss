@@ -1,0 +1,26 @@
+// SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+// SPDX-License-Identifier: AGPL-3.0-only
+
+@import "@angular/material/theming";
+
+@mixin multi-line-option-theme($theme) {
+	.multi-line-option {
+		.mat-option-text {
+			@include mat-line-wrapper-base();
+			padding: 0;
+		}
+	}
+}
+
+@mixin multi-line-option-typography($config) {
+	.multi-line-option {
+		@include mat-line-base(mat-font-size($config, body-1));
+		.mat-line {
+			line-height: 1em;
+		}
+		&.mat-3-line {
+			@include mat-line-base(mat-font-size($config, caption));
+			font-size: mat-font-size($config, body-1);
+		}
+	}
+}

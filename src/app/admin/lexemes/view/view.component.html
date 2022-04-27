@@ -1,0 +1,53 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<!--<mat-toolbar color="primary">
+	Lexeme View Toolbar
+</mat-toolbar>-->
+<div class="header" *transloco="let t; read: 'admin'">
+	<mat-toolbar>
+		<div class="left-column">
+			<button mat-stroked-button type="button" color="primary" class="mat-toolbar-action"
+				(click)="newLexemeClicked()" [disabled]="!lexemeService.canCreateLexeme()">{{ t('newLexeme') }}</button>
+		</div>
+		<div *ngIf="lexemeService.store.active?.origin === 1">
+			<button mat-stroked-button type="button" class="mat-toolbar-action"
+					[disabled]="!lexemeService.canSaveActiveLexeme()" (click)="saveClicked()">
+				{{ lexemeService.isActiveLexemePersistent() ? t('update') : t('create') }}
+			</button>
+			<button mat-stroked-button type="button" color="warn" class="mat-toolbar-action"
+					(click)="discardClicked()" [disabled]="!lexemeService.canDiscardActiveLexeme()">
+				{{ lexemeService.isActiveLexemeChanged() ? t('discard') : t('quitEditing') }}
+			</button><!-- verwerfen oder löschen, je nach persistenzzustand -->
+			<span class="toolbar-smallSpacer"></span>
+			<button mat-stroked-button *ngIf="lexemeService.hasActiveLexemeErrors()" type="button" color="accent" class="mat-toolbar-action"
+					(click)="showErrorsClicked()">
+				{{ t('showErrors') }}
+			</button>
+			<button mat-stroked-button *ngIf="lexemeService.canDecoupleActiveLexeme()" type="button" class="mat-toolbar-action"
+					(click)="decoupleClicked()">
+				{{ t('decouple') }}
+			</button>
+		</div>
+		<div *ngIf="lexemeService.store.active?.origin === 2">
+			<button mat-stroked-button type="button" class="mat-toolbar-action" (click)="lexemeService.editLexeme()"
+				[disabled]="!lexemeService.canEditLexeme()">{{ t('edit') }}</button>
+		</div>
+		<!--<span class="toolbar-stretch"></span>
+		<button mat-stroked-button type="button" class="mat-toolbar-action">{{ t('quickCreation') }}</button>-->
+	</mat-toolbar>
+</div>
+<div style="display: flex; flex-basis: auto; flex-direction: column; flex-grow: 1; flex-shrink: 1; flex-wrap: nowrap; overflow-x: hidden; overflow-y: hidden; vertical-align: baseline;">
+	<div style="align-items: stretch; display: flex; flex-basis: auto; flex-direction: row; flex-grow: 1; flex-shrink: 1; flex-wrap: nowrap; height: calc(100% - 44px); position: relative; vertical-align: baseline;">
+		<div class="list left-column" style="display: flex; flex-basis: auto; flex-direction: column; flex-grow: 0; flex-shrink: 0; position: relative; vertical-align: baseline; width: 300px;">
+			<admin-lexeme-list #list class="list left-column" (loadClick)="loadClicked()" (lexemeSelect)="lexemeSelected($event)" (nextClick)="nextPage()" (previousClick)="previousPage()"></admin-lexeme-list>
+		</div>
+
+		<!-- Divider -->
+		<div class="divider">
+		</div>
+
+		<div style="display: flex; flex-basis: auto; flex-direction: column; flex-grow: 1; flex-shrink: 1; overflow-x: hidden; overflow-y: hidden; position: relative; vertical-align: baseline;">
+			<admin-lexeme-editor #editor class="editor"></admin-lexeme-editor>
+		</div>
+	</div>
+</div>

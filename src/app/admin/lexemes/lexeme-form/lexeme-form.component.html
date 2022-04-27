@@ -1,0 +1,13 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let tf; scope: 'formType'; read: 'formType'" class="component">
+	<mat-form-field class="textField">
+		<mat-label>{{ tf(uitID) }}</mat-label>
+		<input matInput [ngModel]="input" (ngModelChange)="onChange($event)" (blur)="onTouch()"
+		  [errorStateMatcher]="matcher" [disabled]="disabled">
+	</mat-form-field>
+	<span class="stateField" matTooltip="{{ 'admin.lexForms:state:tt' | transloco }}" matTooltipShowDelay="800"
+	  matTooltipHideDelay="500" matTooltipClass="lineBreakTT">
+		{{ getStateLetter() }}
+	</span>
+</div>

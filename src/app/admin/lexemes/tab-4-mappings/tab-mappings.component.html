@@ -1,0 +1,100 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let t; scope: 'admin'; read: 'admin'">
+
+	<!--<h4 class="editorSubHeading" *ngIf="editMode">{{ t('mapping') }}</h4>-->
+	<form (ngSubmit)="onSubmit()" [formGroup]="mappingForm">
+		<div class="grid-container lexeme-tab" *ngIf="editMode"><!-- #formDirective="ngForm" -->
+
+			<mat-form-field class="row1 col1 colspan2">
+				<mat-label>{{ t('sememe') }}</mat-label>
+				<mat-select formControlName="thisSememe">
+					<mat-option *ngFor="let sememe of sememes; index as i" [value]="sememe?.id">
+						{{ prepare(sememeNames[i], transloco) }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+	
+			<mat-form-field class="row1 col3">
+				<mat-label>{{ t('targetLang') }}</mat-label>
+				<mat-select formControlName="langPair" (selectionChange)="langPairSelected($event)">
+					<mat-option *ngFor="let langPair of langPairs; index as i" [value]="langPair?.id">
+						{{ getTargetLang(langPair) }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+	
+			<admin-sememe-link #sememeLink class="row2 col1 colspan2" formControlName="thatSememe" [langID]="getOtherLang()"
+			  [disableControl]="editMode"></admin-sememe-link>
+
+			<mat-form-field class="row2 col3">
+				<mat-label>{{ t('weight') }}</mat-label>
+				<mat-select formControlName="weight" [compareWith]="mixedCompare">
+					<mat-option value="90">{{ t('weight:almostAlways') }} (90)</mat-option>
+					<mat-option value="70">{{ t('weight:often') }} (70)</mat-option>
+					<mat-option value="50">{{ t('weight:common') }} (50)</mat-option>
+					<mat-option value="30">{{ t('weight:lessCommon') }} (30)</mat-option>
+					<mat-option value="10">{{ t('weight:rare') }} (10)</mat-option>
+				</mat-select>
+			</mat-form-field>
+	
+			<div class="grid-container btn-container row3 col2 colspan2">
+				<div></div>
+				<button mat-stroked-button type="button" color="secondary" class="content-bottomed"
+					[disabled]="mappingForm.disabled" (click)="onClear()">{{ t('clear') }}</button>
+				<button mat-stroked-button type="submit" color="primary" class="content-bottomed"
+				  [disabled]="mappingForm.invalid || mappingForm.disabled || mappingAlreadyExists">
+					{{ editingIndex == -1 ? t('create') : t('update') }}
+				</button>
+			</div>
+	
+		</div>
+	</form>
+	<mat-divider *ngIf="editMode"></mat-divider>
+	<!--<h4 class="editorSubHeading">{{ t('allMappings') }}</h4>-->
+	<div class="grid-container lexeme-tab"><!-- mat-elevation-z8 -->
+
+		<div class="col1 row1 colspan4 rowspan8 mat-elevation-z2">
+			<table mat-table [dataSource]="dataSource" style="width: 100%; max-height: 600px;" matSort>
+
+				<ng-container matColumnDef="thisSememe">
+				  <th mat-header-cell *matHeaderCellDef> {{ t('sememe') }} </th>
+				  <td mat-cell *matCellDef="let mapping"> {{ getThisCaption(mapping.thisSememe) }} </td>
+				</ng-container>
+
+				<ng-container matColumnDef="langPair">
+				  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ t('targetLang') }} </th>
+				  <td mat-cell *matCellDef="let mapping"> {{ getTargetLang(mapping.langPair) }} </td>
+				</ng-container>
+
+				<ng-container matColumnDef="thatSememe">
+				  <th mat-header-cell *matHeaderCellDef> {{ t('targetSememe') }} </th>
+				  <td mat-cell *matCellDef="let mapping"> {{ getThatCaption(mapping.thatSememe) }} </td>
+				</ng-container>
+
+				<ng-container matColumnDef="weight">
+				  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ t('weight') }} </th>
+				  <td mat-cell *matCellDef="let mapping"> {{ getWeightTranslation(mapping.weight) }} </td>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<th mat-header-cell *matHeaderCellDef>{{ t('actions') }}</th>
+					<td mat-cell *matCellDef="let entity; let i = index;"><!-- https://stackoverflow.com/a/53525491 -->
+						<button mat-icon-button color="primary" attr.aria-label="{{ t('editEntry') }}" (click)="editClicked(entity, i)"
+						  [disabled]="!editMode || i == editingIndex">
+							<mat-icon>edit</mat-icon>
+						</button>
+						<button mat-icon-button color="primary" attr.aria-label="{{ t('deleteEntry') }}" (click)="deleteClicked(entity, i)"
+						  [disabled]="!editMode">
+							<mat-icon>delete</mat-icon>
+						</button>
+					</td>
+				</ng-container>
+			
+				<tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			  </table>
+		</div>
+
+	</div>
+</div>

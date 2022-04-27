@@ -1,0 +1,96 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let t; read: 'admin'" class="margin-view">
+	<h1 class="entity-headline">{{ t('loMappings') }}</h1>
+
+	<mat-card *ngIf="errors.length > 0" style="overflow: auto;">
+		<button style="float: right;" mat-icon-button attr.aria-label="{{ t('close') }}" (click)="resetErrors()"><mat-icon>close</mat-icon></button>
+		<mat-error *ngFor="let error of errors" class="error">{{error}}</mat-error>
+	</mat-card>
+	<br *ngIf="errors.length > 0">
+	<mat-card>
+		<section>
+			<form [formGroup]="entityForm" #formDirective="ngForm" (ngSubmit)="onSubmit()" autocomplete="off">
+				<div class="grid-container" style="grid-template-columns: repeat(4, 1fr);">
+					<mat-form-field>
+						<mat-label>{{ t('language') }}</mat-label>
+						<mat-select formControlName="langID">
+							<mat-option *ngFor="let lang of getLangsForActiveEntity()" [value]="lang.id">
+								{{ lang.locale }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+
+					<mat-form-field>
+						<mat-label>{{ t('orthography') }}</mat-label>
+						<mat-select formControlName="orthographyID">
+							<mat-option *ngFor="let ortho of getOrthographiesForActiveEntity()" [value]="ortho.id">
+								{{ ortho.description }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+
+					<mat-form-field>
+						<input type="number" matInput formControlName="position" placeholder="{{ t('position') }}">
+					</mat-form-field>
+				</div>
+				<div class="grid-container btn-container">
+					<div></div>
+					<button mat-raised-button type="button" color="secondary" (click)="onClear()">{{ t('clear') }}</button>
+					<button mat-raised-button type="submit" color="primary" [disabled]="entityForm.invalid">{{ !isUpdate ? t('create') : t('update') }}</button>
+				</div>
+			</form>
+		</section>
+	</mat-card>
+	<br>
+	<mat-card>
+		<section>
+			<div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+				<mat-form-field>
+					<mat-label>{{ t('filter') }}</mat-label>
+					<input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterValue" placeholder="{{ t('filterExample') }}">
+					<button mat-button *ngIf="filterValue" matSuffix mat-icon-button attr.aria-label="{{ t('clear') }}"
+							(click)="filterValue=''; applyFilter(null);" attr.aria-label="{{ t('emptyField') }}">
+						<mat-icon>close</mat-icon>
+					</button>
+				</mat-form-field>
+			</div>
+		</section>
+		<section>
+			<div class="table-container">
+				<table mat-table [dataSource]="dataSource" class="data-table">
+
+				<ng-container matColumnDef="langID">
+					<th mat-header-cell *matHeaderCellDef>{{ t('language') }}</th>
+					<td mat-cell *matCellDef="let row">{{ row.langID === null ? '–' : getLangLocaleForID(row.langID) }}</td>
+				</ng-container>
+
+				<ng-container matColumnDef="orthographyID">
+					<th mat-header-cell *matHeaderCellDef>{{ t('orthography') }}</th>
+					<td mat-cell *matCellDef="let row">{{ row.orthographyID === null ? '–' : getOrthographyPresentationForID(row.orthographyID) }}</td>
+				</ng-container>
+			
+				<ng-container matColumnDef="position">
+					<th mat-header-cell *matHeaderCellDef>{{ t('position') }}</th>
+					<td mat-cell *matCellDef="let row">{{row.position}}</td>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<th mat-header-cell *matHeaderCellDef>{{ t('action') }}</th>
+					<td mat-cell *matCellDef="let row">
+						<button mat-icon-button color="primary" attr.aria-label="{{ t('editEntry') }}" (click)="onEditRow(row)" *ngIf="!row.essential">
+							<mat-icon>edit</mat-icon>
+						</button>
+						<button mat-icon-button color="primary" attr.aria-label="{{ t('deleteEntry') }}" (click)="onDeleteRow(row)" *ngIf="!row.essential">
+							<mat-icon>delete</mat-icon>
+						</button>
+					</td>
+				</ng-container>
+				
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+				</div>
+		</section>
+	</mat-card>
+</div>

@@ -1,0 +1,71 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div *transloco="let t; read: 'admin'" style="display: block; flex-basis: auto; flex-grow: 1; flex-shrink: 1; position: relative; width: 100%; min-width: 640px;">
+	<div style="cursor: default;
+								display: flex;
+								flex-direction: column;
+								flex-wrap: nowrap;
+								overflow-x: hidden;
+								overflow-y: hidden;
+								position: relative;
+								vertical-align: baseline;
+								height: calc(100vh - 128px);
+								width: 100%;
+								min-width: 640px;">
+		<div style="display: block; overflow-x: auto; overflow-y: auto; position: relative; word-wrap: break-word;
+				height: 100%; width: 100%; min-width: 640px;">
+			<!-- hidden: lexemeService.store.active === null -->
+			<mat-tab-group #editorTabs [hidden]="false" animationDuration="0ms">
+				<mat-tab style="min-width: 100px !important;">
+					<ng-template mat-tab-label>
+						<span [matBadge]="tabGeneral.errorCount" [matBadgeHidden]="tabGeneral.errorCount === 0"
+						 matBadgeOverlap="false" matBadgeColor="warn">
+							{{ t('general') }}
+						</span>
+					</ng-template>
+					<lex-tab-general #tabGeneral (typeSelect)="typeSelected($event)" (languageSelect)="languageSelected($event)"></lex-tab-general>
+				</mat-tab>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<span [matBadge]="tabVariants.errors" [matBadgeHidden]="tabVariants.errors === 0"
+						 matBadgeOverlap="false" matBadgeColor="warn">
+							{{ t('variants') }}
+						</span>
+					</ng-template>
+					<lex-tab-variants #tabVariants></lex-tab-variants>
+				</mat-tab>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<span [matBadge]="tabSememes.errors" [matBadgeHidden]="tabSememes.errors === 0"
+						 matBadgeOverlap="false" matBadgeColor="warn">
+							{{ t('sememes') }}
+						</span>
+					</ng-template>
+					<lex-tab-sememes #tabSememes></lex-tab-sememes>
+				</mat-tab>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<span [matBadge]="tabMappings.errors" [matBadgeHidden]="tabMappings.errors === 0"
+						 matBadgeOverlap="false" matBadgeColor="warn">
+							{{ t('mappings') }}
+						</span>
+					</ng-template>
+					<lex-tab-mappings #tabMappings></lex-tab-mappings>
+				</mat-tab>
+				<!--
+				<mat-tab label="{{ t('links') }}">
+					<lex-tab-links></lex-tab-links>
+				</mat-tab>
+				<mat-tab label="Historye">
+				</mat-tab>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<span matBadge="4" matBadgeOverlap="false">{{ t('comments') }}</span>
+					</ng-template>
+					<lex-tab-comments></lex-tab-comments>
+				</mat-tab>
+				-->
+			</mat-tab-group>
+		</div>
+	</div>
+</div>

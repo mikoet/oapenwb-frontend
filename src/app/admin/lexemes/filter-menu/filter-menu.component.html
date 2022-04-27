@@ -1,0 +1,60 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<form [formGroup]="form" *transloco="let ta; read: 'admin'">
+	<button mat-icon-button [matMenuTriggerFor]="filterMenu" matTooltip="{{ ta('lexFilter:tt') }}" matTooltipShowDelay="500"><!-- attribute aria-label was removed. why didn't it work? -->
+		<mat-icon>more_vert</mat-icon>
+	</button>
+	<mat-menu #filterMenu="matMenu">
+		<button mat-menu-item [matMenuTriggerFor]="searchTypeMenu">{{ ta('searchType') }}</button>
+		<button mat-menu-item [matMenuTriggerFor]="langsMenu" [disabled]="languages.length === 0">{{ ta('languages') }}</button>
+		<button mat-menu-item [matMenuTriggerFor]="typesMenu" [disabled]="types.length === 0">{{ ta('lexemeTypes') }}</button>
+		<button mat-menu-item [matMenuTriggerFor]="tagsMenu" [disabled]="tags.length === 0">{{ ta('tags') }}</button>
+		<button mat-menu-item [matMenuTriggerFor]="activeMenu">{{ ta('activeState') }}</button>
+		<mat-divider></mat-divider>
+		<button mat-menu-item (click)="reset()">{{ ta('lexFilter:reset') }}</button>
+	</mat-menu>
+
+	
+	<mat-menu #searchTypeMenu="matMenu">
+		<mat-radio-group [(ngModel)]="lexemeQuery.searchType" [ngModelOptions]="{ standalone: true }">
+			<div mat-menu-item (click)="searchTypeClicked($event, 'PostgreWeb')">
+				<mat-radio-button value="PostgreWeb">{{ ta('standard') }}</mat-radio-button>
+			</div>
+			<div mat-menu-item (click)="searchTypeClicked($event, 'Prefixed')">
+				<mat-radio-button value="Prefixed">{{ ta('prefixed') }}</mat-radio-button>
+			</div>
+		</mat-radio-group>
+	</mat-menu>
+
+	<mat-menu #langsMenu="matMenu">
+		<div mat-menu-item *ngFor="let lang of this.languages; index as i" formArrayName="languages" (click)="langClicked($event, i)">
+			<mat-checkbox [formControlName]="i" *transloco="let tf; scope: 'full', read: 'full'">{{ tf(lang.uitID) }}</mat-checkbox> 
+		</div>
+	</mat-menu>
+
+	<mat-menu #typesMenu="matMenu">
+		<div mat-menu-item *ngFor="let type of this.types; index as i" formArrayName="types" (click)="typeClicked($event, i)">
+			<mat-checkbox [formControlName]="i" *transloco="let tf; scope: 'full', read: 'full'">{{ tf(type.uitID) }}</mat-checkbox> 
+		</div>
+	</mat-menu>
+
+	<mat-menu #tagsMenu="matMenu">
+		<div mat-menu-item *ngFor="let tagObj of this.tags; index as i" formArrayName="tags" (click)="tagClicked($event, i)">
+			<mat-checkbox [formControlName]="i">{{ tagObj.tag }}</mat-checkbox> 
+		</div>
+	</mat-menu>
+
+	<mat-menu #activeMenu="matMenu">
+		<mat-radio-group [(ngModel)]="active" [ngModelOptions]="{ standalone: true }">
+			<div mat-menu-item (click)="activeClicked($event, 'Active')">
+				<mat-radio-button value="Active">{{ ta('active') }}</mat-radio-button>
+			</div>
+			<div mat-menu-item (click)="activeClicked($event, 'Inactive')">
+				<mat-radio-button value="Inactive">{{ ta('inactive') }}</mat-radio-button>
+			</div>
+			<div mat-menu-item (click)="activeClicked($event, 'Both')">
+				<mat-radio-button value="Both">{{ ta('both') }}</mat-radio-button>
+			</div>
+		</mat-radio-group>
+	</mat-menu>
+</form>

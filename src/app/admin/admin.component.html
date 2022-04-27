@@ -1,0 +1,41 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *transloco="let t; read: 'admin'">
+	<mat-toolbar id="main-tb" color="primary">
+		<button mat-icon-button (click)="sidenav.toggle()" attr.aria-label="{{ t('toggleSideNav') }}">
+			<mat-icon>menu</mat-icon>
+		</button>
+		<span>{{ t('title') }}</span>
+		<span class="example-spacer"></span>
+		<button mat-icon-button attr.aria-label="{{ t('openUserMenu') }}" [matMenuTriggerFor]="userMenu">
+			<mat-icon>person</mat-icon>
+		</button>
+		<mat-menu #userMenu="matMenu">
+			<button mat-menu-item [matMenuTriggerFor]="uiLanguages">
+				<mat-icon>language</mat-icon>
+				<span>{{ t('language') }}</span>
+			</button>
+			<button mat-menu-item (click)="onLogoutClicked()">
+				<mat-icon>exit_to_app</mat-icon>
+				<span>{{ t('logOut') }}</span>
+			</button>
+		</mat-menu>
+
+		<mat-menu #uiLanguages="matMenu">
+			<button mat-menu-item *ngFor="let lang of transloco.getAvailableLangs()"
+				(click)="onUiLanguageClicked(lang)">{{lang}}</button>
+		</mat-menu>
+	</mat-toolbar>
+
+	<mat-sidenav-container class="example-sidenav-container">
+		<mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+			fixedTopGap="56" opened="true">
+			<admin-side-menu></admin-side-menu>
+		</mat-sidenav>
+		<mat-sidenav-content>
+			<block-ui>
+				<router-outlet></router-outlet>
+			</block-ui>
+		</mat-sidenav-content>
+	</mat-sidenav-container>
+</div>

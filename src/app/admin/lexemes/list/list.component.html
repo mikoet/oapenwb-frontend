@@ -1,0 +1,45 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<mat-toolbar>
+	<mat-form-field class="toolbar-stretch" style="font-size: 14px;">
+		<mat-label>Filter</mat-label>
+		<input matInput [(ngModel)]="lexemeQuery.filter" (keyup.enter)="loadClicked()">
+	</mat-form-field>
+	<button mat-icon-button aria-label="Refresh" [disabled]="btnClicked" (click)="loadClicked()">
+		<mat-icon>refresh</mat-icon>
+	</button>
+	<app-filter-menu #filterMenu></app-filter-menu>
+</mat-toolbar>
+
+<div class="scrollable">
+	<mat-selection-list #lexemeList [multiple]="false" [(ngModel)]="selectedLexemes" (selectionChange)="selectionChanged($event)" [compareWith]="compareFunction">
+		<mat-list-option *ngFor="let topLexeme of topLexemes | async; index as i" [value]="{ index: i, origin: 1 }">
+			<mat-icon mat-list-icon>{{ getTopListIcon(topLexeme) }}</mat-icon>
+			<div mat-line [matTooltip]="buildLemma(topLexeme.slim)" [matTooltipDisabled]="buildLemma(topLexeme.slim)?.length < 25"
+				matTooltipShowDelay="250" matTooltipHideDelay="500">{{ buildLemma(topLexeme.slim) }}</div>
+			<div mat-line>{{ getLanguageName(topLexeme.slim.langID) }} | {{ getLexemeTypeName(topLexeme.slim.typeID) }}</div>
+			<div mat-line>{{ buildTagString(topLexeme.slim.tags) }}</div>
+		</mat-list-option>
+		<mat-divider *ngIf="this.lexemeService.store.heldLexemes?.length"></mat-divider>
+		<ng-container *ngFor="let lexeme of lexemes | async; index as i">
+			<mat-list-option *ngIf="!lexemeService.isBeingEdited({ id: lexeme.id, origin: 2 })" [value]="{ id: lexeme.id, origin: 2 }"><!-- #fafafa vs #dcdcdc style="background-color: #FAEDF0;" -->
+				<mat-icon mat-list-icon [ngClass]="lexeme.active ? 'active' : 'inactive'">{{ getIcon(lexeme.condition) }}</mat-icon>
+				<div mat-line [matTooltip]="buildLemma(lexeme)" [matTooltipDisabled]="buildLemma(lexeme)?.length < 25"
+					matTooltipShowDelay="250" matTooltipHideDelay="500">{{ buildLemma(lexeme) }}</div>
+				<div mat-line>{{ getLanguageName(lexeme.langID) }} | {{ getLexemeTypeName(lexeme.typeID) }}</div>
+				<div mat-line>{{ buildTagString(lexeme.tags) }}</div>
+			</mat-list-option>
+		</ng-container>
+	</mat-selection-list>
+</div>
+
+<mat-toolbar>
+	<span class="pageInfo">{{ total === 0 ? 0 : offset + 1 }} – {{  (offset + limit) > total ? total : (offset + limit) }} / {{ total }}</span>
+	<span class="toolbar-stretch"></span>
+	<button mat-icon-button [disabled]="!hasPrevious || btnClicked" (click)="previousClicked()" aria-label="Previous page">
+		<mat-icon>arrow_back</mat-icon>
+	</button>
+	<button mat-icon-button [disabled]="!hasNext || btnClicked" (click)="nextClicked()" aria-label="Next page">
+		<mat-icon>arrow_forward</mat-icon>
+	</button>
+</mat-toolbar>
