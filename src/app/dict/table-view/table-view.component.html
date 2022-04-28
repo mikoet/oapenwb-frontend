@@ -3,21 +3,15 @@
 
 <!-- Logo -->
 
-<div>
-	<mat-button-toggle-group name="tonguePair" aria-label="TODO" [(value)]="selectedTonguePair">
-		<mat-button-toggle value="nds-de">de</mat-button-toggle>
-		<mat-button-toggle value="nds-en">en</mat-button-toggle>
-		<mat-button-toggle value="nds-nl">nl</mat-button-toggle>
-		<!--<mat-button-toggle *ngFor="let pair of baseConfig.dictionarySettings.tonguePairs" [value]="pair.id">
-			{{pair.tongue2.locale}}</mat-button-toggle>-->
-	</mat-button-toggle-group>
+<div class="container">
+	<app-lang-pair-select></app-lang-pair-select>
 
 	<br />
 
-	<mat-form-field class="searchField" style="margin-top: 0.7rem;">
+	<mat-form-field class="searchField" style="margin-top: 0.7rem;" appearance="outline">
+		<mat-label>Wat wult du nå söken?</mat-label>
 		<input id="searchText" name="search" matInput type="search" autocomplete="off" autofocus
-			placeholder="Wat wult du nå söken?" [(ngModel)]="searchValue"
-			(keyup.enter)="executeSearch()" />
+			[(ngModel)]="searchValue" (keyup.enter)="executeSearch()" />
 		<button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="TODO Clear" (click)="clearSearch()">
 			<mat-icon>close</mat-icon>
 		</button>

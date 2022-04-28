@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './transloco-root.module';
@@ -25,6 +26,7 @@ import { TableViewComponent } from './dict/table-view/table-view.component';
 import { ResultTableComponent } from './dict/table-view/result-table/result-table.component';
 
 import { SharedModule } from '@app/shared/shared.module';
+import { LangPairSelectComponent } from './dict/table-view/lang-pair-select/lang-pair-select.component';
 // Dit is düdelik beater as en eigen material.module.ts to bruken:
 // Bruukt eyn a.b. lazy loading, so kan eyn in elk module dat loaden wat eyn dår ouk
 // innedåd bruukt un laadt nich in alle modulen allens uut dat material.module.ts
@@ -35,6 +37,7 @@ const material = [
 	MatIconModule,
 	MatInputModule,
 	MatListModule,
+	MatMenuModule,
 ];
 
 @NgModule({
@@ -42,7 +45,8 @@ const material = [
     AppComponent,
     MainComponent,
     TableViewComponent,
-    ResultTableComponent
+    ResultTableComponent,
+    LangPairSelectComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
