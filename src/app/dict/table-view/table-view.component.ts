@@ -33,4 +33,22 @@ export class TableViewComponent implements OnInit
 		}, 1200);
 		*/
 	}
+
+	addTextAtCaret(textAreaId, text) {
+		let textArea: any = document.getElementById(textAreaId);
+		let cursorPosition = textArea.selectionStart;
+		this.addTextAtCursorPosition(textArea, cursorPosition, text);
+		this.updateCursorPosition(cursorPosition, text, textArea);
+	}
+	addTextAtCursorPosition(textArea, cursorPosition, text) {
+		let front = (textArea.value).substring(0, cursorPosition);
+		let back = (textArea.value).substring(cursorPosition, textArea.value.length);
+		textArea.value = front + text + back;
+	}
+	updateCursorPosition(cursorPosition, text, textArea) {
+		cursorPosition = cursorPosition + text.length;
+		textArea.selectionStart = cursorPosition;
+		textArea.selectionEnd = cursorPosition;
+		textArea.focus();    
+	}
 }

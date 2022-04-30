@@ -19,7 +19,7 @@
 }
 
 .upperArea {
-	grid-template-columns: auto 1fr;
+	grid-template-columns: auto auto 1fr;
 	gap: 2px 15px;
 	font-size: 0.8em !important;
 	//margin: 24px 18px 18px 24px;
@@ -34,16 +34,28 @@
 	width: 100%;
 	font-size: 1.2em;
 }
-.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mat-form-field-flex:hover .mat-form-field-outline {
-    border: 0.2px solid red;
-    opacity: 1;
 
-    .mat-form-field-outline-start,
-    .mat-form-field-outline-gap,
-    .mat-form-field-outline-end {
-        border: none;
+#search-special-letters {
+	text-align: left;
+	margin-left: 0.5rem;
+	font-size: 1.08rem;
+}
+
+/** */
+/*
+.mat-form-field {
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+    .mat-form-field-underline {
+        bottom: 0;
     }
 }
+*/
+.mat-form-field.no-padding > .mat-form-field-wrapper {
+	margin-bottom: -1.25em;
+}
+//
 
 /** Grid classes */
 $sidenav-content-margin: 1rem;

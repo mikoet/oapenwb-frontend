@@ -22,6 +22,14 @@
 				</button>
 			</mat-form-field>
 		</div>
+
+		<div id="search-special-letters">
+			<a (click)="addTextAtCaret('searchText','å'); false" href="#">&nbsp;å&nbsp;</a>
+			<a (click)="addTextAtCaret('searchText','ä'); false" href="#">&nbsp;ä&nbsp;</a>
+			<a (click)="addTextAtCaret('searchText','ö'); false" href="#">&nbsp;ö&nbsp;</a>
+			<a (click)="addTextAtCaret('searchText','ü'); false" href="#">&nbsp;ü&nbsp;</a>
+			<a (click)="addTextAtCaret('searchText','ß'); false" href="#">&nbsp;ß&nbsp;</a>
+		</div>
 	</div>
 
 	<app-result-table></app-result-table>
