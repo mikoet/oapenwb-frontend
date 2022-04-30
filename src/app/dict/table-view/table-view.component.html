@@ -4,19 +4,25 @@
 <!-- Logo -->
 
 <div class="container">
-	<app-lang-pair-select></app-lang-pair-select>
+	<div class="grid-container inputArea">
+		<div class="grid-container upperArea">
+			<app-lang-pair-select></app-lang-pair-select>
+		</div>
 
-	<br />
+		<div class="searchArea">
+			<mat-form-field class="searchField" appearance="outline"><!-- style="margin-top: 0.7rem;" -->
+				<mat-label>Wat wult du nå söken?</mat-label>
+				<input id="searchText" name="search" matInput type="search" autocomplete="off"
+					[(ngModel)]="searchValue" (keyup.enter)="executeSearch()" /><!-- autofocus -->
+				<button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="TODO Clear" (click)="clearSearch()">
+					<mat-icon>close</mat-icon>
+				</button>
+				<button mat-button matSuffix mat-icon-button aria-label="TODO Search" (click)="executeSearch()">
+					<mat-icon>search</mat-icon>
+				</button>
+			</mat-form-field>
+		</div>
+	</div>
 
-	<mat-form-field class="searchField" style="margin-top: 0.7rem;" appearance="outline">
-		<mat-label>Wat wult du nå söken?</mat-label>
-		<input id="searchText" name="search" matInput type="search" autocomplete="off" autofocus
-			[(ngModel)]="searchValue" (keyup.enter)="executeSearch()" />
-		<button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="TODO Clear" (click)="clearSearch()">
-			<mat-icon>close</mat-icon>
-		</button>
-		<button mat-button matSuffix mat-icon-button aria-label="TODO Search" (click)="executeSearch()">
-			<mat-icon>search</mat-icon>
-		</button>
-	</mat-form-field>
+	<app-result-table></app-result-table>
 </div>
