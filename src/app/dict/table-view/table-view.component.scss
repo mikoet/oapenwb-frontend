@@ -16,6 +16,7 @@
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 25px;
+	margin-bottom: 1.5rem;
 }
 
 .upperArea {
@@ -32,7 +33,7 @@
 
 .searchField {
 	width: 100%;
-	font-size: 1.2em;
+	font-size: 1.15em;
 }
 
 #search-special-letters {
@@ -41,19 +42,18 @@
 	font-size: 1.08rem;
 }
 
-/** */
-/*
-.mat-form-field {
-    .mat-form-field-wrapper {
-        padding-bottom: 0;
-    }
-    .mat-form-field-underline {
-        bottom: 0;
-    }
-}
-*/
-.mat-form-field.no-padding > .mat-form-field-wrapper {
-	margin-bottom: -1.25em;
+/** Removing the padding-bottom from the search field */
+// TODO deprecated: ::ng-deep, see also: https://betterprogramming.pub/best-way-to-overwrite-angular-materials-styles-e38dc8b84962
+:host {
+	::ng-deep {
+		.searchField {
+			//.mat-form-field {
+				.mat-form-field-wrapper {
+					padding-bottom: 0.2rem !important;
+				}
+			}
+		//}
+	}
 }
 //
 
