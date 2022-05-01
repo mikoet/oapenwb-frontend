@@ -13,8 +13,8 @@
 			<mat-form-field class="searchField" appearance="outline">
 				<mat-label>Wat wult du nå söken?</mat-label>
 				<input id="searchText" name="search" matInput type="search" autocomplete="off"
-					[(ngModel)]="searchValue" (keyup.enter)="executeSearch()" /><!-- autofocus -->
-				<button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="TODO Clear" (click)="clearSearch()">
+					[(ngModel)]="search.term" (keyup.enter)="executeSearch()" /><!-- autofocus -->
+				<button mat-button *ngIf="!!search.term" matSuffix mat-icon-button aria-label="TODO Clear" (click)="clearSearch()">
 					<mat-icon>close</mat-icon>
 				</button>
 				<button mat-button matSuffix mat-icon-button aria-label="TODO Search" (click)="executeSearch()">

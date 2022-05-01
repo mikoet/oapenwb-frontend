@@ -7,8 +7,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
 import { TranslocoService } from '@ngneat/transloco'
-import { UiTranslationScope } from '../_models/oapenwb-api';
-import { uiScopeApiPath } from '../_models/api-pathes';
+import { UiTranslationScope } from '../_models/admin-api';
+import { uiScopeApiPath } from '../_models/admin-api-paths';
 
 @Component({
   selector: 'app-ui-scope',

@@ -1,7 +1,7 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 
-<div id="result-area">
+<div id="result-area" *ngIf="(search.searchResult | async)?.entries?.length > 0">
 	<table>
 		<colgroup>
 			<col class="text-column">
@@ -12,10 +12,10 @@
 				<th colspan="2">Resultaten</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr>
-				<td>Text 1</td>
-				<td>Text 2</td>
+		<tbody *transloco="let ta; scope: 'abbr'; read: 'abbr'">
+			<tr *ngFor="let entry of (search.searchResult | async)?.entries">
+				<td [innerHTML]="lemma.formatLemmaStr(entry?.sememeOne?.lemma)"></td>
+				<td [innerHTML]="lemma.formatLemmaStr(entry?.sememeTwo?.lemma)"></td>
 			</tr>
 		</tbody>
 	</table>

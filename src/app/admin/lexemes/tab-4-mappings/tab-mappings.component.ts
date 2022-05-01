@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 import { MatSelectChange } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { LangPair, Mapping, Sememe } from '@app/admin/_models/oapenwb-api';
+import { LangPair, Mapping, Sememe } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { KeyMap } from '@app/util/hashmap';

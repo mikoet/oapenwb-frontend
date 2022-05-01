@@ -7,8 +7,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
 import { TranslocoService } from '@ngneat/transloco'
-import { UiLanguage } from '../_models/oapenwb-api';
-import { uiLanguageApiPath } from '../_models/api-pathes';
+import { UiLanguage } from '../_models/admin-api';
+import { uiLanguageApiPath } from '../_models/admin-api-paths';
 
 @Component({
 	selector: 'app-ui-language',

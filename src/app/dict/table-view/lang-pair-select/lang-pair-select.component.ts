@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit } from '@angular/core';
+import { SearchService } from '@app/_services/search.service';
 
 @Component({
 	selector: 'app-lang-pair-select',
@@ -9,9 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LangPairSelectComponent implements OnInit
 {
-	activeLangPair: string = 'nds-en';
-
-	constructor()
+	constructor(public search: SearchService)
 	{
 	}
 
@@ -21,6 +20,6 @@ export class LangPairSelectComponent implements OnInit
 
 	choose(id: string) : void
 	{
-		this.activeLangPair = id;
+		this.search.pair = id;
 	}
 }

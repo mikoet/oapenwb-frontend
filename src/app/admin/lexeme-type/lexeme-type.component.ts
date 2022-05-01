@@ -10,8 +10,8 @@ import { Response } from '@app/_models/response';
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
 import { TranslocoService } from '@ngneat/transloco'
-import { Language, LexemeType, UiResultCategory } from '../_models/oapenwb-api';
-import { langApiPath, lexemeTypeApiPath, uiResultCategoryApiPath } from '../_models/api-pathes';
+import { Language, LexemeType, UiResultCategory } from '../_models/admin-api';
+import { langApiPath, lexemeTypeApiPath, uiResultCategoryApiPath } from '../_models/admin-api-paths';
 
 /**
  * LexemeTypeComponent is the component to administrate the LexemeTypes. It extends AbstractSEC,

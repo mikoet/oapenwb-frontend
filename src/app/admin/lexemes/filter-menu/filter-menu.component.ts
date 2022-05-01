@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { FilterOptions, Language, LexemeType, State, Tag, TextSearchType } from '@app/admin/_models/oapenwb-api';
+import { FilterOptions, Language, LexemeType, State, Tag, TextSearchType } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
 import { Dictionary } from '@app/util/hashmap';

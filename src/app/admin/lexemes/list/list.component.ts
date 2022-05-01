@@ -7,7 +7,7 @@ import { DataService } from '@app/admin/_services/data.service';
 import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
 import { HeldLexeme, LexemeOrigin, LexemeService, SelectedLexeme } from '@app/admin/_services/lexeme.service';
 import { Pagination } from '@app/_models/response';
-import { LexemeSlimDTO } from '@app/admin/_models/oapenwb-api';
+import { LexemeSlimDTO } from '@app/admin/_models/admin-api';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatSelectionListChange } from '@angular/material/list';
 import { FilterMenuComponent } from '../filter-menu/filter-menu.component';

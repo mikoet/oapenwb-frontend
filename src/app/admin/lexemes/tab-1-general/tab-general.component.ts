@@ -13,7 +13,7 @@ import { DataService } from '@app/admin/_services/data.service';
 import { FormControl } from '@angular/forms';
 import { TransferStop } from '../view/view.component';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
-import { Lexeme } from '@app/admin/_models/oapenwb-api';
+import { Lexeme } from '@app/admin/_models/admin-api';
 import { MatSelectChange } from '@angular/material/select';
 import { countErrors, doEnablingControl } from '@app/admin/_util/form-utils';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';

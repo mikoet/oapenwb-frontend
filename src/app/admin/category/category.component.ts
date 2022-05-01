@@ -6,8 +6,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { TranslocoService } from '@ngneat/transloco';
 
-import { Category } from '../_models/oapenwb-api';
-import { categoriesApiPath } from '../_models/api-pathes';
+import { Category } from '../_models/admin-api';
+import { categoriesApiPath } from '../_models/admin-api-paths';
 import { DataService } from '../_services/data.service';
 import { AbstractSECPlus } from '../abstract/abstract-simple-entity-plus';
 

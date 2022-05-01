@@ -3,7 +3,7 @@
 import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { FormTypePos, LexemeFormType } from '../_models/oapenwb-api';
+import { FormTypePos, LexemeFormType } from '../_models/admin-api';
 import { DataService, Entities } from '../_services/data.service';
 import { Subscription } from 'rxjs';
 import { KeyMap } from '@app/util/hashmap';

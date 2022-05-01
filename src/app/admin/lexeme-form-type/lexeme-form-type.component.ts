@@ -10,8 +10,8 @@ import { Response } from '@app/_models/response';
 import { TranslocoService } from '@ngneat/transloco';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
-import { LexemeFormType, LexemeType } from '../_models/oapenwb-api';
-import { lexemeFormTypeApiPath, lexemeTypeApiPath } from '../_models/api-pathes';
+import { LexemeFormType, LexemeType } from '../_models/admin-api';
+import { lexemeFormTypeApiPath, lexemeTypeApiPath } from '../_models/admin-api-paths';
 
 /**
  * LexemeFormTypeComponent is the component to administrate the LexemeFormTypes. It extends AbstractSEC,

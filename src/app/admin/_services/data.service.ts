@@ -7,8 +7,8 @@ import { catchError, map } from 'rxjs/operators';
 
 import { Dictionary, KeyMap, NumericKeyMap } from '@app/util/hashmap';
 import { environment } from '@environments/environment';
-import { Category, LangOrthoMapping, LangPair, Language, LemmaTemplate, LexemeFormType, LexemeType, Orthography, Tag, TypeLanguageConfig, Level } from '../_models/oapenwb-api';
-import { categoriesApiPath, langApiPath, langPairApiPath, lemmaTemplatesApiPath, lexemeFormTypeApiPath, lexemeTypeApiPath, loMappingApiPath, orthoApiPath, tagsApiPath, typeLangConfigsApiPath, unitLevelsApiPath } from '../_models/api-pathes';
+import { Category, LangOrthoMapping, LangPair, Language, LemmaTemplate, LexemeFormType, LexemeType, Orthography, Tag, TypeLanguageConfig, Level } from '../_models/admin-api';
+import { categoriesApiPath, langApiPath, langPairApiPath, lemmaTemplatesApiPath, lexemeFormTypeApiPath, lexemeTypeApiPath, loMappingApiPath, orthoApiPath, tagsApiPath, typeLangConfigsApiPath, unitLevelsApiPath } from '../_models/admin-api-paths';
 import { Response } from '@app/_models/response';
 
 export class ExtLanguage implements Language

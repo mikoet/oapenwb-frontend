@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit } from '@angular/core';
+import { SearchService } from '@app/_services/search.service';
 
 @Component({
 	selector: 'app-table-view',
@@ -9,21 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableViewComponent implements OnInit
 {
-	searchValue: String = '';
-	selectedTonguePair: String = 'nds-de';
-
-	constructor() {}
+	constructor(public search: SearchService)
+	{
+	}
 
 	ngOnInit(): void {
 	}
 
 	clearSearch(): void {
-		this.searchValue = '';
-		//this.resultVisible = false;
+		this.search.term = '';
 	}
 
 	executeSearch(): void {
-		console.debug("Executing search for: ", this.searchValue);
+		console.debug("Executing search for: ", this.search.term);
+		this.search.performSearch();
 		/*
 		console.log("Request - execute search for:", this.searchValue);
 		this.blockUI.start();

@@ -5,7 +5,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { MatSelectChange } from '@angular/material/select';
 import { ListComponent } from '@app/admin/lexemes/list/list.component';
 import { TabSememesComponent } from '@app/admin/lexemes/tab-3-sememes/tab-sememes.component';
-import { LexemeSlimPlus, LexemeSlimDTO, SSearchResult, SememeSlim } from '@app/admin/_models/oapenwb-api';
+import { LexemeSlimPlus, LexemeSlimDTO, SSearchResult, SememeSlim } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { SememeService } from '@app/admin/_services/sememe.service';
 import { SCOPE_LEXEME_TYPES } from '@app/_base/ui-scopes';

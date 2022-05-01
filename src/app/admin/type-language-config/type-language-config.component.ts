@@ -6,8 +6,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { TranslocoService } from '@ngneat/transloco';
 
-import { TypeLanguageConfig } from '../_models/oapenwb-api';
-import { typeLangConfigsApiPath } from '../_models/api-pathes';
+import { TypeLanguageConfig } from '../_models/admin-api';
+import { typeLangConfigsApiPath } from '../_models/admin-api-paths';
 import { DataService, Entities } from '../_services/data.service';
 import { KeyMap } from '@app/util/hashmap';
 import { AbstractSECPlus } from '../abstract/abstract-simple-entity-plus';

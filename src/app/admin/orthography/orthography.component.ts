@@ -4,11 +4,11 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { Orthography } from '../_models/oapenwb-api';
+import { Orthography } from '../_models/admin-api';
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
 import { TranslocoService } from '@ngneat/transloco'
-import { orthoApiPath } from '../_models/api-pathes';
+import { orthoApiPath } from '../_models/admin-api-paths';
 
 interface ParentableOrtho
 {

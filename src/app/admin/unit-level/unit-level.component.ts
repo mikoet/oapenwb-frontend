@@ -6,8 +6,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { TranslocoService } from '@ngneat/transloco';
 
-import { Level } from '../_models/oapenwb-api';
-import { unitLevelsApiPath } from '../_models/api-pathes';
+import { Level } from '../_models/admin-api';
+import { unitLevelsApiPath } from '../_models/admin-api-paths';
 import { DataService } from '../_services/data.service';
 import { AbstractSECPlus } from '../abstract/abstract-simple-entity-plus';
 import { UIT_ID_REGEX } from '../_util/uit-id';

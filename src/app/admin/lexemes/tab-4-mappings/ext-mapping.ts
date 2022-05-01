@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
-import { ApiAction, Mapping, SememeSlim } from "@app/admin/_models/oapenwb-api";
+import { ApiAction, Mapping, SememeSlim } from "@app/admin/_models/admin-api";
 import { transferValues } from "@app/admin/_util/form-utils";
 
 export interface ThisThatMapping

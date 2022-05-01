@@ -3,7 +3,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, isDevMode, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
-import { LexemeForm, Variant, LemmaTemplate, Orthography, Lemma } from '@app/admin/_models/oapenwb-api';
+import { LexemeForm, Variant, LemmaTemplate, Orthography, Lemma } from '@app/admin/_models/admin-api';
 import { DataService, ExtLanguage } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { Subscription } from 'rxjs';

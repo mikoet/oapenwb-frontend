@@ -14,8 +14,8 @@ import { environment } from '@environments/environment';
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
 import { TranslocoService } from '@ngneat/transloco';
-import { UiLanguage, UiTranslationScope, UiTranslationSet } from '../_models/oapenwb-api';
-import { uiLanguageApiPath, uiScopeApiPath, uiTranslationsApiPath } from '../_models/api-pathes';
+import { UiLanguage, UiTranslationScope, UiTranslationSet } from '../_models/admin-api';
+import { uiLanguageApiPath, uiScopeApiPath, uiTranslationsApiPath } from '../_models/admin-api-paths';
 
 interface SelectableUiLanguage
 {

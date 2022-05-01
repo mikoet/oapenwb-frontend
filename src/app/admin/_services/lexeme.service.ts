@@ -8,11 +8,11 @@ import { TranslocoService } from '@ngneat/transloco';
 import { AccountService } from '@app/shared/_services/account.service';
 
 import { LexemeQueryService } from './lexeme-query.service';
-import { LexemeDetailedDTO, LexemeSlimDTO, Mapping, Sememe, Variant } from '../_models/oapenwb-api';
+import { LexemeDetailedDTO, LexemeSlimDTO, Mapping, Sememe, Variant } from '../_models/admin-api';
 import { ApiAction } from '../_models/enums';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
-import { lexemesApiPath } from '../_models/api-pathes';
+import { lexemesApiPath } from '../_models/admin-api-paths';
 import { MultiResponse } from '@app/_models/response';
 import { Message } from '@app/_models/message';
 import { DataService } from './data.service';

@@ -10,8 +10,8 @@ import { environment } from '@environments/environment';
 import { AccountService } from '@app/shared/_services/account.service';
 
 import { PaginatedResponse, Pagination, Response } from '@app/_models/response';
-import { lexemesApiPath } from '../_models/api-pathes';
-import { FilterOptions, LexemeDetailedDTO, LexemeSlimDTO, LSearchRequest, TextSearchType } from '../_models/oapenwb-api';
+import { lexemesApiPath } from '../_models/admin-api-paths';
+import { FilterOptions, LexemeDetailedDTO, LexemeSlimDTO, LSearchRequest, TextSearchType } from '../_models/admin-api';
 
 /**
  * The LexemeQueryService...

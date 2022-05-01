@@ -3,7 +3,7 @@
 import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ListComponent } from '@app/admin/lexemes/list/list.component';
-import { LexemeSlimDTO } from '@app/admin/_models/oapenwb-api';
+import { LexemeSlimDTO } from '@app/admin/_models/admin-api';
 import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
 import { ReplaySubject, Subject } from 'rxjs';
 import { debounceTime, tap, filter, takeUntil, switchMap } from 'rxjs/operators';

@@ -10,8 +10,8 @@ import { Response } from '@app/_models/response';
 import { TranslocoService } from '@ngneat/transloco';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
-import { Language, Orthography } from '../_models/oapenwb-api';
-import { langApiPath, orthoApiPath } from '../_models/api-pathes';
+import { Language, Orthography } from '../_models/admin-api';
+import { langApiPath, orthoApiPath } from '../_models/admin-api-paths';
 
 @Component({
 	selector: 'app-language',

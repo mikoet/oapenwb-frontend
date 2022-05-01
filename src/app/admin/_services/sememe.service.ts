@@ -7,8 +7,8 @@ import { Response } from '@app/_models/response';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import { sememesApiPath } from '../_models/api-pathes';
-import { Sememe, SememeSlim, SSearchRequest, SSearchResult, TextSearchType } from '../_models/oapenwb-api';
+import { sememesApiPath } from '../_models/admin-api-paths';
+import { Sememe, SememeSlim, SSearchRequest, SSearchResult, TextSearchType } from '../_models/admin-api';
 import { ApiAction } from '../_models/enums';
 
 @Injectable({

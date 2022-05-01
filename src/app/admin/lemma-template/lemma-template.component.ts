@@ -6,8 +6,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { TranslocoService } from '@ngneat/transloco';
 
-import { LemmaTemplate } from '../_models/oapenwb-api';
-import { lemmaTemplatesApiPath } from '../_models/api-pathes';
+import { LemmaTemplate } from '../_models/admin-api';
+import { lemmaTemplatesApiPath } from '../_models/admin-api-paths';
 import { DataService, Entities } from '../_services/data.service';
 import { KeyMap } from '@app/util/hashmap';
 import { AbstractSECPlus } from '../abstract/abstract-simple-entity-plus';

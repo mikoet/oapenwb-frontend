@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { LexemeFormType, LexemeForm } from '@app/admin/_models/oapenwb-api';
+import { LexemeFormType, LexemeForm } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { NumericKeyMap } from '@app/util/hashmap';
 import { TransferStop } from '../view/view.component';

@@ -7,8 +7,8 @@ import { Response } from '@app/_models/response';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import { synGroupsApiPath } from '../_models/api-pathes';
-import { SGSearchRequest, SGSearchResult, SynGroup, TextSearchType } from '../_models/oapenwb-api';
+import { synGroupsApiPath } from '../_models/admin-api-paths';
+import { SGSearchRequest, SGSearchResult, SynGroup, TextSearchType } from '../_models/admin-api';
 import { ApiAction } from '../_models/enums';
 import { SememeService } from './sememe.service';
 
