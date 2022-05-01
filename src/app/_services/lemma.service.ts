@@ -18,10 +18,16 @@ export class LemmaService
 		if (!text) {
 			return '';
 		}
+
+		// Put the words/phrases into span tags
+		text = text.replace(/\{[^\}]+\}/g, (match) => {
+			let term = match.substring(1, match.length - 1);
+			return '<a href="">' + term +'</a>';
+		});
 		
 		// Replace orthographies
 		text = text.replace(/\^\[[A-Za-z0-9,. ]+\]/g, (match) => {
-			let orthographies = match.substr(2, match.length - 3);
+			let orthographies = match.substring(2, match.length - 1);
 			return '<sup>' + orthographies +'</sup>';
 		});
 
@@ -43,7 +49,7 @@ export class LemmaService
 	private substituteUitIdStr(match: string, cutLeft: number, cutRight: number, scope: string,
 		prefix: string, postfix: string) : string
 	{
-		let uitIdStr = match.substr(cutLeft, match.length - (cutLeft + cutRight));
+		let uitIdStr = match.substring(cutLeft, match.length - cutRight);
 		let substitute = ''; // substitute string for the uitID string
 		// Split the parts and translate each with transloco
 		let uitIDs = uitIdStr.split(',');
