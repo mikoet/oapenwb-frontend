@@ -7,13 +7,13 @@
 			<span>ULE.DK</span>
 
             <nav>
-                <a href="#" class="hide-desktop">
-                    <img src="images/ham.svg" alt="toggle menu" class="menu" id="menu">
+                <a class="hide-desktop" (click)="toggleMenu()">
+                    <img src="assets/images/ham.svg" alt="toggle menu" class="menu" id="menu">
                 </a>
 
-                <ul class="show-desktop hide-mobile" id="nav">
+                <ul class="show-desktop" id="nav" [ngClass]="hideMenu ? 'hide-mobile' : ''">
                     <li id="exit" class="exit-btn hide-desktop">
-                        <img src="images/exit.svg" alt="exit menu">
+                        <img (click)="toggleMenu()" src="assets/images/exit.svg" alt="Exit menu">
                     </li>
                     <li><a [routerLink]="'table' | route">söke</a></li>
                     <li><a [routerLink]="'.' | route">öäver</a></li>
@@ -31,7 +31,7 @@
 
 		<section>
 			<h1>ULE.DK</h1><br>
-			<h3>neddersassisk/platdüütsk wöördebook med öäversettings nå düütsk, nedderlandsk, engelsk, un ander språken</h3>
+			<h3>Neddersassisk/ platdüütsk wöördebook med öäversettings nå düütsk, nedderlandsk, engelsk un ander språken.</h3>
 		</section>
 		
 		<main>
