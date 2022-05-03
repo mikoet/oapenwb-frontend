@@ -10,7 +10,7 @@
 		</div>
 
 		<div class="searchArea">
-			<mat-form-field class="searchField" appearance="outline">
+			<mat-form-field class="searchField" appearance="outline" color="accent">
 				<mat-label>Wat wult du nå söken?</mat-label>
 				<input id="searchText" name="search" matInput type="search" autocomplete="off"
 					[(ngModel)]="search.term" (keyup.enter)="executeSearch()" /><!-- autofocus -->

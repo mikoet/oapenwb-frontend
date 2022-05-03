@@ -22,7 +22,8 @@ export class LemmaService
 		// Put the words/phrases into span tags
 		text = text.replace(/\{[^\}]+\}/g, (match) => {
 			let term = match.substring(1, match.length - 1);
-			return '<a href="">' + term +'</a>';
+			//return `<a [routerLink]="['.']" [queryParams]="{term: term}">${term}</a>`;
+			return '<span>' + term +'</span>';
 		});
 		
 		// Replace orthographies
