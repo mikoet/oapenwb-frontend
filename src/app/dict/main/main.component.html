@@ -2,17 +2,44 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <block-ui>
 	<div id="content">
-		<header>
-			<!-- Top menu bar -->
-			ULE.DK – neddersassisk/platdüütsk wöördebook med öäversettings nå düütsk, engelsk, nedderlandsk un ander språken
-		</header>
+        <header>
+            <!--<img src="images/logo.svg" alt="ULE.DK logo" class="logo">-->
+			<span>ULE.DK</span>
+
+            <nav>
+                <a href="#" class="hide-desktop">
+                    <img src="images/ham.svg" alt="toggle menu" class="menu" id="menu">
+                </a>
+
+                <ul class="show-desktop hide-mobile" id="nav">
+                    <li id="exit" class="exit-btn hide-desktop">
+                        <img src="images/exit.svg" alt="exit menu">
+                    </li>
+                    <li><a [routerLink]="'table' | route">söke</a></li>
+                    <li><a [routerLink]="'.' | route">öäver</a></li>
+                    <li><a [routerLink]="'.' | route">kontakt</a></li>
+					<li><a [routerLink]="'admin' | route">admin</a></li>
+					<li><a [routerLink]="['.']" [matMenuTriggerFor]="uiLangMenu">språke</a></li>
+					<mat-menu #uiLangMenu="matMenu">
+						<button mat-menu-item *ngFor="let lang of transloco.getAvailableLangs()" (click)="transloco.setActiveLang(lang)">
+							{{ lang }}
+						</button>
+					</mat-menu>
+                </ul>
+            </nav>
+        </header>
+
+		<section>
+			<h1>ULE.DK</h1><br>
+			<h3>neddersassisk/platdüütsk wöördebook med öäversettings nå düütsk, nedderlandsk, engelsk, un ander språken</h3>
+		</section>
 		
 		<main>
 			<router-outlet></router-outlet>
 		</main>
 
 		<footer>
-			&copy; 2022 <strong>ULE.DK</strong>. Alle rechten vöärbeholden.
+			&copy; 2022 <strong>ULE.DK</strong>
 			<br>
 			<a href="">Impressum</a> |
 			<a href="">Datenschutz</a> |

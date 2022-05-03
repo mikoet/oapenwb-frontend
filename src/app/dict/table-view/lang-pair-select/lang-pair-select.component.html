@@ -1,6 +1,6 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
-<button mat-stroked-button matTooltip="Språkpår" matTooltipPosition="above" matTooltipShowDelay="500"
+<button mat-button matTooltip="Språkpår" matTooltipPosition="above" matTooltipShowDelay="500"
 	[matMenuTriggerFor]="langPairMenu">{{ search.pair }}</button>
 <mat-menu #langPairMenu="matMenu">
 	<button mat-menu-item (click)="choose('nds-de')">nds-de</button>
