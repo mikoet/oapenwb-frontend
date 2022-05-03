@@ -6,7 +6,7 @@ import { Observable, BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { SearchRequest, SearchResult } from '@app/_models/dict-api';
+import { Direction, SearchRequest, SearchResult } from '@app/_models/dict-api';
 import { searchResultsApiPath } from '@app/_models/dict-api-paths';
 import { Response } from '@app/_models/response';
 
@@ -22,6 +22,7 @@ export class SearchService
 	//
 	public term: string = '';
 	public pair: string = 'nds-de';
+	public direction: Direction = 'Both';
 
 	constructor(private http: HttpClient)
 	{
@@ -34,7 +35,7 @@ export class SearchService
 
 		let searchRequest: SearchRequest = {
 			term: this.term,
-			direction: 'Both',
+			direction: this.direction,
 			pair: this.pair
 		};
 

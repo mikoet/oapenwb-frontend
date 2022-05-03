@@ -1,0 +1,9 @@
+<!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+<button mat-button matTooltip="Söökricht" matTooltipPosition="above" matTooltipShowDelay="500"
+	[matMenuTriggerFor]="directionMenu">{{ search.direction }}</button>
+<mat-menu #directionMenu="matMenu">
+	<button mat-menu-item (click)="choose('Both')">&lt;–&gt;</button>
+	<button mat-menu-item (click)="choose('Right')">–&gt;</button>
+	<button mat-menu-item (click)="choose('Left')">&lt;–</button>
+</mat-menu>
