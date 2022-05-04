@@ -66,7 +66,7 @@
 
 // mat-option of mat-select begin
 @for $i from 0 through 6 {
-	.optIndent-#{$i} {
+	.optIndent#{$i} {
 		// when put directly into the component's scss file it works without the '!important' though
 		padding-left: 16px + $i * 28px !important;
 	}
