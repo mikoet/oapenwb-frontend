@@ -26,7 +26,7 @@
 				</span>
 			</span>
 		</mat-select-trigger>
-		<mat-option *ngFor="let item of items" [value]="item.id" class="optIndent-{{ item.level }}">
+		<mat-option *ngFor="let item of items" [value]="item.id" class="optIndent{{ item.level }}">
 			<span *transloco="let tf; scope: 'full'; read: 'full'">{{ tf(item.uitID_full) }}</span>
 		</mat-option>
 	</mat-select>
