@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from '@app/_services/search.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
 	selector: 'app-table-view',
@@ -10,8 +11,13 @@ import { SearchService } from '@app/_services/search.service';
 })
 export class TableViewComponent implements OnInit
 {
-	constructor(public search: SearchService)
+	private readonly isMobile : boolean;
+
+	constructor(
+		public search: SearchService,
+		private deviceService: DeviceDetectorService)
 	{
+		this.isMobile = this.deviceService.isMobile();
 	}
 
 	ngOnInit(): void {
@@ -24,7 +30,12 @@ export class TableViewComponent implements OnInit
 	executeSearch(element: HTMLElement) : void
 	{
 		console.debug("Executing search for: ", this.search.term);
-		this.removeFocus(element);
+
+		if (this.isMobile) {
+			// Remove the focus on mobile devices so they close the onscreen keyboard
+			this.removeFocus(element);
+		}
+
 		this.search.performSearch();
 		/*
 		console.log("Request - execute search for:", this.searchValue);
@@ -39,11 +50,14 @@ export class TableViewComponent implements OnInit
 	private removeFocus(element: HTMLElement) : void
 	{
 		if (!!element) {
-			element.setAttribute('readonly', 'readonly'); // Force keyboard to hide on input field.
-			element.setAttribute('disabled', 'true'); // Force keyboard to hide on textarea field.
+			// Force keyboard to hide on input field
+			element.setAttribute('readonly', 'readonly');
+			// Force keyboard to hide on textarea field
+			element.setAttribute('disabled', 'true');
 			setTimeout(function() {
-				element.blur();  //actually close the keyboard
-				// Remove readonly attribute after keyboard is hidden.
+				// Close the keyboard
+				element.blur();
+				// Remove the attributes once the keyboard is hidden
 				element.removeAttribute('readonly');
 				element.removeAttribute('disabled');
 			}, 100);
