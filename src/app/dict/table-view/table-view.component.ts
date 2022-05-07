@@ -21,8 +21,10 @@ export class TableViewComponent implements OnInit
 		this.search.term = '';
 	}
 
-	executeSearch(): void {
+	executeSearch(element: HTMLElement) : void
+	{
 		console.debug("Executing search for: ", this.search.term);
+		this.removeFocus(element);
 		this.search.performSearch();
 		/*
 		console.log("Request - execute search for:", this.searchValue);
@@ -32,6 +34,20 @@ export class TableViewComponent implements OnInit
 			this.blockUI.stop();
 		}, 1200);
 		*/
+	}
+
+	private removeFocus(element: HTMLElement) : void
+	{
+		if (!!element) {
+			element.setAttribute('readonly', 'readonly'); // Force keyboard to hide on input field.
+			element.setAttribute('disabled', 'true'); // Force keyboard to hide on textarea field.
+			setTimeout(function() {
+				element.blur();  //actually close the keyboard
+				// Remove readonly attribute after keyboard is hidden.
+				element.removeAttribute('readonly');
+				element.removeAttribute('disabled');
+			}, 100);
+		}
 	}
 
 	addTextAtCaret(textAreaId, text) {
