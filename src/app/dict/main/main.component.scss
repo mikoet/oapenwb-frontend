@@ -8,6 +8,18 @@
 }
 
 header {
+	/*
+    position: -webkit-sticky;
+    position: sticky;
+    top: -1px;
+    right: 0;
+    left: 0;
+    z-index: 100;
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+	border-bottom: 1px solid lightgray;
+	*/
+
 	display: flex;
 	justify-content: space-between;
 	padding: .8em 1.2em;
@@ -88,19 +100,23 @@ ul {
 }
 
 @media only screen and (min-width: 650px) {
+	/*
 	.server {
 		width: 50%;
 	}
+	*/
 
 	h1 {
 		font-size: 3em;
 		margin: 0;
 	}
 
+	/*
 	.subhead {
 		font-size: 1.4em;
 		margin-bottom: 12%;
 	}
+	*/
 
 	nav ul {
 		width: 40%;
@@ -108,9 +124,11 @@ ul {
 }
 
 @media only screen and (min-width: 875px) {
+	/*
 	.subhead {
 		margin-bottom: 15%;
 	}
+	*/
 }
 
 @media only screen and (min-width: 1024px) {
