@@ -14,8 +14,10 @@
 		</thead>
 		<tbody *transloco="let ta; scope: 'abbr'; read: 'abbr'">
 			<tr *ngFor="let entry of (search.searchResult | async)?.entries">
-				<td [innerHTML]="lemma.formatLemmaStr(entry?.sememeOne?.lemma)"></td>
-				<td [innerHTML]="lemma.formatLemmaStr(entry?.sememeTwo?.lemma)"></td>
+				<!-- TODO The parameters for the locale parameters are only fake.
+					 The LangPair and its locales are needed to correct this. -->
+				<td [innerHTML]="lemma.formatLemmaStr(entry?.sememeOne?.lemma, 'nds')"></td>
+				<td [innerHTML]="lemma.formatLemmaStr(entry?.sememeTwo?.lemma, 'de')"></td>
 			</tr>
 		</tbody>
 	</table>

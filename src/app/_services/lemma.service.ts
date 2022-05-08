@@ -13,7 +13,7 @@ export class LemmaService
 	)
 	{}
 
-	formatLemmaStr(text: string) : string
+	formatLemmaStr(text: string, locale?: string) : string
 	{
 		if (!text) {
 			return '';
@@ -23,7 +23,10 @@ export class LemmaService
 		text = text.replace(/\{[^\}]+\}/g, (match) => {
 			let term = match.substring(1, match.length - 1);
 			//return `<a [routerLink]="['.']" [queryParams]="{term: term}">${term}</a>`;
-			return '<span>' + term +'</span>';
+			if (!!locale && locale != this.transloco.getActiveLang()) {
+				return `<span lang="${locale}">${term}</span>`;
+			}
+			return `<span>${term}</span>`;
 		});
 		
 		// Replace orthographies
