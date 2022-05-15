@@ -1,7 +1,9 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatFormField } from '@angular/material/form-field';
 import { SearchService } from '@app/_services/search.service';
+import { TranslocoService } from '@ngneat/transloco';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
@@ -13,14 +15,21 @@ export class TableViewComponent implements OnInit
 {
 	private readonly isMobile : boolean;
 
+	@ViewChild('searchFormField')
+	searchFormField: MatFormField;
+
 	constructor(
 		public search: SearchService,
-		private deviceService: DeviceDetectorService)
+		private deviceService: DeviceDetectorService,
+		private transloco: TranslocoService)
 	{
 		this.isMobile = this.deviceService.isMobile();
 	}
 
 	ngOnInit(): void {
+		this.transloco.langChanges$.subscribe(locale => {
+			setTimeout(() => this.searchFormField.updateOutlineGap());
+		});
 	}
 
 	clearSearch(): void {
