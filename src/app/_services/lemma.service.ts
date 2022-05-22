@@ -13,6 +13,9 @@ export class LemmaService
 	)
 	{}
 
+	// Hint: method could get a parameter 'config' instead of 'locale' in future,
+	//       containing a small formatting configuration (locale, orthographies to show/hide, …).
+	//       That config could be made out of the presets, maybe.
 	formatLemmaStr(text: string, locale?: string) : string
 	{
 		if (!text) {
