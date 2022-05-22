@@ -141,6 +141,8 @@ export class LexemeQueryService
 					if (response.status == 'success') {
 						return response.data;
 					}
+					// TODO An error can occur here like code 11001, message 'Could not perform operation {{operation}} for type {{entity}} on database.'
+					//      That should then be shown in the snackbar or somewhere else.
 					console.error('Loading lexeme by ID failed (ID and message following):', id, response.message);
 					throw new Error('Loading lexeme failed. ID: ' + id);
 				}),
