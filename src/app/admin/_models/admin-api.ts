@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-04-24 23:43:39.
+// Generated using typescript-generator version 2.32.889 on 2022-08-07 20:06:21.
 
 export interface LSearchRequest {
     filter: string;
@@ -28,6 +28,7 @@ export interface LexemeSlimDTO {
     active: boolean;
     condition: number;
     tags: string[];
+    firstSememeID: number;
 }
 
 export interface LexemeDetailedDTO {
@@ -83,16 +84,6 @@ export interface SynGroupItem {
     id: number;
     description: string;
     presentation: string;
-}
-
-export interface SearchRequest {
-    pair: string;
-    term: string;
-    direction: Direction;
-}
-
-export interface SearchResult {
-    entries: ResultEntry[];
 }
 
 export interface Language extends IEntity<number> {
@@ -269,9 +260,10 @@ export interface LexemeForm extends Serializable {
 export interface Link extends IRPCEntity<number> {
     id: number;
     version: number;
+    creatorID: number;
     typeID: number;
-    startLexemeID: number;
-    endLexemeID: number;
+    startSememeID: number;
+    endSememeID: number;
     changed: boolean;
 }
 
@@ -323,12 +315,6 @@ export interface UiTranslationSet extends IEntity<string> {
     translations: { [index: string]: string };
 }
 
-export interface ResultEntry {
-    sememeOne: SememeEntry;
-    sememeTwo: SememeEntry;
-    weight: number;
-}
-
 export interface Serializable {
 }
 
@@ -352,11 +338,6 @@ export interface SynGroup extends IRPCEntity<number>, IEntity<number> {
     changed: boolean;
 }
 
-export interface SememeEntry {
-    typeID: number;
-    lemma: string;
-}
-
 export interface IEntity<T> {
 }
 
@@ -368,7 +349,5 @@ export interface IRPCEntity<T> {
 export type TextSearchType = "PostgreWeb" | "Prefixed";
 
 export type State = "Active" | "Inactive" | "Both";
-
-export type Direction = "Both" | "Left" | "Right";
 
 export type ApiAction = "None" | "Insert" | "Update" | "Delete";
