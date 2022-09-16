@@ -21,14 +21,11 @@ export class MainComponent implements OnInit, OnDestroy
 {
 	private langChange: Subscription;
 
-	hideMenu: boolean = true;
-
 	constructor(
 		public transloco: TranslocoService,
 		private pageTitle: Title,
 		@Inject(DOCUMENT) private document: Document,
-		private router: Router)
-	{}
+	) { }
 
 	ngOnInit(): void
 	{
@@ -49,11 +46,6 @@ export class MainComponent implements OnInit, OnDestroy
 	ngOnDestroy(): void
 	{
 		this.langChange.unsubscribe();
-	}
-
-	toggleMenu(): void
-	{
-		this.hideMenu = !this.hideMenu;
 	}
 
 	/*

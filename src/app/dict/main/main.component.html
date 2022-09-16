@@ -2,32 +2,7 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <block-ui>
 	<div id="content">
-        <header>
-            <!--<img src="images/logo.svg" alt="ULE.DK logo" class="logo">-->
-			<span>ULE.DK</span>
-
-            <nav>
-                <a class="hide-desktop" (click)="toggleMenu()">
-                    <img src="assets/images/ham.svg" alt="toggle menu" class="menu" id="menu">
-                </a>
-
-                <ul class="show-desktop" id="nav" [ngClass]="hideMenu ? 'hide-mobile' : ''">
-                    <li id="exit" class="exit-btn hide-desktop">
-                        <img (click)="toggleMenu()" src="assets/images/exit.svg" alt="Exit menu">
-                    </li>
-                    <li><a [routerLink]="'table' | route">söke</a></li>
-                    <li><a [routerLink]="'.' | route">öäver</a></li>
-                    <li><a [routerLink]="'.' | route">kontakt</a></li>
-					<li><a [routerLink]="'admin' | route">admin</a></li>
-					<li><a [routerLink]="['.']" [matMenuTriggerFor]="uiLangMenu">språke</a></li>
-					<mat-menu #uiLangMenu="matMenu">
-						<button mat-menu-item *ngFor="let lang of transloco.getAvailableLangs()" (click)="transloco.setActiveLang(lang)">
-							{{ lang }}
-						</button>
-					</mat-menu>
-                </ul>
-            </nav>
-        </header>
+		<dict-header></dict-header>
 
 		<section>
 			<h1>ULE.DK</h1><br>
@@ -38,12 +13,6 @@
 			<router-outlet></router-outlet>
 		</main>
 
-		<footer>
-			&copy; 2022 <strong>ULE.DK</strong>
-			<br>
-			<a href="">Impressum</a> |
-			<a href="">Datenschutz</a> |
-			<a href="">Nutzungsbedingungen</a>
-		</footer>
+		<dict-footer></dict-footer>
 	</div>
 </block-ui>

@@ -29,6 +29,8 @@ import { ResultTableComponent } from './dict/table-view/result-table/result-tabl
 import { SharedModule } from '@app/shared/shared.module';
 import { LangPairSelectComponent } from './dict/table-view/lang-pair-select/lang-pair-select.component';
 import { DirectionSelectComponent } from './dict/table-view/direction-select/direction-select.component';
+import { FooterComponent } from './dict/footer/footer.component';
+import { HeaderComponent } from './dict/header/header.component';
 
 // Dit is düdelik beater as en eigen material.module.ts to bruken:
 // Bruukt eyn a.b. lazy loading, so kan eyn in elk module dat loaden wat eyn dår ouk
@@ -51,7 +53,9 @@ const material = [
     TableViewComponent,
     ResultTableComponent,
     LangPairSelectComponent,
-    DirectionSelectComponent
+    DirectionSelectComponent,
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
