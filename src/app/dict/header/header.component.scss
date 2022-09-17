@@ -1,19 +1,9 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
-header {
-	/*
-    position: -webkit-sticky;
-    position: sticky;
-    top: -1px;
-    right: 0;
-    left: 0;
-    z-index: 100;
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
-	border-bottom: 1px solid lightgray;
-	*/
+@import "../../../theme/dict-variables";
 
+header {
 	display: flex;
 	justify-content: space-between;
 	padding: .8em 1.2em;
@@ -23,9 +13,10 @@ ul {
     margin: 0;
     padding: 0;
 }
-nav ul {
-    position: fixed;
-    width: 60%;
+
+#nav {
+	position: fixed;
+    width: 47%;
     top: 0;
     right: 0;
     text-align: left;
@@ -34,20 +25,19 @@ nav ul {
     z-index: 7;
     padding-top: 3em;
 }
-/*
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    width: 100%;
-    padding: 1em 2em;
-    background-color: rgb(49, 55, 59);
+#nav-inner {
+	display: inline-grid;
+	grid-template-columns: auto;
 }
-nav ul li a:hover {
-    background-color: rgb(65, 73, 78);
+.nav-item {
+	padding: 16px 24px;
+	font-size: 17px;
+	text-align: left;
 }
-*/
-
+.nav-item a {
+	text-decoration: none;
+	color: white;
+}
 .hide-mobile {
 	display: none;
 }
@@ -67,13 +57,41 @@ nav ul li a:hover {
     cursor: pointer;
 }
 
-@media only screen and (min-width: 650px) {
+@media only screen and (min-width: $min-width-smartphone-wide) {
 	nav ul {
 		width: 40%;
 	}
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: $min-width-desktop) {
+	#nav {
+		display: grid;
+		grid-template-columns: auto;
+	
+		position: inherit;
+		width: auto;
+		background: none;
+		height: auto;
+		display: flex;
+		padding-top: 0;
+	}
+
+	#nav-inner {
+		display: grid;
+		grid-template-columns: auto auto auto auto auto;
+	}
+
+	.nav-item {
+		padding: 8px 24px;
+		font-size: 17px;
+		text-align: center;
+	}
+
+	.nav-item a {
+		text-decoration: none;
+		color: black;
+	}
+
 	nav ul {
 		position: inherit;
 		width: auto;

@@ -1,28 +1,33 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
-<header>
-	<!--<img src="images/logo.svg" alt="ULE.DK logo" class="logo">-->
-	<span>ULE.DK</span>
+<header *transloco="let tf; scope: 'formType'; read: 'formType'">
+
+	<span>
+		<img src="assets/images/logo/h40.png.png" srcset="assets/images/logo/h40_2x.png 2x" title="Logo ULE.DK" alt="Logo ULE.DK" />
+	</span>
 
 	<nav>
 		<a class="hide-desktop" (click)="toggleMenu()">
 			<img src="assets/images/ham.svg" alt="toggle menu" class="menu" id="menu">
 		</a>
 
-		<ul class="show-desktop" id="nav" [ngClass]="hideMenu ? 'hide-mobile' : ''">
-			<li id="exit" class="exit-btn hide-desktop">
+		<div id="nav" class="show-desktop" [ngClass]="hideMenu ? 'hide-mobile' : ''">
+			<div id="exit" class="exit-btn hide-desktop">
 				<img (click)="toggleMenu()" src="assets/images/exit.svg" alt="Exit menu">
-			</li>
-			<li><a [routerLink]="'table' | route">söke</a></li>
-			<li><a [routerLink]="'.' | route">öäver</a></li>
-			<li><a [routerLink]="'.' | route">kontakt</a></li>
-			<li><a [routerLink]="'admin' | route">admin</a></li>
-			<li><a [routerLink]="['.']" [matMenuTriggerFor]="uiLangMenu">språke</a></li>
-			<mat-menu #uiLangMenu="matMenu">
-				<button mat-menu-item *ngFor="let lang of transloco.getAvailableLangs()" (click)="transloco.setActiveLang(lang)">
-					{{ lang }}
-				</button>
-			</mat-menu>
-		</ul>
+			</div>
+			<div id="nav-inner">
+				<div class="nav-item"><a [routerLink]="'table' | route">söke</a></div>
+				<div class="nav-item"><a [routerLink]="'.' | route">öäver</a></div>
+				<div class="nav-item"><a [routerLink]="'.' | route">faq</a></div>
+				<div class="nav-item"><a [routerLink]="'.' | route">kontakt</a></div>
+				<div class="nav-item"><a [routerLink]="['.']" [matMenuTriggerFor]="uiLangMenu">språke</a></div>
+				<mat-menu #uiLangMenu="matMenu">
+					<button mat-menu-item *ngFor="let lang of transloco.getAvailableLangs()" (click)="transloco.setActiveLang(lang)">
+						{{ lang }}
+					</button>
+				</mat-menu>
+			</div>
+		</div>
 	</nav>
+
 </header>
