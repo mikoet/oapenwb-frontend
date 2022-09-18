@@ -3,17 +3,17 @@
 <header *transloco="let tf; scope: 'formType'; read: 'formType'">
 
 	<span>
-		<img src="assets/images/logo/h40.png.png" srcset="assets/images/logo/h40_2x.png 2x" title="Logo ULE.DK" alt="Logo ULE.DK" />
+		<img src="/assets/img/logo/h40.png.png" srcset="/assets/img/logo/h40@2x.png 2x" title="Logo ULE.DK" alt="Logo ULE.DK" />
 	</span>
 
 	<nav>
 		<a class="hide-desktop" (click)="toggleMenu()">
-			<img src="assets/images/ham.svg" alt="toggle menu" class="menu" id="menu">
+			<img src="/assets/img/ham.svg" alt="toggle menu" class="menu" id="menu">
 		</a>
 
 		<div id="nav" class="show-desktop" [ngClass]="hideMenu ? 'hide-mobile' : ''">
 			<div id="exit" class="exit-btn hide-desktop">
-				<img (click)="toggleMenu()" src="assets/images/exit.svg" alt="Exit menu">
+				<img (click)="toggleMenu()" src="/assets/img/exit.svg" alt="Exit menu">
 			</div>
 			<div id="nav-inner">
 				<div class="nav-item"><a [routerLink]="'table' | route">söke</a></div>
