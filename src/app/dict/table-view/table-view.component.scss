@@ -1,12 +1,14 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
+@import "../../../theme/dict-variables";
+
 .container {
     text-align: center;
     padding: .8em 1.2em;
 }
 
-.inputArea {
+.input-area {
 	grid-template-columns: auto;
 	gap: 2px 15px !important;
 	//margin: 24px 18px 18px 24px;
@@ -15,11 +17,11 @@
 	max-width: 500px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 25px;
+	margin-top: 0px;
 	margin-bottom: 1.5rem;
 }
 
-.upperArea {
+.upper-area {
 	grid-template-columns: auto auto 1fr;
 	gap: 2px 15px;
 	font-size: 0.8em !important;
@@ -121,3 +123,15 @@ $editor-subheading-margin: 18px;
 .rowspan4 { grid-row-end: span 4; }
 .rowspan8 { grid-row-end: span 8; }
 // Grid end
+
+@media only screen and (min-width: $min-width-desktop) {
+	.input-area {
+		max-width: 560px;
+	}
+}
+
+@media only screen and (min-width: $min-width-desktop-large) {
+	.input-area {
+		max-width: 700px;
+	}
+}
