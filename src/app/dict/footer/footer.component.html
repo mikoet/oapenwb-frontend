@@ -1,9 +1,42 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
-<footer>
-	&copy; 2022 <strong>ULE.DK</strong>
-	<br>
-	<a href="">Impressum</a> |
-	<a href="">Datenschutz</a> |
-	<a href="">Nutzungsbedingungen</a>
+<footer *transloco="let t">
+	<div class="c1">
+		<div class="c2">
+			<div class="column-container">
+				<div class="lcolumn">
+					<ul>
+						<h5>{{ t('footer.runsWith') }}</h5>
+						<li><a href="https://github.com/mikoet" target="_blank">
+							<img src="/assets/img/oapenwb.png" srcset="/assets/img/oapenwb@2x.png 2x" title="oapen wöördebook" alt="oapen wöördebook" />
+						</a></li>
+					</ul>
+				</div>
+				<div class="column">
+					<h5>{{ t('footer.pages') }}</h5>
+					<ul>
+						<li><a [routerLink]="'table' | route">{{ t('nav.search') }}</a></li>
+						<li><a [routerLink]="'about' | route">{{ t('nav.about') }}</a></li>
+						<li><a [routerLink]="'faq' | route">{{ t('nav.faq') }}</a></li>
+						<li><a [routerLink]="'contact' | route">{{ t('nav.contact') }}</a></li>
+						<li><a [routerLink]="'admin' | route">{{ t('nav.admin') }}</a></li>
+					</ul>
+				</div>
+				<!--
+				TODO Hyr kunden later de nygsten un interessantsten blog-bydräge in en eygen spleade stån.
+				-->
+				<div class="column">
+					<h5>{{ t('footer.duty') }}</h5>
+					<ul class="no-trailing-space">
+						<li><a [routerLink]="'privacy' | route">{{ t('duty.privacy') }}</a></li>
+						<li><a [routerLink]="'termsOfUse' | route">{{ t('duty.termsOfUse') }}</a></li>
+						<li><a [routerLink]="'imprint' | route">{{ t('duty.imprint') }}</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+		&copy; 2022 <strong>ULE.DK</strong>
+	</div>
 </footer>

@@ -1,15 +1,126 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
+@import "../../../theme/dict-variables";
+
 footer {
 	//position: absolute;
 	//bottom: 0rem; //1.5rem;
 	//width: calc(100% - 100px);
 	//width: 100%;
 	color: white;
+	margin-top: 55px;
 	padding-top: 40px;
 	padding-bottom: 25px;
 	font-size: 0.9rem;
 	text-align: center;
-	background-color: darkgray;
+	background-color: #142b41;
+}
+
+.c1 {
+	padding: 0 40px 25px;
+}
+
+.c2 {
+	padding: 0 24px;
+}
+
+.column-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+
+h5 {
+	font-size: 0.9rem;
+	font-weight: bold;
+	display: block;
+	margin: 0;
+	line-height: 1.334;
+    color: white;
+	text-align: left;
+	margin-block-start: 1.67em;
+    margin-block-end: 1.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+ul {
+	display: block;
+	list-style: none;
+	list-style-type: disc;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 0px;
+	padding-right: 25px;
+}
+
+.no-trailing-space {
+	padding-right: 0px;
+}
+
+ul li {
+	text-decoration: none;
+	display: flex;
+	text-align: left;
+}
+
+ul li a {
+	font-size: 0.725rem;
+	text-transform: uppercase;
+	letter-spacing: 0.125em;
+	line-height: 1.57;
+	word-break: break-word;
+}
+
+ul li img {
+	margin-bottom: 32px;
+	max-width:100%;
+}
+
+.lcolumn {
+	flex-basis: 100%;
+	max-width: 100%;
+	flex-grow: 0;
+	text-align: left;
+}
+
+.column {
+	flex-basis: 100%;
+	max-width: 100%;
+	flex-grow: 0;
+	text-align: left;
+}
+
+@media only screen and (min-width: $min-width-smartphone-wide) {
+	.lcolumn {
+		flex-basis: 40%;
+		max-width: 40%;
+	}
+	
+	.column {
+		flex-basis: 30%;
+		max-width: 30%;
+	}
+}
+
+@media only screen and (min-width: $min-width-tablet-wide) {
+	.lcolumn {
+		flex-basis: 40%;
+		max-width: 40%;
+	}
+	
+	.column {
+		flex-basis: 30%;
+		max-width: 30%;
+	}
+}
+
+@media only screen and (min-height: 1100px) {
+	.c1 {
+		padding: 30px 40px 45px;
+	}
 }
