@@ -36,6 +36,7 @@ ul {
 }
 .nav-item a {
 	text-decoration: none;
+	text-transform: lowercase;
 	color: white;
 }
 .hide-mobile {
@@ -55,6 +56,10 @@ ul {
 .exit-btn img {
     width: 15px;
     cursor: pointer;
+}
+
+.pointer {
+	cursor: pointer;
 }
 
 @media only screen and (min-width: $min-width-smartphone-wide) {

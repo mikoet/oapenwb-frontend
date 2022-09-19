@@ -1,6 +1,6 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
-<header *transloco="let tf; scope: 'formType'; read: 'formType'">
+<header *transloco="let t">
 
 	<span>
 		<img src="/assets/img/logo/h40.png.png" srcset="/assets/img/logo/h40@2x.png 2x" title="Logo ULE.DK" alt="Logo ULE.DK" />
@@ -8,23 +8,27 @@
 
 	<nav>
 		<a class="hide-desktop" (click)="toggleMenu()">
-			<img src="/assets/img/ham.svg" alt="toggle menu" class="menu" id="menu">
+			<img src="/assets/img/ham.svg" alt="{{ t('nav.toggleMenu') }}" class="menu pointer" id="menu">
 		</a>
 
 		<div id="nav" class="show-desktop" [ngClass]="hideMenu ? 'hide-mobile' : ''">
 			<div id="exit" class="exit-btn hide-desktop">
-				<img (click)="toggleMenu()" src="/assets/img/exit.svg" alt="Exit menu">
+				<img (click)="toggleMenu()" src="/assets/img/exit.svg" alt="{{ t('nav.exitMenu') }}" class="pointer">
 			</div>
 			<div id="nav-inner">
-				<div class="nav-item"><a [routerLink]="'table' | route">söke</a></div>
-				<div class="nav-item"><a [routerLink]="'.' | route">öäver</a></div>
-				<div class="nav-item"><a [routerLink]="'.' | route">faq</a></div>
-				<div class="nav-item"><a [routerLink]="'.' | route">kontakt</a></div>
-				<div class="nav-item"><a [routerLink]="['.']" [matMenuTriggerFor]="uiLangMenu">språke</a></div>
+				<div class="nav-item"><a [routerLink]="'table' | route">{{ t('nav.search') }}</a></div>
+				<div class="nav-item"><a [routerLink]="'about' | route">{{ t('nav.about') }}</a></div>
+				<div class="nav-item"><a [routerLink]="'faq' | route">{{ t('nav.faq') }}</a></div>
+				<div class="nav-item"><a [routerLink]="'contact' | route">{{ t('nav.contact') }}</a></div>
+				<div class="nav-item pointer"><a [matMenuTriggerFor]="uiLangMenu">{{ t('nav.language') }}</a></div>
 				<mat-menu #uiLangMenu="matMenu">
-					<button mat-menu-item *ngFor="let lang of transloco.getAvailableLangs()" (click)="transloco.setActiveLang(lang)">
+					<button mat-menu-item (click)="transloco.setActiveLang('nds')">Neddersassisk</button>
+					<button mat-menu-item (click)="transloco.setActiveLang('de')">Deutsch</button>
+					<button mat-menu-item (click)="transloco.setActiveLang('en')">English</button>
+					<!--<button mat-menu-item (click)="transloco.setActiveLang('nl')">Nederlands</button>-->
+					<!--<button mat-menu-item *ngFor="let lang of transloco.getAvailableLangs()" (click)="transloco.setActiveLang(lang)">
 						{{ lang }}
-					</button>
+					</button>-->
 				</mat-menu>
 			</div>
 		</div>
