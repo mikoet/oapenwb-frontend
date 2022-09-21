@@ -43,7 +43,7 @@
 	<br>
 	<mat-card>
 		<section>
-			<div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+			<div class="grid-container" style="grid-template-columns: repeat(4, 1fr);">
 				<mat-form-field>
 					<mat-label>{{ t('showLanguages') }}</mat-label>
 					<mat-select [(ngModel)]="selectedLanguages" multiple (selectionChange)="onUiLanguagesChanged($event)">
@@ -54,10 +54,21 @@
 				</mat-form-field>
 
 				<mat-form-field>
+					<mat-label>{{ t('scope') }}</mat-label>
+					<mat-select [(ngModel)]="selectedScope" (selectionChange)="onUiScopeChanged($event)">
+						<mat-option [value]="undefined">{{ t('allScopes') }}</mat-option>
+						<mat-option *ngFor="let scope of uiScopes" [value]="scope.id">
+							{{ scope.id == '' ? '(default)' : scope.id }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+
+				<mat-form-field>
 					<mat-label>{{ t('filter') }}</mat-label>
-					<input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterValue" placeholder="{{ t('filterExample') }}">
+					<input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterValue"
+						placeholder="{{ t('filterExample') }}">
 					<button mat-button *ngIf="filterValue" matSuffix mat-icon-button attr.aria-label="{{ t('clear') }}"
-							(click)="filterValue=''; applyFilter(null);" attr.aria-label="{{ t('emptyField') }}">
+						(click)="resetFilter();" attr.aria-label="{{ t('emptyField') }}">
 						<mat-icon>close</mat-icon>
 					</button>
 				</mat-form-field>
@@ -114,7 +125,7 @@
 				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 				</table>
-				</div>
+			</div>
 		</section>
 	</mat-card>
 </div>

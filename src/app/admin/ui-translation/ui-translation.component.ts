@@ -29,12 +29,17 @@ interface SelectableUiLanguage
 	styleUrls: ['./ui-translation.component.scss']
   })
 export class UiTranslationComponent extends AbstractSEC<UiTranslationSet> {
+	private static readonly magicFilterString: string = '><//|-<>';
+
 	// Scope attributes
 	uiScopes: UiTranslationScope[];
 
-	// UiLanguage attribues
-	selectedLanguages: string[];
+	//
 	uiLanguages: SelectableUiLanguage[] = [];
+
+	// Filter attributes
+	selectedScope: string = undefined;
+	selectedLanguages: string[];
 
 	// table attributes
 	basicColumns: string[] = ['scopeID', 'uitID', 'essential'];
@@ -47,6 +52,33 @@ export class UiTranslationComponent extends AbstractSEC<UiTranslationSet> {
 		private snackBar: MatSnackBar)
 	{
 		super(httpClient, transloco, ['scopeID', 'uitID'], uiTranslationsApiPath, {scopeID: '', essential: false});
+	}
+
+	/**
+	 * !Overridden! from base class so that the magicFilterString can be included into 
+	 */
+	applyFilter(event: Event)
+	{
+		let filterValue;
+		if (event === null) {
+			filterValue = '';
+		} else {
+			filterValue = (event.target as HTMLInputElement).value;
+		}
+		this.dataSource.filter = UiTranslationComponent.magicFilterString + filterValue.trim().toLowerCase();
+	}
+
+	resetFilter()
+	{
+		this.filterValue = '';
+		this.dataSource.filter = UiTranslationComponent.magicFilterString + this.filterValue;
+	}
+
+	onUiScopeChanged(arg: any)
+	{
+		// Add the language ID (to always have some change in the filter when changing the language) and the magic filter-string
+		// as a seperator
+		this.dataSource.filter = this.selectedScope + UiTranslationComponent.magicFilterString + this.filterValue;
 	}
 
 	onUiLanguagesChanged(arg: any)
@@ -76,26 +108,39 @@ export class UiTranslationComponent extends AbstractSEC<UiTranslationSet> {
 	buildForm(): void
 	{
 		// set a custom filter that is able to filter for the nested translation property
+		// and the optionally selected scopes
 		this.dataSource.filterPredicate = (set: UiTranslationSet, filter: string) => {
-			if (set !== null && set !== undefined) {
-				if (!(set.scopeID === null || set.scopeID === undefined)
-					&& set.scopeID.toLowerCase().indexOf(filter) !== -1)
+			if (!!set) {
+				if (this.selectedScope === undefined || this.selectedScope == set.scopeID)
 				{
-					return true;
-				}
-				if (!(set.uitID === null || set.uitID === undefined)
-					&& set.uitID.toLowerCase().indexOf(filter) !== -1)
-				{
-					return true;
-				}
-				if (!(set.translations === null || set.translations === undefined)) {
-					// For each possible translation check if it matches the filter
-					for (let locale of this.selectedLanguages) {
-						let translation = set.translations[locale];
-						if (translation !== null && translation !== undefined
-							&& translation.toLowerCase().indexOf(filter) !== -1)
-						{
-							return true;
+					let magicIndex = filter.indexOf(UiTranslationComponent.magicFilterString);
+					if (magicIndex !== -1) {
+						// Remove the magicString itself and everything before it
+						filter = filter.substring(magicIndex + UiTranslationComponent.magicFilterString.length);
+					}
+					filter = filter.trim();
+
+					/*
+					if (!(set.scopeID === null || set.scopeID === undefined)
+						&& set.scopeID.toLowerCase().indexOf(filter) !== -1)
+					{
+						return true;
+					}
+					*/
+					if (!(set.uitID === null || set.uitID === undefined)
+						&& set.uitID.toLowerCase().indexOf(filter) !== -1)
+					{
+						return true;
+					}
+					if (!(set.translations === null || set.translations === undefined)) {
+						// For each possible translation check if it matches the filter
+						for (let locale of this.selectedLanguages) {
+							let translation = set.translations[locale];
+							if (translation !== null && translation !== undefined
+								&& translation.toLowerCase().indexOf(filter) !== -1)
+							{
+								return true;
+							}
 						}
 					}
 				}
