@@ -31,6 +31,7 @@ import { LangPairSelectComponent } from './dict/table-view/lang-pair-select/lang
 import { DirectionSelectComponent } from './dict/table-view/direction-select/direction-select.component';
 import { FooterComponent } from './dict/footer/footer.component';
 import { HeaderComponent } from './dict/header/header.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // Dit is düdelik beater as en eigen material.module.ts to bruken:
 // Bruukt eyn a.b. lazy loading, so kan eyn in elk module dat loaden wat eyn dår ouk
@@ -65,11 +66,12 @@ const material = [
 	}),
     AppRoutingModule,
 	BrowserAnimationsModule,
+	FontAwesomeModule,
 	FormsModule,
 	material,
 	HttpClientModule,
 	TranslocoRootModule,
-	SharedModule
+	SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
