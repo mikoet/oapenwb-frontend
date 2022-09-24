@@ -39,6 +39,7 @@ $codict-theme: mat.define-light-theme($codict-primary, $codict-accent, $codict-w
 
 @use '@angular/material' as mat;
 @import './theme/core.scss';
+@import './theme/colors.scss';
 
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -46,7 +47,7 @@ a {
 	text-decoration: none;
 }
 a:link, a:visited {
-	color: #3278d2;
+	color: $owb-color-primary;
 }
 a:hover {
 	color: #c2d7f2;

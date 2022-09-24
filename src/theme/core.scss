@@ -13,6 +13,7 @@
 @import './light.scss';
 @import './dark.scss';
 @import './typography.scss';
+@import './colors.scss';
 
 @import '../app/admin/_directives/multi-line-option-theme.scss';
 
@@ -29,7 +30,7 @@
 // Theme Config
 
 :root {
-	--primary-color: #3278d2;
+	--primary-color: $owb-color-primary;
 	--primary-lighter-color: #c2d7f2;
 	--primary-darker-color: #1f5bc1;
 	--text-primary-color: #{white};
@@ -38,10 +39,10 @@
 }
 
 $mat-primary: (
-	main: #3278d2,
+	main: $owb-color-primary,
 	lighter: #c2d7f2,
 	darker: #1f5bc1,
-	200: #3278d2, // For slide toggle,
+	200: $owb-color-primary, // For slide toggle,
 	contrast : (
 		main: white,
 		lighter: rgba(black, 0.87),
