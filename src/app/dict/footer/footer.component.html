@@ -15,11 +15,11 @@
 				<div class="column">
 					<h5>{{ t('footer.pages') }}</h5>
 					<ul>
-						<li><a [routerLink]="'table' | route">{{ t('nav.search') }}</a></li>
-						<li><a [routerLink]="'about' | route">{{ t('nav.about') }}</a></li>
-						<li><a [routerLink]="'faq' | route">{{ t('nav.faq') }}</a></li>
-						<li><a [routerLink]="'contact' | route">{{ t('nav.contact') }}</a></li>
-						<li><a [routerLink]="'admin' | route">{{ t('nav.admin') }}</a></li>
+						<li><a [routerLink]="'table' | route: transloco.getActiveLang()">{{ t('nav.search') }}</a></li>
+						<li><a [routerLink]="'about' | route: transloco.getActiveLang()">{{ t('nav.about') }}</a></li>
+						<li><a [routerLink]="'faq' | route: transloco.getActiveLang()">{{ t('nav.faq') }}</a></li>
+						<li><a [routerLink]="'contact' | route: transloco.getActiveLang()">{{ t('nav.contact') }}</a></li>
+						<li><a [routerLink]="'admin' | route: transloco.getActiveLang()">{{ t('nav.admin') }}</a></li>
 					</ul>
 				</div>
 				<!--
@@ -28,9 +28,9 @@
 				<div class="column">
 					<h5>{{ t('footer.duty') }}</h5>
 					<ul class="no-trailing-space">
-						<li><a [routerLink]="'privacy' | route">{{ t('duty.privacy') }}</a></li>
-						<li><a [routerLink]="'termsOfUse' | route">{{ t('duty.termsOfUse') }}</a></li>
-						<li><a [routerLink]="'imprint' | route">{{ t('duty.imprint') }}</a></li>
+						<li><a [routerLink]="'privacy' | route: transloco.getActiveLang()">{{ t('duty.privacy') }}</a></li>
+						<li><a [routerLink]="'termsOfUse' | route: transloco.getActiveLang()">{{ t('duty.termsOfUse') }}</a></li>
+						<li><a [routerLink]="'imprint' | route: transloco.getActiveLang()">{{ t('duty.imprint') }}</a></li>
 					</ul>
 				</div>
 			</div>
