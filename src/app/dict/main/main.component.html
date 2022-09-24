@@ -1,12 +1,14 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <block-ui>
-	<div id="content">
+	<div id="content" *transloco="let t">
 		<dict-header></dict-header>
 
 		<section>
-			<h1>ULE.DK</h1><br>
-			<h3>Neddersassisk/ platdüütsk wöördebook med öäversettings nå düütsk, nedderlandsk, engelsk un ander språken.</h3>
+			<div id="logo"></div>
+			<h4 class="hide-mobile">
+				{{ t('search.subtitle') }}
+			</h4>
 		</section>
 		
 		<main>

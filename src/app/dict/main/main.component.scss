@@ -1,6 +1,8 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
+@import "../../../theme/dict-variables";
+
 #content {
 	display: flex;
 	flex-direction: column;
@@ -12,50 +14,67 @@ section {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	text-align: center;
-	width: 60%;
+	width: 85%;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+#logo {
+	margin: 20px auto 5px;
+	width: 300px;
+	height: 160px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-image: image-set(
+		url("/assets/img/logo/w300.png") 1x,
+		url("/assets/img/logo/w300@2x.png") 2x
+	);
+}
+
+h4 {
+	white-space: pre-line;
 }
 
 main {
 	flex: 1;
 }
 
-@media only screen and (min-width: 650px) {
-	/*
-	.server {
-		width: 50%;
-	}
-	*/
-
-	h1 {
-		font-size: 3em;
-		margin: 0;
-	}
-
-	/*
-	.subhead {
-		font-size: 1.4em;
-		margin-bottom: 12%;
-	}
-	*/
+.hide-mobile {
+	display: none;
 }
 
-@media only screen and (min-width: 875px) {
-	/*
-	.subhead {
-		margin-bottom: 15%;
+@media only screen and (min-width: $min-width-smartphone-wide) {
+	section {
+		width: 70%;
 	}
-	*/
+
+	#logo {
+		margin: 20px auto 5px;
+		width: 375px;
+		height: 200px;
+		background-image: image-set(
+			url("/assets/img/logo/w375.png") 1x,
+			url("/assets/img/logo/w375@2x.png") 2x
+		);
+	}
 }
 
-@media only screen and (min-width: 1024px) {
-	/*
-	.scroll {
-		width: 30px;
-		animation: move 1s infinite alternate;
+@media only screen and (min-width: $min-width-tablet-wide) {
+	#logo {
+		margin: 20px auto 5px;
+		width: 450px;
+		height: 240px;
+		background-image: image-set(
+			url("/assets/img/logo/w450.png") 1x,
+			url("/assets/img/logo/w450@2x.png") 2x
+		);
 	}
-	*/
+}
+
+@media only screen and (min-width: $min-width-desktop) {
+	.hide-mobile {
+		display: inline-block;
+	}
 
 	@keyframes move {
 		from {
@@ -67,7 +86,7 @@ main {
 	}
 }
 
-@media only screen and (min-width: 1600px) {
+@media only screen and (min-width: $min-width-desktop-large) {
 	.container {
 		width: 70%;
 	}
@@ -75,5 +94,32 @@ main {
 	.blue-container ul li p,
 	blockquote {
 		font-size: 1.3em;
+	}
+}
+
+
+// For the logo the viewport height is important, too!!
+
+@media only screen and (min-width: $min-width-desktop) and (min-height: 1100px) {
+	#logo {
+		margin: 20px auto 5px;
+		width: 540px;
+		height: 288px;
+		background-image: image-set(
+			url("/assets/img/logo/w540.png") 1x,
+			url("/assets/img/logo/w540@2x.png") 2x
+		);
+	}
+}
+
+@media only screen and (min-width: $min-width-desktop-large) and (min-height: 1250px) {
+	#logo {
+		margin: 20px auto 5px;
+		width: 650px;
+		height: 347px;
+		background-image: image-set(
+			url("/assets/img/logo/w650.png") 1x,
+			url("/assets/img/logo/w650@2x.png") 2x
+		);
 	}
 }
