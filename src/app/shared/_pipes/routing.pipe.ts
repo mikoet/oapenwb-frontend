@@ -27,17 +27,15 @@ export function getRouteStrWithoutLang(desc: RouteDesc): string
 })
 export class RoutingPipe implements PipeTransform
 {
-	constructor(private translocoService: TranslocoService)
-	{
-	}
+	constructor(
+		private transloco: TranslocoService,
+	) { }
 
-	transform(value: string, args?: any): string
-	{
+	transform(value: string, args?: any): string {
 		return this.getRoute(value);
 	}
 
-	private getRoute(destinationID: string): string
-	{
+	private getRoute(destinationID: string): string {
 		let route: string = '';
 		let desc: RouteDesc = allRoutesMap.get(destinationID);
 
@@ -45,9 +43,13 @@ export class RoutingPipe implements PipeTransform
 		{
 			route = route == '' ? desc.path : desc.path + '/' + route;
 			if (desc.parent === null && !desc.noLang) {
-				route = this.translocoService.getActiveLang() + '/' + route;
+				route = this.transloco.getActiveLang() + '/' + route;
 			}
 			desc = desc.parent;
+		}
+
+		if (route == '') {
+			route = this.transloco.getActiveLang();
 		}
 
 		return '/' + route;
