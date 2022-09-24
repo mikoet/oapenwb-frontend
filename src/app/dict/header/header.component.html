@@ -16,12 +16,17 @@
 				<img (click)="toggleMenu()" src="/assets/img/exit.svg" alt="{{ t('nav.exitMenu') }}" class="pointer">
 			</div>
 			<div id="nav-inner">
-				<div class="nav-item"><a [routerLink]="'table' | route">{{ t('nav.search') }}</a></div>
-				<div class="nav-item"><a [routerLink]="'about' | route">{{ t('nav.about') }}</a></div>
-				<div class="nav-item"><a [routerLink]="'faq' | route">{{ t('nav.faq') }}</a></div>
-				<div class="nav-item"><a [routerLink]="'contact' | route">{{ t('nav.contact') }}</a></div>
-				<div class="nav-item pointer"><a [matMenuTriggerFor]="uiLangMenu">{{ t('nav.language') }}</a></div>
-				<mat-menu #uiLangMenu="matMenu">
+				<div class="nav-item"><a [routerLink]="'table' | route: transloco.getActiveLang()">{{ t('nav.search') }}</a></div>
+				<div class="nav-item"><a [routerLink]="'about' | route: transloco.getActiveLang()">{{ t('nav.about') }}</a></div>
+				<!-- TODO Sou krigt Angular dat med… hm. Wat skal ik dår doon? Kan en funktioon helpen as by transloco t(…)? -->
+				<div class="nav-item"><a [routerLink]="'faq' | route: transloco.getActiveLang()">{{ t('nav.faq') }}</a></div>
+				<div class="nav-item"><a [routerLink]="'contact' | route: transloco.getActiveLang()">{{ t('nav.contact') }}</a></div>
+				<div class="nav-item pointer">
+					<a [matMenuTriggerFor]="uiLangMenu">
+						<fa-icon [icon]="faLanguage"></fa-icon> {{ t('nav.language') }}
+					</a>
+				</div>
+				<mat-menu #uiLangMenu="matMenu" xPosition="before">
 					<button mat-menu-item (click)="transloco.setActiveLang('nds')">Neddersassisk</button>
 					<button mat-menu-item (click)="transloco.setActiveLang('de')">Deutsch</button>
 					<button mat-menu-item (click)="transloco.setActiveLang('en')">English</button>

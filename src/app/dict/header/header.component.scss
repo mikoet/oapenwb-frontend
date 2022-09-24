@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 @import "../../../theme/dict-variables";
+@import "../../../theme/colors";
 
 header {
 	display: flex;
@@ -39,6 +40,7 @@ ul {
 	text-transform: lowercase;
 	color: white;
 }
+
 .hide-mobile {
 	display: none;
 }
@@ -94,36 +96,46 @@ ul {
 
 	.nav-item a {
 		text-decoration: none;
+		text-transform: lowercase;
 		color: black;
+		background-image: linear-gradient(
+			to right,
+			$owb-color-primary,
+			$owb-color-primary 50%,
+			#000 50%
+		);
+		background-size: 200% 100%;
+		background-position: -100%;
+		display: inline-block;
+		padding: 5px 0;
+		position: relative;
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		transition: all 0.25s ease-in-out;
 	}
-
-	nav ul {
-		position: inherit;
-		width: auto;
-		background: none;
-		height: auto;
-		display: flex;
-		padding-top: 0;
+	.nav-item a:before {
+		content: '';
+		position: absolute;
+		background: $owb-color-primary;
+		display: block;
+		width: 0;
+		height: 3px;
+		bottom: -3px;
+		left: 0;
+		transition: all 0.25s ease-in-out;
 	}
-
-	nav ul li {
-		float: left;
+	.nav-item a:hover {
+		color: $owb-color-primary; // necessary for the language icon
+		background-position: 0;
 	}
-
-	nav ul li a {
-		color: black;
-		background-color: inherit;
-		text-align: right;
-		padding: 1em 2em;
-	}
-
-	nav ul li a:hover {
-		background-color: inherit;
+	.nav-item a:hover::before {
+		width:100%;
 	}
 
 	.show-desktop {
 		display: block;
-		margin: 0 auto 13% auto;
+		margin: 0 auto 60px auto;
 	}
 
 	.hide-desktop {
