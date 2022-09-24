@@ -7,6 +7,9 @@
 		</button>
 		<span>{{ t('title') }}</span>
 		<span class="example-spacer"></span>
+		<button mat-icon-button attr.aria-label="{{ t('switchToSite') }}" [routerLink]="'table' | route: transloco.getActiveLang()">
+			<mat-icon>home</mat-icon>
+		</button>
 		<button mat-icon-button attr.aria-label="{{ t('openUserMenu') }}" [matMenuTriggerFor]="userMenu">
 			<mat-icon>person</mat-icon>
 		</button>
