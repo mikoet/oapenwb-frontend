@@ -93,7 +93,6 @@
 
 .table-container {
 	position: relative;
-	/*max-height: 400px; TODO Try to calculate the maximum height so the site will not have a scrollbar */
 	overflow: auto;
 }
 
@@ -410,6 +409,7 @@ mat-sidenav .doc-version {
 // Class for components (views) within the sidenav-content that need a margin
 .margin-view {
 	margin: $sidenav-content-margin;
+	height: calc(100% - 2 * $sidenav-content-margin);
 }
 
 // Stretch in Material toolbars (e.g. spacer)
