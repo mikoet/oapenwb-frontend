@@ -1,18 +1,23 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
-<button mat-button matTooltip="Språkpår" matTooltipPosition="above" matTooltipShowDelay="500"
-	[matMenuTriggerFor]="langPairMenu">{{ search.pair }}</button>
-<mat-menu #langPairMenu="matMenu">
-	<button mat-menu-item (click)="choose('nds-de')">nds-de</button>
-	<button mat-menu-item (click)="choose('nds-en')">nds-en</button>
-	<button mat-menu-item (click)="choose('nds-nl')">nds-nl</button>
+<div *transloco="let t">
+	<button mat-button matTooltip="{{ t('search.langPair') }}" matTooltipPosition="above" matTooltipShowDelay="50"
+		[matMenuTriggerFor]="langPairMenu">{{ search.pair }}</button>
+	<mat-menu #langPairMenu="matMenu">
+		<button mat-menu-item (click)="choose('nds-de')">nds-de</button>
+		<button mat-menu-item (click)="choose('nds-en')">nds-en</button>
+		<button mat-menu-item (click)="choose('nds-nl')">nds-nl</button>
 
-	<mat-divider></mat-divider>
+		<mat-divider></mat-divider>
 
-	<button mat-menu-item (click)="choose('nds-da')">nds-da</button>
-	<button mat-menu-item (click)="choose('nds-fi')">nds-fi</button>
-	<button mat-menu-item (click)="choose('nds-sv')">nds-sv</button>
-</mat-menu>
+		<button mat-menu-item (click)="choose('nds-da')">nds-da</button>
+		<button mat-menu-item (click)="choose('nds-fi')">nds-fi</button>
+		<button mat-menu-item (click)="choose('nds-sv')">nds-sv</button>
 
+		<mat-divider></mat-divider>
+
+		<button mat-menu-item (click)="choose('nds-*')">nds-* ({{ t('search.allLanguages') }})</button>
+	</mat-menu>
+</div>
 <!--<mat-button-toggle *ngFor="let pair of baseConfig.dictionarySettings.tonguePairs" [value]="pair.id">
 	{{pair.tongue2.locale}}</mat-button-toggle>-->
