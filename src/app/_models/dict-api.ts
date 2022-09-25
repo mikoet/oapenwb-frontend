@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-08-07 20:06:31.
+// Generated using typescript-generator version 2.32.889 on 2022-09-24 19:53:48.
 
 export interface SearchRequest {
     pair: string;
@@ -9,6 +9,12 @@ export interface SearchRequest {
 }
 
 export interface SearchResult {
+    entries: ResultCategory[];
+}
+
+export interface ResultCategory {
+    uitID: string;
+    totalWeight: number;
     entries: ResultEntry[];
 }
 
@@ -21,6 +27,7 @@ export interface ResultEntry {
 export interface SememeEntry {
     typeID: number;
     lemma: string;
+    locale?: string;
 }
 
 export type Direction = "Both" | "Left" | "Right";
