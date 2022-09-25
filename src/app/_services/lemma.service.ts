@@ -24,7 +24,7 @@ export class LemmaService
 
 		// Put the words/phrases into span tags
 		text = text.replace(/\{[^\}]+\}/g, (match) => {
-			let term = match.substring(1, match.length - 1);
+			const term = match.substring(1, match.length - 1);
 			//return `<a [routerLink]="['.']" [queryParams]="{term: term}">${term}</a>`;
 			if (!!locale && locale != this.transloco.getActiveLang()) {
 				return `<span lang="${locale}">${term}</span>`;
@@ -34,20 +34,20 @@ export class LemmaService
 		
 		// Replace orthographies
 		text = text.replace(/\^\[[A-Za-z0-9,. ]+\]/g, (match) => {
-			let orthographies = match.substring(2, match.length - 1);
+			const orthographies = match.substring(2, match.length - 1);
 			return '<sup>' + orthographies +'</sup>';
 		});
 
 		// Replace dialects: ((...))
-		let dRegex = /\(\([A-Za-z0-9_\-:!]{2,32}(, [A-Za-z0-9_\-:!]{2,32}){0,31}\)\)/g
-		text = text.replace(dRegex, (match) => this.substituteUitIdStr(match, 2, 2, 'abbr', '<small>(', ')</small>'));
+		const dRegex = /\(\([A-Za-z0-9_\-:!@]{2,32}(, [A-Za-z0-9_\-:!@]{2,32}){0,31}\)\)/g
+		text = text.replace(dRegex, (match) => this.substituteUitIdStr(match, 2, 2, 'abbr', '<small matTooltip="En test!">(', ')</small>'));
 
 		// Replace categories: [[...]]
-		let cRegex = /\[\[[A-Za-z0-9_\-:!]{2,32}(, [A-Za-z0-9_\-:!]{2,32}){0,31}\]\]/g
+		const cRegex = /\[\[[A-Za-z0-9_\-:!@]{2,32}(, [A-Za-z0-9_\-:!@]{2,32}){0,31}\]\]/g
 		text = text.replace(cRegex, (match) => this.substituteUitIdStr(match, 2, 2, 'abbr', '<small><span style="font-variant: small-caps;">[', ']</span></small>'));
 
 		// Replace levels: [/.../]
-		let lRegex = /\[\/[A-Za-z0-9_\-:!]{2,32}(, [A-Za-z0-9_\-:!]{2,32}){0,31}\/\]/g
+		const lRegex = /\[\/[A-Za-z0-9_\-:!@]{2,32}(, [A-Za-z0-9_\-:!@]{2,32}){0,31}\/\]/g
 		text = text.replace(lRegex, (match) => this.substituteUitIdStr(match, 2, 2, 'abbr', '<small><i>[', ']</i></small>'));
 
 		return text;
