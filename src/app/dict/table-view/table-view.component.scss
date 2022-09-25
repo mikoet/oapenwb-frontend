@@ -40,8 +40,14 @@
 
 #search-special-letters {
 	text-align: left;
+	margin-top: 0.25rem;
 	margin-left: 0.5rem;
 	font-size: 1.08rem;
+
+	a {
+		margin-left: 3px;
+		margin-right: 3px;
+	}
 }
 
 /** Removing the padding-bottom from the search field */

@@ -1,9 +1,6 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
-
-<!-- Logo -->
-
-<div class="container">
+<div class="container" *transloco="let t">
 	<div class="grid-container input-area">
 		<div class="grid-container upper-area">
 			<app-lang-pair-select></app-lang-pair-select>
@@ -11,8 +8,8 @@
 		</div>
 
 		<div class="searchArea">
-			<mat-form-field #searchFormField class="searchField" appearance="outline" color="accent">
-				<mat-label>Wat wult du nå söken?</mat-label>
+			<mat-form-field #searchFormField class="searchField" appearance="outline" color="primary">
+				<mat-label>{{ t('search.question') }}</mat-label>
 				<input #searchInput id="searchText" name="search" matInput type="search" autocomplete="off"
 					[(ngModel)]="search.term" (keyup.enter)="executeSearch(searchInput)" /><!-- autofocus -->
 				<button mat-button *ngIf="!!search.term" matSuffix mat-icon-button aria-label="TODO Clear" (click)="clearSearch()">

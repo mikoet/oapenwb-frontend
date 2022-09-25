@@ -74,20 +74,21 @@ export class TableViewComponent implements OnInit
 	}
 
 	addTextAtCaret(textAreaId, text) {
-		let textArea: any = document.getElementById(textAreaId);
-		let cursorPosition = textArea.selectionStart;
-		this.addTextAtCursorPosition(textArea, cursorPosition, text);
+		const textArea: any = document.getElementById(textAreaId);
+		const cursorPosition = textArea.selectionStart;
+		this.addTextAtCursorPosition(cursorPosition, text);
 		this.updateCursorPosition(cursorPosition, text, textArea);
 	}
-	addTextAtCursorPosition(textArea, cursorPosition, text) {
-		let front = (textArea.value).substring(0, cursorPosition);
-		let back = (textArea.value).substring(cursorPosition, textArea.value.length);
-		textArea.value = front + text + back;
+	private addTextAtCursorPosition(cursorPosition, text) {
+		const front = this.search.term.substring(0, cursorPosition);
+		const back = this.search.term.substring(cursorPosition, this.search.term.length);
+		this.search.term = front + text + back;
 	}
-	updateCursorPosition(cursorPosition, text, textArea) {
+	private updateCursorPosition(cursorPosition, text, textArea) {
 		cursorPosition = cursorPosition + text.length;
-		textArea.selectionStart = cursorPosition;
-		textArea.selectionEnd = cursorPosition;
-		textArea.focus();    
+		setTimeout(() => {
+			textArea.setSelectionRange(cursorPosition, cursorPosition);
+			textArea.focus();
+		}, 0);
 	}
 }
