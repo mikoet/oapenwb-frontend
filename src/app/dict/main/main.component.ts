@@ -1,11 +1,12 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { TranslocoService } from '@ngneat/transloco';
-import { Subscription } from 'rxjs';
+import { ReplaySubject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * The MainComponent is the main component of the dictionary's visitor view.
@@ -19,53 +20,46 @@ import { Router } from '@angular/router';
 })
 export class MainComponent implements OnInit, OnDestroy
 {
-	private langChange: Subscription;
+	private destroy$ = new ReplaySubject();
 
 	constructor(
 		public transloco: TranslocoService,
+		private router: Router,
+		private ngZone: NgZone,
 		private pageTitle: Title,
 		@Inject(DOCUMENT) private document: Document,
 	) { }
 
 	ngOnInit(): void
 	{
-		this.langChange = this.transloco.langChanges$.subscribe((locale: string) => {
-			this.setPageTitle();
+		this.transloco.langChanges$.pipe(
+			takeUntil(this.destroy$),
+		).subscribe((locale: string) => {
+			this.onLangSelected(locale);
 		});
 
-		// Initialize the 
-		this.setPageTitle();
-	}
-
-	private setPageTitle() : void
-	{
-		// Translate the page title
-		this.pageTitle.setTitle(this.transloco.translate('p.title'));
+		this.transloco.selectTranslate('pageTitle').pipe(
+			takeUntil(this.destroy$),
+		).subscribe((value: string) => this.pageTitle.setTitle(value));
 	}
 
 	ngOnDestroy(): void
 	{
-		this.langChange.unsubscribe();
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
-	/*
-	onLangSelected(event) {
-		// Reroute/navigate to the selected lang code
-		let url: string = this.router.url;
-		let parts: string[] = url.split('/');
+	onLangSelected(locale: string): void {
+		// Renavigate to include the active locale into the URL
+		const url: string = this.router.url;
+		const parts: string[] = url.split('/');
 		if (parts.length >= 2) {
-			// If the language in the URL is not one of the uiLanguages array, then
-			// set a different language
-			// Todo Fixme The array should be taken from BaseConfig and the default
-			// language from the browser for human users
-			let uiLanguages: string[] = ['de', 'nl', 'en', 'nds', 'nds-SASS'];
-			parts[1] = event.value;
-			if (uiLanguages.indexOf(parts[1]) == -1) {
-				parts[1] = 'en';
+			const availableLocales = this.transloco.getAvailableLangs();
+			parts[1] = locale;
+			if (availableLocales.indexOf(parts[1] as any) == -1) {
+				parts[1] = this.transloco.getDefaultLang();
 			}
-			url = parts.join('/');
-			this.router.navigateByUrl(url);
+			this.ngZone.runGuarded(async () => await this.router.navigateByUrl(parts.join('/')));
 		}
 	}
-	*/
 }
