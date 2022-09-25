@@ -5,7 +5,8 @@ import { DOCUMENT } from '@angular/common';
 
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
-import { Subscription } from 'rxjs';
+import { ReplaySubject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * The AppComponent handles:
@@ -19,8 +20,7 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy
 {
-	private routerEvents: Subscription;
-	private langChange: Subscription;
+	private destroy$ = new ReplaySubject();
 
 	constructor(
 		/*public configService: ConfigService,*/
@@ -32,7 +32,9 @@ export class AppComponent implements OnInit, OnDestroy
 
 	ngOnInit(): void
 	{
-		this.routerEvents = this.router.events.subscribe(event => {
+		this.router.events.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(event => {
 			if (event instanceof NavigationEnd) {
 				let url: string = this.router.url;
 				let parts: string[] = url.split('/');
@@ -56,7 +58,9 @@ export class AppComponent implements OnInit, OnDestroy
 			}
 		});
 
-		this.langChange = this.transloco.langChanges$.subscribe((locale: string) => {
+		this.transloco.langChanges$.pipe(
+			takeUntil(this.destroy$),
+		).subscribe((locale: string) => {
 			this.setHtmlLang(locale);
 		});
 
@@ -72,8 +76,8 @@ export class AppComponent implements OnInit, OnDestroy
 
 	ngOnDestroy(): void
 	{
-		this.routerEvents.unsubscribe();
-		this.langChange.unsubscribe();
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	toggleTheme()
