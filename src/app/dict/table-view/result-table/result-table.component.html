@@ -2,22 +2,22 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 
 <div id="result-area" *ngIf="(search.searchResult | async)?.entries?.length > 0">
-	<table>
+	<table *ngFor="let entry of (search.searchResult | async)?.entries">
 		<colgroup>
 			<col class="text-column">
 			<col class="text-column">
 		</colgroup>
 		<thead>
-			<tr>
-				<th colspan="2">Resultaten</th>
+			<tr *transloco="let tf; scope: 'full'; read: 'full'">
+				<th colspan="2">{{ tf(entry.uitID) }}</th>
 			</tr>
 		</thead>
 		<tbody *transloco="let ta; scope: 'abbr'; read: 'abbr'">
-			<tr *ngFor="let entry of (search.searchResult | async)?.entries">
+			<tr *ngFor="let subEntry of entry?.entries">
 				<!-- TODO The parameters for the locale parameters are only fake.
-					 The LangPair and its locales are needed to correct this. -->
-				<td [innerHTML]="lemma.formatLemmaStr(entry?.sememeOne?.lemma, 'nds')"></td>
-				<td [innerHTML]="lemma.formatLemmaStr(entry?.sememeTwo?.lemma, 'de')"></td>
+					The LangPair and its locales are needed to correct this. -->
+				<td [innerHTML]="lemma.formatLemmaStr(subEntry?.sememeOne?.lemma, 'nds')"></td>
+				<td [innerHTML]="lemma.formatLemmaStr(subEntry?.sememeTwo?.lemma, 'de')"></td>
 			</tr>
 		</tbody>
 	</table>
