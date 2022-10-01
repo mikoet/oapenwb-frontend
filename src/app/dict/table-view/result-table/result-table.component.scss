@@ -77,6 +77,25 @@ table tr:last-child td:last-child {
 	width: 44%;
 }
 
+.right-content {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: stretch;
+}
+
+.spacer {
+	flex-grow: 1;
+	align-self: stretch;
+	border-right: 1px solid #ccc;
+}
+
+.locale {
+	align-self: flex-end;
+	vertical-align: text-bottom;
+	padding-left: 7px;
+}
+
 @media only screen and (min-width: $min-width-smartphone-wide) {
 	// TODO bellow this width the table should take the whole width
 	//      currently .container in table-view-component blocks this (1.2em padding on the sides)

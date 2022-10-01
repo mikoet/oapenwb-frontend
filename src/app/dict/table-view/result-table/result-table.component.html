@@ -17,7 +17,17 @@
 				<!-- TODO The parameters for the locale parameters are only fake.
 					The LangPair and its locales are needed to correct this. -->
 				<td [innerHTML]="lemma.formatLemmaStr(subEntry?.sememeOne?.lemma, 'nds')"></td>
-				<td [innerHTML]="lemma.formatLemmaStr(subEntry?.sememeTwo?.lemma, 'de')"></td>
+				<td>
+					<div class="right-content">
+						<span [innerHTML]="lemma.formatLemmaStr(subEntry?.sememeTwo?.lemma, 'de')"></span>
+						<ng-container *ngIf="!!subEntry?.sememeTwo?.locale">
+							<span class="spacer"></span>
+							<span class="locale">
+								{{ subEntry.sememeTwo.locale }}
+							</span>
+						</ng-container>
+					</div>
+				</td>
 			</tr>
 		</tbody>
 	</table>
