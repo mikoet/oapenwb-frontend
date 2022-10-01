@@ -4,19 +4,19 @@
 	<button mat-button matTooltip="{{ t('search.langPair') }}" matTooltipPosition="above" matTooltipShowDelay="50"
 		[matMenuTriggerFor]="langPairMenu">{{ search.pair }}</button>
 	<mat-menu #langPairMenu="matMenu">
-		<button mat-menu-item (click)="choose('nds-de')">nds-de</button>
-		<button mat-menu-item (click)="choose('nds-en')">nds-en</button>
-		<button mat-menu-item (click)="choose('nds-nl')">nds-nl</button>
+		<ng-container *ngFor="let langPair of langPairs">
+			<ng-container *ngIf="langPair !== '-'; else divider">
+				<button mat-menu-item (click)="choose(langPair)">{{ langPair }}
+					<ng-container *ngIf="langPair.endsWith('*')">
+						({{ t('search.allLanguages') }})
+					</ng-container>
+				</button>
+			</ng-container>
 
-		<mat-divider></mat-divider>
-
-		<button mat-menu-item (click)="choose('nds-da')">nds-da</button>
-		<button mat-menu-item (click)="choose('nds-fi')">nds-fi</button>
-		<button mat-menu-item (click)="choose('nds-sv')">nds-sv</button>
-
-		<mat-divider></mat-divider>
-
-		<button mat-menu-item (click)="choose('nds-*')">nds-* ({{ t('search.allLanguages') }})</button>
+			<ng-template #divider>
+				<mat-divider></mat-divider>
+			</ng-template>
+		</ng-container>
 	</mat-menu>
 </div>
 <!--<mat-button-toggle *ngFor="let pair of baseConfig.dictionarySettings.tonguePairs" [value]="pair.id">

@@ -3,6 +3,12 @@
 import { RouteDesc } from '@app/shared/_helpers/route-desc';
 import { allRoutesMap } from '@app/shared/all-routes-map';
 
+// Query params for route ROUTE_TABLE_VIEW
+export const QP_TABLE_VIEW_PAIR = 'pår';
+export const QP_TABLE_VIEW_DIRECTION = 'richt';
+export const QP_TABLE_VIEW_TERM = 'term';
+
+
 //export const ROUTE_DICT: RouteDesc = { path: '' /* could be 'dict' or 'dictionary' */ }
 export const ROUTE_DICT: RouteDesc = new RouteDesc({ id: 'dict', path: '' }, allRoutesMap);
 export const ROUTE_TABLE_VIEW: RouteDesc = new RouteDesc({ id: 'table', path: 'tabel', parent: ROUTE_DICT }, allRoutesMap);

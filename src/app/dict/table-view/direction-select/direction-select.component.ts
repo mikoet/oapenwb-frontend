@@ -11,16 +11,15 @@ import { SearchService } from '@app/_services/search.service';
 })
 export class DirectionSelectComponent implements OnInit
 {
-	constructor(public search: SearchService)
-	{
+	constructor(
+		public search: SearchService,
+	) {
 	}
 
-	ngOnInit(): void
-	{
+	ngOnInit(): void {
 	}
 
-	choose(value: Direction): void
-	{
+	choose(value: Direction): void {
 		this.search.direction = value;
 	}
 }

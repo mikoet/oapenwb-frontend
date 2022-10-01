@@ -1,59 +1,117 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatFormField } from '@angular/material/form-field';
+import { ActivatedRoute, Router } from '@angular/router';
+import { QP_TABLE_VIEW_DIRECTION, QP_TABLE_VIEW_PAIR, QP_TABLE_VIEW_TERM } from '@app/routes';
+import { Direction } from '@app/_models/dict-api';
 import { SearchService } from '@app/_services/search.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { ReplaySubject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
+
+function isDirection(str: string): str is Direction {
+	return ['Both', 'Left', 'Right'].includes(str);
+}
 
 @Component({
 	selector: 'app-table-view',
 	templateUrl: './table-view.component.html',
 	styleUrls: ['./table-view.component.scss']
 })
-export class TableViewComponent implements OnInit
+export class TableViewComponent implements OnInit, OnDestroy
 {
+	@BlockUI()
+	blockUI: NgBlockUI;
+
 	private readonly isMobile : boolean;
 
 	@ViewChild('searchFormField')
 	searchFormField: MatFormField;
 
+	destroy$ = new ReplaySubject(1);
+
 	constructor(
 		public search: SearchService,
 		private deviceService: DeviceDetectorService,
-		private transloco: TranslocoService)
-	{
+		private transloco: TranslocoService,
+		private route: ActivatedRoute,
+		private router: Router,
+	) {
 		this.isMobile = this.deviceService.isMobile();
 	}
 
 	ngOnInit(): void {
-		this.transloco.langChanges$.subscribe(locale => {
+		this.transloco.langChanges$.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(locale => {
 			setTimeout(() => this.searchFormField.updateOutlineGap());
 		});
+
+		this.readQueryParams();
+	}
+
+	private readQueryParams(): void {
+		const pair: string = this.route.snapshot.queryParamMap.get(QP_TABLE_VIEW_PAIR);
+		const direction: string = this.route.snapshot.queryParamMap.get(QP_TABLE_VIEW_DIRECTION);
+		const term: string = this.route.snapshot.queryParamMap.get(QP_TABLE_VIEW_TERM);
+
+		if (!!pair) {
+			this.search.pair = pair;
+		}
+
+		if (!!direction && isDirection(direction)) {
+			this.search.direction = direction as Direction;
+		}
+
+		if (!!term) {
+			this.search.term = term;
+			this.executeSearch();
+		}
+	}
+
+	ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	clearSearch(): void {
 		this.search.term = '';
 	}
 
-	executeSearch(element: HTMLElement) : void
+	executeSearch(element?: HTMLElement): void
 	{
-		console.debug("Executing search for: ", this.search.term);
+		this.blockUI.start();
 
-		if (this.isMobile) {
+		this.search.performSearch().pipe(
+			take(1),
+			takeUntil(this.destroy$),
+		).subscribe(
+			response => {
+				this.blockUI.stop();
+			},
+			// TODO this should also stop the blocking and give an error
+			error => {
+				console.error('Error performing search request', error);
+				this.blockUI.stop();
+			}
+		);
+
+		this.router.navigate([], {
+			relativeTo: this.route,
+			queryParams: {
+				pår: this.search.pair,
+				richt: this.search.direction,
+				term: this.search.term,
+			},
+		});
+
+		if (!!element && this.isMobile) {
 			// Remove the focus on mobile devices so they close the onscreen keyboard
 			this.removeFocus(element);
 		}
-
-		this.search.performSearch();
-		/*
-		console.log("Request - execute search for:", this.searchValue);
-		this.blockUI.start();
-		setTimeout(() => {
-			this.resultVisible = this.searchValue.length > 0;
-			this.blockUI.stop();
-		}, 1200);
-		*/
 	}
 
 	private removeFocus(element: HTMLElement) : void
