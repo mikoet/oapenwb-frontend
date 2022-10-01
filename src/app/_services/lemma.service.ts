@@ -3,6 +3,11 @@
 import { Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 
+export interface LangConfig {
+	locale: string;
+	showOrthography?: boolean;
+}
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -16,8 +21,9 @@ export class LemmaService
 	// Hint: method could get a parameter 'config' instead of 'locale' in future,
 	//       containing a small formatting configuration (locale, orthographies to show/hide, …).
 	//       That config could be made out of the presets, maybe.
-	formatLemmaStr(text: string, locale?: string) : string
-	{
+	formatLemmaStr(text: string, config?: LangConfig): string {
+		const showOrthography = config?.showOrthography;
+
 		if (!text) {
 			return '';
 		}
@@ -26,17 +32,23 @@ export class LemmaService
 		text = text.replace(/\{[^\}]+\}/g, (match) => {
 			const term = match.substring(1, match.length - 1);
 			//return `<a [routerLink]="['.']" [queryParams]="{term: term}">${term}</a>`;
-			if (!!locale && locale != this.transloco.getActiveLang()) {
-				return `<span lang="${locale}">${term}</span>`;
+			if (!!config && !!config.locale && config.locale !== this.transloco.getActiveLang()) {
+				return `<span lang="${config.locale}">${term}</span>`;
 			}
 			return `<span>${term}</span>`;
 		});
-		
+
 		// Replace orthographies
-		text = text.replace(/\^\[[A-Za-z0-9,. ]+\]/g, (match) => {
-			const orthographies = match.substring(2, match.length - 1);
-			return '<sup>' + orthographies +'</sup>';
-		});
+		if (showOrthography) {
+			text = text.replace(/\^\[[A-Za-z0-9,. ]+\]/g, (match) => {
+				const orthographies = match.substring(2, match.length - 1);
+				return '<sup>' + orthographies +'</sup>';
+			});
+		} else {
+			text = text.replace(/\^\[[A-Za-z0-9,. ]+\]/g, (match) => {
+				return '';
+			});
+		}
 
 		// Replace dialects: ((...))
 		const dRegex = /\(\([A-Za-z0-9_\-:!@]{2,32}(, [A-Za-z0-9_\-:!@]{2,32}){0,31}\)\)/g
