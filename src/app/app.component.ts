@@ -45,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy
 					// language from the browser for human users
 					let uiLanguages: string[] = ['de', 'nl', 'en', 'nds', 'nds-SASS'];
 					if (uiLanguages.indexOf(parts[1]) == -1) {
-						parts[1] = 'en';
+						parts[1] = 'nds';
 						url = parts.join('/');
 					}
 					this.transloco.setActiveLang(parts[1]);
