@@ -5,7 +5,7 @@ import { LemmaService } from '@app/_services/lemma.service';
 import { SearchService } from '@app/_services/search.service';
 
 @Component({
-	selector: 'app-result-table',
+	selector: 'dict-result-table',
 	templateUrl: './result-table.component.html',
 	styleUrls: ['./result-table.component.scss']
 })

@@ -14,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
  * 1. Translation of the page title when the language changes.
  */
 @Component({
-	selector: 'app-main',
+	selector: 'dict-main',
 	templateUrl: './main.component.html',
 	styleUrls: ['./main.component.scss']
 })

@@ -1,24 +1,60 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
-@import "../../../theme/dict-variables";
+@import "../../../theme/dict-variables.scss";
 
-.container {
+.top-section {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	text-align: center;
+	//width: 85%; // villicht later noch an ander stea to bruken
+	margin-left: auto;
+	margin-right: auto;
+	
+	display: grid;
+}
+
+.top-section-column {
+	grid-template-rows: auto auto;
+}
+
+.top-section-row {
+	grid-template-rows: auto auto;
+}
+
+.logo-section {
+	color: #999;
+}
+
+.logo-big {
+	margin: 20px auto 5px;
+	width: 300px;
+	height: 160px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-image: image-set(
+		url("/assets/img/logo/w300.png") 1x,
+		url("/assets/img/logo/w300@2x.png") 2x
+	);
+}
+
+h4 {
+	white-space: pre-line;
+}
+
+.full-width-container {
     text-align: center;
-    padding: .8em 1.2em;
+	padding: .8em 0.3em;
 }
 
 .input-area {
 	grid-template-columns: auto;
 	gap: 2px 15px !important;
-	//margin: 24px 18px 18px 24px;
+	margin: 11px auto 1.5rem;
 
 	padding: 8px;
+	width: 95%;
 	max-width: 500px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 0px;
-	margin-bottom: 1.5rem;
 }
 
 .upper-area {
@@ -130,14 +166,119 @@ $editor-subheading-margin: 18px;
 .rowspan8 { grid-row-end: span 8; }
 // Grid end
 
+
+.hide-mobile {
+	display: none;
+}
+
+.hide-general {
+	display: none;
+}
+
+@media only screen and (min-width: $min-width-smartphone-wide) {
+	/* Villicht later noch an ander stea to bruken
+	section {
+		width: 70%;
+	}
+	*/
+
+	.logo-big {
+		margin: 20px auto 5px;
+		width: 375px;
+		height: 200px;
+		background-image: image-set(
+			url("/assets/img/logo/w375.png") 1x,
+			url("/assets/img/logo/w375@2x.png") 2x
+		);
+	}
+
+	.full-width-container {
+		padding: .8em 1.2em;
+	}
+}
+
+@media only screen and (min-width: $min-width-tablet-wide) {
+	.logo-big {
+		margin: 20px auto 5px;
+		width: 450px;
+		height: 240px;
+		background-image: image-set(
+			url("/assets/img/logo/w450.png") 1x,
+			url("/assets/img/logo/w450@2x.png") 2x
+		);
+	}
+}
+
 @media only screen and (min-width: $min-width-desktop) {
+	.top-section-row {
+		width: 70%;
+		max-width: 650px;
+		grid-template-columns: 220px 1fr;
+	}
+
+	.logo-small {
+		margin: 35px auto 5px;
+		width: 200px;
+		height: 107px;
+		background-image: image-set(
+			url("/assets/img/logo/h107.png") 1x,
+			url("/assets/img/logo/h107@2x.png") 2x
+		);
+	}
+
+	.hide-mobile {
+		display: inline-block;
+	}
+
 	.input-area {
-		max-width: 560px;
+		max-width: 580px;
+		width: 100%;
+	}
+
+	@keyframes move {
+		from {
+			transform: translateY(0px);
+		}
+		to {
+			transform: translateY(20px);
+		}
 	}
 }
 
 @media only screen and (min-width: $min-width-desktop-large) {
+	.top-section-row {
+		max-width: 830px;
+		grid-template-columns: 220px 1fr;
+	}
+
 	.input-area {
-		max-width: 700px;
+		max-width: 720px;
+	}
+}
+
+
+// For the logo the viewport height is important, too!!
+
+@media only screen and (min-width: $min-width-desktop) and (min-height: 1100px) {
+	.logo-big {
+		margin: 20px auto 5px;
+		width: 540px;
+		height: 288px;
+		background-image: image-set(
+			url("/assets/img/logo/w540.png") 1x,
+			url("/assets/img/logo/w540@2x.png") 2x
+		);
+	}
+}
+
+@media only screen and (min-width: $min-width-desktop-large) and (min-height: 1250px) {
+	.logo-big {
+		margin: 20px auto 5px;
+		width: 650px;
+		height: 347px;
+		background-image: image-set(
+			url("/assets/img/logo/w650.png") 1x,
+			url("/assets/img/logo/w650@2x.png") 2x
+		);
 	}
 }

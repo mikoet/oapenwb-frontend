@@ -3,18 +3,9 @@
 <block-ui>
 	<div id="content" *transloco="let t">
 		<dict-header></dict-header>
-
-		<section>
-			<div id="logo"></div>
-			<h4 class="hide-mobile">
-				{{ t('search.subtitle') }}
-			</h4>
-		</section>
-		
-		<main>
+		<div class="main">
 			<router-outlet></router-outlet>
-		</main>
-
+		</div>
 		<dict-footer></dict-footer>
 	</div>
 </block-ui>

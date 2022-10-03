@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { MatFormField } from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QP_TABLE_VIEW_DIRECTION, QP_TABLE_VIEW_PAIR, QP_TABLE_VIEW_TERM } from '@app/routes';
@@ -26,21 +27,36 @@ export class TableViewComponent implements OnInit, OnDestroy
 	@BlockUI()
 	blockUI: NgBlockUI;
 
-	private readonly isMobile : boolean;
-
 	@ViewChild('searchFormField')
 	searchFormField: MatFormField;
 
+	performedSearch = false;
+	hasDesktopWidth = false;
+
 	destroy$ = new ReplaySubject(1);
+
+	private readonly isMobile : boolean;
 
 	constructor(
 		public search: SearchService,
 		private deviceService: DeviceDetectorService,
+		@Inject(PLATFORM_ID) private platformId: any,
 		private transloco: TranslocoService,
 		private route: ActivatedRoute,
 		private router: Router,
 	) {
 		this.isMobile = this.deviceService.isMobile();
+		if (isPlatformBrowser(platformId)) {
+			this.hasDesktopWidth = window.innerWidth >= 1024;
+		} else {
+			// Hypothetically
+			this.hasDesktopWidth = true;
+		}
+	}
+
+	@HostListener('window:resize', ['$event'])
+	onResize(event) {
+		this.hasDesktopWidth = event.target.innerWidth >= 1024;
 	}
 
 	ngOnInit(): void {
@@ -90,10 +106,11 @@ export class TableViewComponent implements OnInit, OnDestroy
 			takeUntil(this.destroy$),
 		).subscribe(
 			response => {
+				this.performedSearch = true;
 				this.blockUI.stop();
 			},
-			// TODO this should also stop the blocking and give an error
 			error => {
+				// TODO Show an error text in this case
 				console.error('Error performing search request', error);
 				this.blockUI.stop();
 			}

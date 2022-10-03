@@ -1,34 +1,46 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
-<div class="container" *transloco="let t">
-	<div class="grid-container input-area">
-		<div class="grid-container upper-area">
-			<app-lang-pair-select></app-lang-pair-select>
-			<app-direction-select></app-direction-select>
+<main *transloco="let t" (window:resize)="onResize($event)">
+	<div class="top-section" [class.top-section-row]="performedSearch && hasDesktopWidth" [class.top-section-column]="!performedSearch || !hasDesktopWidth">
+
+		<div class="logo-section">
+			<div [className]="performedSearch && hasDesktopWidth ? 'logo-small' : 'logo-big'"></div>
+			<h4 class="hide-mobile" *ngIf="!performedSearch">
+				{{ t('search.subtitle') }}
+			</h4>
 		</div>
 
-		<div class="searchArea">
-			<mat-form-field #searchFormField class="searchField" appearance="outline" color="primary">
-				<mat-label>{{ t('search.question') }}</mat-label>
-				<input #searchInput id="searchText" name="search" matInput type="search" autocomplete="off"
-					[(ngModel)]="search.term" (keyup.enter)="executeSearch(searchInput)" /><!-- autofocus -->
-				<button mat-button *ngIf="!!search.term" matSuffix mat-icon-button aria-label="TODO Clear" (click)="clearSearch()">
-					<mat-icon>close</mat-icon>
-				</button>
-				<button mat-button matSuffix mat-icon-button aria-label="TODO Search" (click)="executeSearch(searchInput)">
-					<mat-icon>search</mat-icon>
-				</button>
-			</mat-form-field>
+		<div class="grid-container input-area">
+			<div class="grid-container upper-area">
+				<app-lang-pair-select></app-lang-pair-select>
+				<app-direction-select></app-direction-select>
+			</div>
+	
+			<div class="searchArea">
+				<mat-form-field #searchFormField class="searchField" appearance="outline" color="primary">
+					<mat-label>{{ t('search.question') }}</mat-label>
+					<input #searchInput id="searchText" name="search" matInput type="search" autocomplete="off"
+						[(ngModel)]="search.term" (keyup.enter)="executeSearch(searchInput)" /><!-- autofocus -->
+					<button mat-button *ngIf="!!search.term" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+						<mat-icon>close</mat-icon>
+					</button>
+					<button mat-button matSuffix mat-icon-button aria-label="Search" (click)="executeSearch(searchInput)">
+						<mat-icon>search</mat-icon>
+					</button>
+				</mat-form-field>
+			</div>
+	
+			<div id="search-special-letters">
+				<a (click)="addTextAtCaret('searchText','å'); false" href="#">&nbsp;å&nbsp;</a>
+				<a (click)="addTextAtCaret('searchText','ä'); false" href="#">&nbsp;ä&nbsp;</a>
+				<a (click)="addTextAtCaret('searchText','ö'); false" href="#">&nbsp;ö&nbsp;</a>
+				<a (click)="addTextAtCaret('searchText','ü'); false" href="#">&nbsp;ü&nbsp;</a>
+				<a (click)="addTextAtCaret('searchText','ß'); false" href="#">&nbsp;ß&nbsp;</a>
+			</div>
 		</div>
 
-		<div id="search-special-letters">
-			<a (click)="addTextAtCaret('searchText','å'); false" href="#">&nbsp;å&nbsp;</a>
-			<a (click)="addTextAtCaret('searchText','ä'); false" href="#">&nbsp;ä&nbsp;</a>
-			<a (click)="addTextAtCaret('searchText','ö'); false" href="#">&nbsp;ö&nbsp;</a>
-			<a (click)="addTextAtCaret('searchText','ü'); false" href="#">&nbsp;ü&nbsp;</a>
-			<a (click)="addTextAtCaret('searchText','ß'); false" href="#">&nbsp;ß&nbsp;</a>
-		</div>
 	</div>
-
-	<app-result-table></app-result-table>
-</div>
+	<div class="full-width-container">	
+		<dict-result-table></dict-result-table>
+	</div>
+</main>
