@@ -36,6 +36,7 @@
 		"express": "^4.15.2",
 		"ng-block-ui": "^3.0.2",
 		"ngx-device-detector": "^3.0.0",
+		"ngx-markdown": "^13.1.0",
 		"ngx-mat-select-search": "^4.0.2",
 		"rxjs": "~6.5.4",
 		"tslib": "^2.0.0",
