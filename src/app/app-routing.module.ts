@@ -6,8 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './dict/main/main.component';
 import { TableViewComponent } from './dict/table-view/table-view.component';
 
-import { ROUTE_DICT, ROUTE_TABLE_VIEW, ROUTE_SIGN_ON, ROUTE_ADMIN } from './routes';
+import { ROUTE_DICT, ROUTE_TABLE_VIEW, ROUTE_SIGN_ON, ROUTE_ADMIN, ROUTE_DUTIES, ROUTE_IMPRINT, ROUTE_TERMS_OF_USE, ROUTE_DATA_PRIVACY } from './routes';
 import { AuthGuard } from '@app/shared/_helpers/auth.guard';
+import { ImprintComponent } from './dict/duty/imprint/imprint.component';
 
 const routes: Routes = [
 	/*{
@@ -25,6 +26,14 @@ const routes: Routes = [
 					{ path: ROUTE_TABLE_VIEW.path, component: TableViewComponent },
 					{ path: ROUTE_TABLE_VIEW.path + '/:langPair', component: TableViewComponent },
 					/*{ path: 'detail', component: DetailViewComponent }*/
+					{
+						path: ROUTE_DUTIES.path,
+						children: [
+							/*{ path: ROUTE_DATA_PRIVACY.path, component: todo },
+							{ path: ROUTE_TERMS_OF_USE.path, component: todo },*/
+							{ path: ROUTE_IMPRINT.path, component: ImprintComponent },
+						]
+					},
 				]
 			},
 			{

@@ -32,7 +32,7 @@ import { DirectionSelectComponent } from './dict/table-view/direction-select/dir
 import { FooterComponent } from './dict/footer/footer.component';
 import { HeaderComponent } from './dict/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MarkdownModule } from 'ngx-markdown';
+import { ImprintComponent } from './dict/duty/imprint/imprint.component';
 
 // Dit is düdelik beater as en eigen material.module.ts to bruken:
 // Bruukt eyn a.b. lazy loading, so kan eyn in elk module dat loaden wat eyn dår ouk
@@ -57,7 +57,8 @@ const material = [
     LangPairSelectComponent,
     DirectionSelectComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    ImprintComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -69,7 +70,6 @@ const material = [
 	BrowserAnimationsModule,
 	FontAwesomeModule,
 	FormsModule,
-	MarkdownModule.forRoot(),
 	material,
 	HttpClientModule,
 	TranslocoRootModule,
