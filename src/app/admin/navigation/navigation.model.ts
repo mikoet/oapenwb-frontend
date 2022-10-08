@@ -1,6 +1,8 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
+import { RouteDesc } from "@app/shared/_helpers/route-desc";
+
 /**
  * The code of this file was originally taken from the Angular documentation project (aio)
  * and then modified to needs of this dictionary. Original file:
@@ -24,7 +26,7 @@ export interface NavigationNode
 	// Roles that are allowed to access the node (if a user has no access to a node it cannot access any of its children)
 	roles?: string[];
 
-	url?: string;
+	targetRoute?: RouteDesc;
 	tooltip?: string;
 	hidden?: boolean;
 	children?: NavigationNode[];
@@ -43,7 +45,7 @@ export interface NavigationViews
  */
 export interface CurrentNode
 {
-	url: string;
+	targetRoute: RouteDesc;
 	view: string;
 	nodes: NavigationNode[];
 }

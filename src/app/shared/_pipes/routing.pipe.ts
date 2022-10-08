@@ -9,6 +9,8 @@ import { RouteDesc } from '@app/shared/_helpers/route-desc';
 /**
  * If the whole route string would be '/nds/admin/ortho',
  * then this function would return 'admin/ortho'.
+ * 
+ * TODO It was good if the usages of this function were to be replaced with a better approach.
  */
 export function getRouteStrWithoutLang(desc: RouteDesc): string
 {

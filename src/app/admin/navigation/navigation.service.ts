@@ -7,7 +7,6 @@ import { Router, NavigationEnd } from '@angular/router';
 import { combineLatest, ConnectableObservable, Observable, of, ReplaySubject } from 'rxjs';
 import { map, publishReplay } from 'rxjs/operators';
 
-import { getRouteStrWithoutLang } from '@app/shared/_pipes/routing.pipe';
 import {
 	ROUTE_ADMIN_ORTHO,
 	ROUTE_ADMIN_LANG,
@@ -46,8 +45,9 @@ export class NavigationService {
 
 	/* Taken from LocationService */
 	private urlSubject = new ReplaySubject<string>(1);
-	currentUrl = this.urlSubject
-		.pipe(map(url => this.stripSlashes(url)));
+	currentUrl = this.urlSubject.pipe(
+		map(url => this.stripSlashes(url)),
+	);
 
 	currentPath = this.currentUrl.pipe(
 		map(url => {
@@ -112,22 +112,29 @@ export class NavigationService {
 	private getCurrentNodes(navigationViews: Observable<NavigationViews>): Observable<CurrentNodes> {
 		const currentNodes = combineLatest([
 			navigationViews.pipe(
-				map(views => {
-					let result = this.computeUrlToNavNodesMap(views);
-					return result;
-				})),
+					map(views => {
+						let result = this.computeUrlToNavNodesMap(views);
+						return result;
+					}),
+				),
 			this.currentPath,
-		])
-			.pipe(
-				map((result) => ({ navMap: result[0], url: result[1] })),
-				map((result) => {
-					const matchSpecialUrls = /^api/.exec(result.url);
-					if (matchSpecialUrls) {
-						result.url = matchSpecialUrls[0];
-					}
-					return result.navMap.get(result.url) || { '': { view: '', url: result.url, nodes: [] } };
-				}),
-				publishReplay(1));
+		]).pipe(
+			map(([navMap, url]: [Map<string, CurrentNodes>, string]) => ({ navMap: navMap, url: url })),
+			map((result: { navMap: Map<string, CurrentNodes>, url: string }) => {
+				/*
+				const matchSpecialUrls = /^api/.exec(result.url);
+				if (matchSpecialUrls) {
+					result.url = matchSpecialUrls[0];
+				}
+				 */
+				let url = result.url;
+				const lastIndexOfSlash = url.lastIndexOf('/');
+				if (lastIndexOfSlash !== -1) {
+					url = url.substring(lastIndexOfSlash + 1);
+				}
+				return result.navMap.get(url) || { '': { view: '', targetRoute: null, nodes: [] } };
+			}),
+			publishReplay(1));
 		(currentNodes as ConnectableObservable<CurrentNodes>).connect();
 		return currentNodes;
 	}
@@ -138,7 +145,7 @@ export class NavigationService {
 	 *
 	 * @param navigation - A collection of navigation nodes that are to be mapped
 	 */
-	private computeUrlToNavNodesMap(navigation: NavigationViews) {
+	private computeUrlToNavNodesMap(navigation: NavigationViews): Map<string, CurrentNodes> {
 		const navMap = new Map<string, CurrentNodes>();
 		Object.keys(navigation)
 			.forEach(view => navigation[view]
@@ -168,18 +175,16 @@ export class NavigationService {
 		view: string, navMap: Map<string, CurrentNodes>,
 		node: NavigationNode, ancestors: NavigationNode[] = []) {
 		const nodes = [node, ...ancestors];
-		const url = node.url;
+		const targetRoute = node.targetRoute;
 		//this.ensureHasTooltip(node);
 
 		// only map to this node if it has a url
-		if (url) {
-			// Strip off trailing slashes from nodes in the navMap - they are not relevant to matching
-			const cleanedUrl = url.replace(/\/$/, '');
-			if (!navMap.has(cleanedUrl)) {
-				navMap.set(cleanedUrl, {});
+		if (targetRoute) {
+			if (!navMap.has(targetRoute.path)) {
+				navMap.set(targetRoute.path, {});
 			}
-			const navMapItem = navMap.get(cleanedUrl)!;
-			navMapItem[view] = { url, view, nodes };
+			const navMapItem = navMap.get(targetRoute.path)!;
+			navMapItem[view] = { targetRoute, view, nodes };
 		}
 
 		if (node.children) {
@@ -197,52 +202,52 @@ let navigationNodes: NavigationViews =
 			tooltip: "admin.baseData:tooltip",
 			children: [
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_ORTHO),
+					targetRoute: ROUTE_ADMIN_ORTHO,
 					uitID: "admin.orthographies",
 					tooltip: "admin.orthographies:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_LANG),
+					targetRoute: ROUTE_ADMIN_LANG,
 					uitID: "admin.languages",
 					tooltip: "admin.languages:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_LANGPAIR),
+					targetRoute: ROUTE_ADMIN_LANGPAIR,
 					uitID: "admin.langPairs",
 					tooltip: "admin.langPairs:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_LANGORTHOMAPPING),
+					targetRoute: ROUTE_ADMIN_LANGORTHOMAPPING,
 					uitID: "admin.loMappings",
 					tooltip: "admin.loMappings:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_LEXEMETYPE),
+					targetRoute: ROUTE_ADMIN_LEXEMETYPE,
 					uitID: "admin.lexemeTypes",
 					tooltip: "admin.lexemeTypes:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_LEXEMEFORMTYPE),
+					targetRoute: ROUTE_ADMIN_LEXEMEFORMTYPE,
 					uitID: "admin.lexemeFormTypes",
 					tooltip: "admin.lexemeFormTypes:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_TYPELANGUAGECONFIG),
+					targetRoute: ROUTE_ADMIN_TYPELANGUAGECONFIG,
 					uitID: "admin.typeLangConfigs",
 					tooltip: "admin.typeLangConfigs:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_LEMMATEMPLATE),
+					targetRoute: ROUTE_ADMIN_LEMMATEMPLATE,
 					uitID: "admin.lemmaTemplates",
 					tooltip: "admin.lemmaTemplates:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_CATEGORY),
+					targetRoute: ROUTE_ADMIN_CATEGORY,
 					uitID: "admin.categories",
 					tooltip: "admin.categories:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_UNITLEVEL),
+					targetRoute: ROUTE_ADMIN_UNITLEVEL,
 					uitID: "admin.unitLevels",
 					tooltip: "admin.unitLevels:tp",
 				},
@@ -254,7 +259,7 @@ let navigationNodes: NavigationViews =
 			tooltip: "admin.contents:tp",
 			children: [
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_LEXEME),
+					targetRoute: ROUTE_ADMIN_LEXEME,
 					uitID: "admin.lexemes",
 					tooltip: "admin.lexemes:tp",
 				},
@@ -273,22 +278,22 @@ let navigationNodes: NavigationViews =
 			tooltip: "admin.ui:tp",
 			children: [
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_UILANG),
+					targetRoute: ROUTE_ADMIN_UILANG,
 					uitID: "admin.uiLanguages",
 					tooltip: "admin.uiLanguages:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_UISCOPE),
+					targetRoute: ROUTE_ADMIN_UISCOPE,
 					uitID: "admin.uiScopes",
 					tooltip: "admin.uiScopes:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_UITRANSLATION),
+					targetRoute: ROUTE_ADMIN_UITRANSLATION,
 					uitID: "admin.uiTranslations",
 					tooltip: "admin.uiTranslations:tp",
 				},
 				{
-					url: getRouteStrWithoutLang(ROUTE_ADMIN_UIRESULTCATEGORY),
+					targetRoute: ROUTE_ADMIN_UIRESULTCATEGORY,
 					uitID: "admin.uiResultCategories",
 					tooltip: "admin.uiResultCategories:tp",
 				},

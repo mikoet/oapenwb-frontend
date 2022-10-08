@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, Input, OnChanges } from '@angular/core';
 import { NavigationNode } from '@app/admin/navigation/navigation.model';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
 	selector: 'app-nav-item',
@@ -19,6 +20,10 @@ export class NavItemComponent implements OnChanges {
 	isSelected = false;
 	classes: { [index: string]: boolean };
 	nodeChildren: NavigationNode[];
+
+	constructor(
+		public readonly transloco: TranslocoService,
+	) { }
 
 	ngOnChanges() {
 		this.nodeChildren = this.node && this.node.children ? this.node.children.filter(n => !n.hidden) : [];
