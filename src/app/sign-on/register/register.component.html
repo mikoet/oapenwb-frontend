@@ -3,7 +3,7 @@
 <simple-card-form>
 	<h2>Registrering</h2>
 	<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="on">
-		<p>Du kanst dat wöördebook aktiv bruken un as byspil wöörde vöärslån, audiobyspillen houglåden or med ander brukerslüde disketeren.</p>
+		<!--<p>Du kanst dat wöördebook aktiv bruken un as byspil wöörde vöärslån, audiobyspillen houglåden or med ander brukerslüde disketeren.</p>-->
 		<mat-form-field class="full-width margin-bottom">
 			<input matInput [formControl]="form.get('firstname')" placeholder="Vörname">
 			<mat-error *ngIf="form.get('firstname').hasError('required')">

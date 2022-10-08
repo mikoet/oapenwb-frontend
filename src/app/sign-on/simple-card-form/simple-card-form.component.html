@@ -2,7 +2,10 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <mat-card class="simple-card" *transloco="let t; read: 'son'">
 	<header>
-		{{ t('title') }}
+		<a [routerLink]="'dict' | route: transloco.getActiveLang()">
+			<img src="/assets/img/logo/h40.png.png" srcset="/assets/img/logo/h40@2x.png 2x" title="Logo ULE.DK" alt="Logo ULE.DK" />
+		</a>
+		<span>{{ t('title') }}</span>
 	</header>
 	<section>
 		<ng-content></ng-content>
@@ -11,9 +14,9 @@
 <footer *transloco="let t; read: 'son'">
 	<nav>
 		<ul>
-			<li><a [routerLink]="'data-privacy' | route">{{ t('dataPrivacy') }}</a></li>
-			<li><a [routerLink]="'terms-of-use' | route">{{ t('termsOfUse') }}</a></li>
-			<li><a [routerLink]="'imprint' | route">{{ t('imprint') }}</a></li>
+			<li><a [routerLink]="'dataPrivacy' | route: transloco.getActiveLang()">{{ t('dataPrivacy') }}</a></li>
+			<li><a [routerLink]="'termsOfUse' | route: transloco.getActiveLang()">{{ t('termsOfUse') }}</a></li>
+			<li><a [routerLink]="'imprint' | route: transloco.getActiveLang()">{{ t('imprint') }}</a></li>
 		</ul>
 	</nav>
 </footer>

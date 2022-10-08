@@ -5,8 +5,16 @@ header {
 	border-bottom: 1px solid darkgray;
 	color: darkgray;
 	font-size: smaller;
-	padding: 16px;
+	padding: 14px 14px 6px;
 	text-align: center;
+}
+
+header img {
+	vertical-align: middle;
+}
+
+header span {
+	margin-left: 14px;
 }
 
 section {
