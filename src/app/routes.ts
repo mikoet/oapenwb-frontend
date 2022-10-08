@@ -39,7 +39,7 @@ export const ROUTE_ADMIN_UITRANSLATION: RouteDesc = new RouteDesc({ id: 'uitrans
 export const ROUTE_ADMIN_UIRESULTCATEGORY: RouteDesc = new RouteDesc({ id: 'uiresultcategory', path: 'ui-result-categories', parent: ROUTE_ADMIN }, allRoutesMap);
 // Admin end
 
-export const ROUTE_DUTIES: RouteDesc = new RouteDesc({ id: 'duties', path: 'plichtangåven' }, allRoutesMap);
-export const ROUTE_DATA_PRIVACY: RouteDesc = new RouteDesc({ id: 'data-privacy', path: 'datenskuul', parent: ROUTE_DUTIES }, allRoutesMap);
-export const ROUTE_TERMS_OF_USE: RouteDesc = new RouteDesc({ id: 'terms-of-use', path: 'gebruuksbedingings', parent: ROUTE_DUTIES }, allRoutesMap); // Nutzungsbedingungen
+export const ROUTE_DUTIES: RouteDesc = new RouteDesc({ id: 'duties', path: 'angåven' }, allRoutesMap);
+export const ROUTE_DATA_PRIVACY: RouteDesc = new RouteDesc({ id: 'dataPrivacy', path: 'datenskuul', parent: ROUTE_DUTIES }, allRoutesMap);
+export const ROUTE_TERMS_OF_USE: RouteDesc = new RouteDesc({ id: 'termsOfUse', path: 'gebruuksbedingings', parent: ROUTE_DUTIES }, allRoutesMap); // Nutzungsbedingungen
 export const ROUTE_IMPRINT: RouteDesc = new RouteDesc({ id: 'imprint', path: 'impressum', parent: ROUTE_DUTIES }, allRoutesMap);
