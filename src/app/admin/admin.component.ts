@@ -103,6 +103,6 @@ export class AdminComponent implements OnInit, OnDestroy
 		// Redirect to login page
 		let lang = this.transloco.getActiveLang();
 		let url = `/${lang}/` + getRouteStrWithoutLang(ROUTE_LOGIN);
-		this.router.navigate([url], { queryParams: { returnUrl: this.router.routerState.snapshot.url } });
+		this.router.navigate([url], { queryParams: { returnURL: this.router.routerState.snapshot.url } });
 	}
 }
