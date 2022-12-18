@@ -3,23 +3,6 @@
 @import "theme/admin-variables";
 
 /** Grid classes */
-.grid-container {
-	display: grid;
-	/*grid-template-columns: auto auto auto;
-	background-color: #2196F3;
-	padding: 10px;*/
-	gap: 7px 15px;
-}
-
-.grid-centered {
-	justify-self: center;
-	align-self: center;
-}
-
-.content-bottomed {
-	align-self: end;
-}
-
 .lexeme-tab {
 	grid-template-columns: minmax(170px, 240px) minmax(170px, 240px) minmax(170px, 240px) minmax(0px, 240px) 1fr;
 	margin: $editor-subheading-margin;
@@ -29,39 +12,6 @@
 	grid-template-columns: auto 120px 120px;
 	margin-top: 12px;
 }
-
-.center-vertical {
-	align-self: center;
-}
-
-.full-width {
-	width: 100%
-}
-
-.col1 { grid-column-start: 1; }
-.col2 { grid-column-start: 2; }
-.col3 { grid-column-start: 3; }
-.col4 { grid-column-start: 4; }
-
-.colspan2 { grid-column-end: span 2; }
-.colspan3 { grid-column-end: span 3; }
-.colspan4 { grid-column-end: span 4; }
-
-.row1 { grid-row-start: 1; }
-.row2 { grid-row-start: 2; }
-.row3 { grid-row-start: 3; }
-.row4 { grid-row-start: 4; }
-.row5 { grid-row-start: 5; }
-.row6 { grid-row-start: 6; }
-.row7 { grid-row-start: 7; }
-.row8 { grid-row-start: 8; }
-.row9 { grid-row-start: 9; }
-.row10 { grid-row-start: 10; }
-
-.rowspan2 { grid-row-end: span 2; }
-.rowspan3 { grid-row-end: span 3; }
-.rowspan4 { grid-row-end: span 4; }
-.rowspan8 { grid-row-end: span 8; }
 // Grid end
 
 // mat-option of mat-select begin
