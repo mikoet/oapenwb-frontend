@@ -1,0 +1,54 @@
+// SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+// SPDX-License-Identifier: AGPL-3.0-only
+
+@import "../../../theme/dict-variables.scss";
+
+.container {
+	display: flex;
+	justify-content: center;
+}
+
+.logo {
+	margin: 35px auto 20px;
+	width: 300px;
+	height: 160px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-image: image-set(
+		url("/assets/img/logo/w300.png") 1x,
+		url("/assets/img/logo/w300@2x.png") 2x
+	);
+}
+
+.grid-box {
+	width: 80%;
+	grid-template-columns: auto auto;
+}
+
+.icon {
+	font-size: 44pt;
+}
+
+p {
+	font-size: 13pt;
+}
+
+@media only screen and (min-width: $min-width-tablet-wide) {
+	.logo {
+		margin: 50px auto 35px;
+		width: 450px;
+		height: 240px;
+		background-image: image-set(
+			url("/assets/img/logo/w450.png") 1x,
+			url("/assets/img/logo/w450@2x.png") 2x
+		);
+	}
+
+	.grid-box {
+		width: 550px;
+	}
+
+	.icon {
+		font-size: 52pt;
+	}
+}

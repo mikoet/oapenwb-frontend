@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './dict/main/main.component';
 import { TableViewComponent } from './dict/table-view/table-view.component';
 
-import { ROUTE_DICT, ROUTE_TABLE_VIEW, ROUTE_SIGN_ON, ROUTE_ADMIN, ROUTE_DUTIES, ROUTE_IMPRINT, ROUTE_TERMS_OF_USE, ROUTE_DATA_PRIVACY } from './routes';
+import { ROUTE_DICT, ROUTE_TABLE_VIEW, ROUTE_SIGN_ON, ROUTE_ADMIN, ROUTE_DUTIES, ROUTE_IMPRINT, ROUTE_TERMS_OF_USE, ROUTE_DATA_PRIVACY, ROUTE_MAINTENANCE } from './routes';
 import { AuthGuard } from '@app/shared/_helpers/auth.guard';
 import { ImprintComponent } from './dict/duty/imprint/imprint.component';
 
@@ -15,6 +15,11 @@ const routes: Routes = [
 		path: '',
 		component: StartComponent
 	},*/
+	{
+		path: '',
+		redirectTo: '/nds',
+		pathMatch: 'full',
+	},
 	{
 		path: ':lang',
 		children: [
@@ -35,6 +40,10 @@ const routes: Routes = [
 						]
 					},
 				]
+			},
+			{
+				path: ROUTE_MAINTENANCE.path,
+				loadChildren: () => import('./maintenance/maintenance.module').then(m => m.MaintenanceModule)
 			},
 			{
 				// Lazy load the SignOn module

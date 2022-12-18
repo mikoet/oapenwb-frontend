@@ -18,6 +18,10 @@ export const ROUTE_LOGIN: RouteDesc = new RouteDesc({ id: 'login', path: 'inlogg
 export const ROUTE_REGISTER: RouteDesc = new RouteDesc({ id: 'register', path: 'registreren', parent: ROUTE_SIGN_ON }, allRoutesMap);
 export const ROUTE_FORGOT_PW: RouteDesc = new RouteDesc({ id: 'forgot-password', path: 'paswoord-vorgeyten', parent: ROUTE_SIGN_ON }, allRoutesMap);
 
+// Maintenance begin
+export const ROUTE_MAINTENANCE: RouteDesc = new RouteDesc({ id: 'maintenance', path: 'upkeep' }, allRoutesMap);
+// Maintenance end
+
 export const ROUTE_ADMIN: RouteDesc = new RouteDesc({ id: 'admin', path: 'admin' }, allRoutesMap);
 // Admin begin
 // TODO think about sourcing these admin routes out into a seperate file for admin routes in admin directory/module

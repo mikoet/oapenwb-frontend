@@ -11,9 +11,11 @@ import {
 	translocoConfig,
 	TranslocoModule,
 } from '@ngneat/transloco';
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable, NgModule, NgZone } from '@angular/core';
 import { environment } from '@environments/environment';
 import { EMPTY } from 'rxjs';
+import { Router } from '@angular/router';
+import { ROUTE_MAINTENANCE } from './routes';
 
 const NO_L10N_AVAILABLE: string = 'no_l10n'
 
@@ -23,11 +25,17 @@ const NO_L10N_AVAILABLE: string = 'no_l10n'
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader
 {
-	constructor(private http: HttpClient) { }
+	constructor(
+		private http: HttpClient,
+		private router: Router,
+		private zone: NgZone,
+	) { }
 
 	getTranslation(lang: string) {
 		if (lang !== null && lang !== undefined && lang.endsWith(NO_L10N_AVAILABLE)) {
-			// What was this for?
+			this.zone.run(async () => {
+				await this.router.navigateByUrl(`/${lang}/${ROUTE_MAINTENANCE.path}`);
+			});
 			return EMPTY;
 		}
 		const path = `${environment.apiUrl}/l10n/${lang}`;
