@@ -16,8 +16,8 @@ import { environment } from '@environments/environment';
 import { EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
 import { ROUTE_MAINTENANCE } from './routes';
+import { DEFAULT_UI_LOCALE } from './_config/config';
 
-const DEFAULT_LANG: string = 'nds'
 const NO_L10N_AVAILABLE: string = 'no_l10n'
 
 /**
@@ -35,7 +35,7 @@ export class TranslocoHttpLoader implements TranslocoLoader
 	getTranslation(lang: string) {
 		if (lang !== null && lang !== undefined && lang.endsWith(NO_L10N_AVAILABLE)) {
 			this.zone.run(async () => {
-				await this.router.navigateByUrl(`/${DEFAULT_LANG}/${ROUTE_MAINTENANCE.path}`);
+				await this.router.navigateByUrl(`/${DEFAULT_UI_LOCALE}/${ROUTE_MAINTENANCE.path}`);
 			});
 			return EMPTY;
 		}
@@ -58,7 +58,7 @@ export class DictFallbackStrategy implements TranslocoFallbackStrategy
 			provide: TRANSLOCO_CONFIG,
 			useValue: translocoConfig({
 				availableLangs: ['nds', 'de', 'en'],
-				defaultLang: 'nds',
+				defaultLang: DEFAULT_UI_LOCALE,
 				reRenderOnLangChange: true,
 				prodMode: environment.production,
 			})

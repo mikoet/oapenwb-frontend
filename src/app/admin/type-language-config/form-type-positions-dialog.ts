@@ -8,6 +8,7 @@ import { DataService, Entities } from '../_services/data.service';
 import { Subscription } from 'rxjs';
 import { KeyMap } from '@app/util/hashmap';
 import { TranslocoService, TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { DEFAULT_UI_LOCALE } from '@app/_config/config';
 
 export class DialogData
 {
@@ -115,7 +116,7 @@ export class FormTypePositionsDialog implements OnInit, OnDestroy
 	{
 		this.available = Object.assign([], this.data.store.lexemeFormTypes.get(this.lexemeTypeID)?.values);
 		this.placed = [];
-		this.transloco.setActiveLang('nds');
+		this.transloco.setActiveLang(DEFAULT_UI_LOCALE);
 	}
 
 	getFormTypeText(formTypeID: number) : string

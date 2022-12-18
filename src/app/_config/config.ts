@@ -1,12 +1,4 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
-h1 {
-	font-size: 30px;
-}
-
-.textual-content {
-	width: 70%;
-	margin: 2rem auto 0;
-    max-width: 800px;
-}
+export const DEFAULT_UI_LOCALE: string = 'nds';

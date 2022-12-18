@@ -29,8 +29,8 @@ export class AuthGuard implements CanActivate
 		}
 
 		// not logged in so redirect to login page with the return url
-		let lang = this.transloco.getActiveLang();
-		let url = `/${lang}/` + getRouteStrWithoutLang(ROUTE_LOGIN);
+		const lang = this.transloco.getActiveLang();
+		const url = `/${lang}/` + getRouteStrWithoutLang(ROUTE_LOGIN);
 		this.router.navigate([url], { queryParams: { returnURL: state.url } });
 		return false;
 	}
