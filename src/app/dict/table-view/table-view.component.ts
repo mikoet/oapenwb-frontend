@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { isPlatformBrowser } from '@angular/common';
-import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, HostListener, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { MatFormField } from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QP_TABLE_VIEW_DIRECTION, QP_TABLE_VIEW_PAIR, QP_TABLE_VIEW_TERM } from '@app/routes';
@@ -44,6 +44,7 @@ export class TableViewComponent implements OnInit, OnDestroy
 		private transloco: TranslocoService,
 		private route: ActivatedRoute,
 		private router: Router,
+		private zone: NgZone,
 	) {
 		this.isMobile = this.deviceService.isMobile();
 		if (isPlatformBrowser(platformId)) {
@@ -51,6 +52,11 @@ export class TableViewComponent implements OnInit, OnDestroy
 		} else {
 			// Hypothetically
 			this.hasDesktopWidth = true;
+		}
+
+		if (this.search.term?.trim() !== '') {
+			this.performedSearch = true;
+			this.adaptNavigation(true);
 		}
 	}
 
@@ -94,7 +100,8 @@ export class TableViewComponent implements OnInit, OnDestroy
 	}
 
 	clearSearch(): void {
-		this.search.term = '';
+		//this.search.term = '';
+		this.search.clearSearch();
 	}
 
 	executeSearch(element?: HTMLElement): void
@@ -116,19 +123,26 @@ export class TableViewComponent implements OnInit, OnDestroy
 			}
 		);
 
-		this.router.navigate([], {
-			relativeTo: this.route,
-			queryParams: {
-				pår: this.search.pair,
-				richt: this.search.direction,
-				term: this.search.term,
-			},
-		});
+		this.adaptNavigation();
 
 		if (!!element && this.isMobile) {
 			// Remove the focus on mobile devices so they close the onscreen keyboard
 			this.removeFocus(element);
 		}
+	}
+
+	private adaptNavigation(replaceUrl?: boolean): void {
+		this.zone.run(async () => {
+			await this.router.navigate([], {
+				relativeTo: this.route,
+				replaceUrl,
+				queryParams: {
+					pår: this.search.pair,
+					richt: this.search.direction,
+					term: this.search.term,
+				},
+			});
+		});
 	}
 
 	private removeFocus(element: HTMLElement) : void

@@ -67,4 +67,9 @@ export class SearchService
 			// TODO error handling?
 		);
 	}
+
+	clearSearch(): void {
+		this.term = '';
+		this._searchResult.next(null);
+	}
 }
