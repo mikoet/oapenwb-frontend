@@ -27,8 +27,8 @@ export class AppComponent implements OnInit, OnDestroy
 		/*public configService: ConfigService,*/
 		@Inject(DOCUMENT) private document: Document,
 		private router: Router,
-		public transloco: TranslocoService)
-	{
+		public transloco: TranslocoService,
+	) {
 	}
 
 	ngOnInit(): void
@@ -44,7 +44,9 @@ export class AppComponent implements OnInit, OnDestroy
 					// set a different language
 					// Todo Fixme The array should be taken from BaseConfig and the default
 					// language from the browser for human users
-					let uiLanguages: string[] = ['de', 'nl', 'en', 'nds', 'nds-SASS'];
+
+					// TODO Should this be taken from BaseConfig?
+					const uiLanguages = this.transloco.getAvailableLangs() as string[];
 					if (uiLanguages.indexOf(parts[1]) == -1) {
 						parts[1] = DEFAULT_UI_LOCALE;
 						url = parts.join('/');

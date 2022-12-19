@@ -10,6 +10,7 @@ import { Direction, SearchRequest, SearchResult } from '@app/_models/dict-api';
 import { searchResultsApiPath } from '@app/_models/dict-api-paths';
 import { Response } from '@app/_models/response';
 
+// TODO This should be received from BaseConfig or similar
 export const LANG_PAIRS = [
 	'nds-de',
 	'nds-en',

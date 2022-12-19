@@ -53,7 +53,7 @@ export class AccountService {
 				email: email,
 				token: token,
 				password: password,
-				//locale: 'nds'
+				//locale: `${DEFAULT_UI_LOCALE}`
 			}).pipe(
 				/*share(),*/
 				catchError(this.handleError),

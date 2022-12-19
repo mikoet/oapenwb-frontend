@@ -11,6 +11,7 @@ import { AccountService } from '@app/shared/_services/account.service';
 
 import { isMessage } from '@app/_models/message';
 import { isUser } from '@app/_models/user';
+import { TranslocoService } from '@ngneat/transloco';
 
 // custom validator to check that two fields match
 /*
@@ -61,8 +62,9 @@ export class RegisterComponent implements OnInit {
 	constructor(private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
-		private accountService: AccountService)
-	{
+		private accountService: AccountService,
+		private transloco: TranslocoService,
+	) {
 		// redirect to home if already logged in
 		if (this.accountService.currentUserValue) {
 			this.router.navigate(['/']);
@@ -95,26 +97,33 @@ export class RegisterComponent implements OnInit {
 
 	onSubmit(): void
 	{
-		this.accountService.register(this.f.firstname.value, this.f.lastname.value, this.f.username.value,
-				this.f.email.value, this.f.token.value, this.f.password.value, 'nds') // TODO Take the correct locale (the one that's currently used, or ask for the preferred one)
-			.pipe(first())
-			.subscribe({
-				next: result => {
-					if (isUser(result)) {
-						// Registration was OK
-						this.router.navigate([this.returnURL]);
-					}
-				},
-				error: error => {
-					if (isMessage(error)) {
-						this.errorMsg = error.message;
-					} else if (typeof error === 'string') {
-						this.errorMsg = error;
-					} else {
-						this.errorMsg = 'Dat inloggen weer nich möäglik.';
-					}
-					//this.loading = false;
+		this.accountService.register(
+			this.f.firstname.value,
+			this.f.lastname.value,
+			this.f.username.value,
+			this.f.email.value,
+			this.f.token.value,
+			this.f.password.value,
+			this.transloco.getActiveLang()	// TODO Ask for the preferred locale?
+		) .pipe(
+			first()
+		).subscribe({
+			next: result => {
+				if (isUser(result)) {
+					// Registration was OK
+					this.router.navigate([this.returnURL]);
 				}
-			});
+			},
+			error: error => {
+				if (isMessage(error)) {
+					this.errorMsg = error.message;
+				} else if (typeof error === 'string') {
+					this.errorMsg = error;
+				} else {
+					this.errorMsg = 'Dat inloggen weer nich möäglik.';
+				}
+				//this.loading = false;
+			}
+		});
 	}
 }

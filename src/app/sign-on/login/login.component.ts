@@ -67,11 +67,6 @@ export class LoginComponent implements OnInit
 					if (isUser(result)) {
 						// Login was OK
 						this.router.navigate([this.returnURL]);
-
-						/*
-						const url = `/${this.transloco.getActiveLang()}/admin/`;
-						this.router.navigate(['/nds/admin/']);
-						*/
 					}
 				},
 				error: error => {
