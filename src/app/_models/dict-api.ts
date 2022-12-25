@@ -1,6 +1,17 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-09-24 19:53:48.
+// Generated using typescript-generator version 2.32.889 on 2022-12-24 14:42:52.
+
+export interface ACSearchRequest {
+    pair: string;
+    term: string;
+    direction: Direction;
+    maxResults: number;
+}
+
+export interface ACSearchResult {
+    entries: VariantEntry[];
+}
 
 export interface SearchRequest {
     pair: string;
@@ -10,6 +21,13 @@ export interface SearchRequest {
 
 export interface SearchResult {
     entries: ResultCategory[];
+}
+
+export interface VariantEntry {
+    typeID: number;
+    lemma: string;
+    searchWord: string;
+    locale: string;
 }
 
 export interface ResultCategory {
