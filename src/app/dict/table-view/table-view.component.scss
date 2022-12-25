@@ -23,7 +23,7 @@
 }
 
 .logo-section {
-	color: #999;
+	color: #999; // TODO Gaev dat dår al konstanten to?
 }
 
 .logo-big {
@@ -58,7 +58,7 @@ h4 {
 }
 
 .upper-area {
-	grid-template-columns: auto auto 1fr;
+	grid-template-columns: auto auto 1fr auto;
 	gap: 2px 15px;
 	font-size: 0.8em !important;
 	//margin: 24px 18px 18px 24px;
@@ -74,16 +74,19 @@ h4 {
 	font-size: 1.2em;
 }
 
-#search-special-letters {
-	text-align: left;
-	margin-top: 0.25rem;
-	margin-left: 0.5rem;
-	font-size: 1.08rem;
+.autocomplete-option {
+	grid-template-columns: auto 1fr auto;
+}
 
-	a {
-		margin-left: 3px;
-		margin-right: 3px;
-	}
+.autocomplete-content {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.autocomplete-locale {
+	font-size: 0.85em;
+	color: #777; // TODO Gaev dat dår al konstanten to?
 }
 
 /** Removing the padding-bottom from the search field */

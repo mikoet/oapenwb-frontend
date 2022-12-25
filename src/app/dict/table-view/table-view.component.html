@@ -14,29 +14,61 @@
 			<div class="grid-container upper-area">
 				<app-lang-pair-select></app-lang-pair-select>
 				<app-direction-select></app-direction-select>
+
+				<div></div>
+
+				<div>
+					<button
+						mat-button
+						matTooltip="{{ t('search.specialChars') }}"
+						matTooltipPosition="above"
+						matTooltipShowDelay="50"
+						[matMenuTriggerFor]="specialChars"
+					>Abc</button>
+					<mat-menu #specialChars="matMenu" xPosition="before">
+						<button mat-menu-item (click)="addTextAtCaret('searchText','å'); false">å</button>
+						<button mat-menu-item (click)="addTextAtCaret('searchText','ä'); false">ä</button>
+						<button mat-menu-item (click)="addTextAtCaret('searchText','ö'); false">ö</button>
+						<button mat-menu-item (click)="addTextAtCaret('searchText','ü'); false">ü</button>
+						<button mat-menu-item (click)="addTextAtCaret('searchText','ß'); false">ß</button>
+					</mat-menu>
+				</div>
 			</div>
 	
 			<div class="searchArea">
 				<mat-form-field #searchFormField class="searchField" appearance="outline" color="primary">
 					<mat-label>{{ t('search.question') }}</mat-label>
-					<input #searchInput id="searchText" name="search" matInput type="search" autocomplete="off"
-						[(ngModel)]="search.term" (keyup.enter)="executeSearch(searchInput)" /><!-- autofocus -->
+					<input
+						#searchInput
+						id="searchText"
+						name="search"
+						matInput type="search"
+						autocomplete="off"
+						[formControl]="searchControl"
+						(keyup.enter)="executeSearch(searchInput)"
+						[matAutocomplete]="auto"
+					/>
 					<button mat-button *ngIf="!!search.term" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
 						<mat-icon>close</mat-icon>
 					</button>
 					<button mat-button matSuffix mat-icon-button aria-label="Search" (click)="executeSearch(searchInput)">
 						<mat-icon>search</mat-icon>
 					</button>
+					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="executeSearch(searchInput)">
+						<mat-option *ngFor="let option of search.autocompletion | async" [value]="option.searchWord">
+							<div class="grid-container autocomplete-option">
+								<span
+									class="autocomplete-content content-bottomed"
+									[innerHTML]="lemma.formatLemmaStr(option?.lemma, { locale: option?.locale, showOrthography: option?.locale === 'nds' })"
+								></span>
+								<span></span>
+								<span class="autocomplete-locale content-bottomed">{{ option?.locale }}</span>
+							</div>
+						</mat-option>
+					</mat-autocomplete>
 				</mat-form-field>
 			</div>
-	
-			<div id="search-special-letters">
-				<a (click)="addTextAtCaret('searchText','å'); false" href="#">&nbsp;å&nbsp;</a>
-				<a (click)="addTextAtCaret('searchText','ä'); false" href="#">&nbsp;ä&nbsp;</a>
-				<a (click)="addTextAtCaret('searchText','ö'); false" href="#">&nbsp;ö&nbsp;</a>
-				<a (click)="addTextAtCaret('searchText','ü'); false" href="#">&nbsp;ü&nbsp;</a>
-				<a (click)="addTextAtCaret('searchText','ß'); false" href="#">&nbsp;ß&nbsp;</a>
-			</div>
+
 		</div>
 
 	</div>
