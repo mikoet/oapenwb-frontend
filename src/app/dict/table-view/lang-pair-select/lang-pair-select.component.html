@@ -1,7 +1,11 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <div *transloco="let t">
-	<button mat-button matTooltip="{{ t('search.langPair') }}" matTooltipPosition="above" matTooltipShowDelay="50"
+	<button
+		mat-button
+		matTooltip="{{ t('search.langPair') }}"
+		matTooltipPosition="above"
+		matTooltipShowDelay="50"
 		[matMenuTriggerFor]="langPairMenu">{{ search.pair }}</button>
 	<mat-menu #langPairMenu="matMenu">
 		<ng-container *ngFor="let langPair of langPairs">
