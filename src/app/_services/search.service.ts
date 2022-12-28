@@ -96,9 +96,9 @@ export class SearchService
 
 		return this.http.post<Response<ACSearchResult>>(requestUrl, acRequest).pipe(
 			tap(response => {
-				this._autocompletion.next(response.data.entries);
+				this._autocompletion.next(response.data?.entries);
 			}),
-			map(result => result.data.entries),
+			map(result => result.data?.entries),
 		);
 	}
 }
