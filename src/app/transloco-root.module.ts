@@ -1,22 +1,18 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+import { EMPTY } from 'rxjs';
+
 // SPDX-License-Identifier: AGPL-3.0-only
 import { HttpClient } from '@angular/common/http';
-import {
-	TRANSLOCO_LOADER,
-	Translation,
-	TranslocoLoader,
-	TranslocoFallbackStrategy,
-	TRANSLOCO_FALLBACK_STRATEGY,
-	TRANSLOCO_CONFIG,
-	translocoConfig,
-	TranslocoModule,
-} from '@ngneat/transloco';
 import { Injectable, NgModule, NgZone } from '@angular/core';
-import { environment } from '@environments/environment';
-import { EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
-import { ROUTE_MAINTENANCE } from './routes';
+import { environment } from '@environments/environment';
+import {
+	Translation, TRANSLOCO_CONFIG, TRANSLOCO_FALLBACK_STRATEGY, TRANSLOCO_LOADER, translocoConfig,
+	TranslocoFallbackStrategy, TranslocoLoader, TranslocoModule
+} from '@ngneat/transloco';
+
 import { DEFAULT_UI_LOCALE } from './_config/config';
+import { ROUTE_MAINTENANCE } from './routes';
 
 const NO_L10N_AVAILABLE: string = 'no_l10n'
 

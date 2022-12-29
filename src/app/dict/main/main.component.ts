@@ -1,12 +1,13 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { DOCUMENT } from '@angular/common';
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { DOCUMENT } from '@angular/common';
-import { TranslocoService } from '@ngneat/transloco';
-import { ReplaySubject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
+import { TranslocoService } from '@ngneat/transloco';
 
 /**
  * The MainComponent is the main component of the dictionary's visitor view.
@@ -30,8 +31,7 @@ export class MainComponent implements OnInit, OnDestroy
 		@Inject(DOCUMENT) private document: Document,
 	) { }
 
-	ngOnInit(): void
-	{
+	ngOnInit(): void {
 		this.transloco.langChanges$.pipe(
 			takeUntil(this.destroy$),
 		).subscribe((locale: string) => {
@@ -43,8 +43,7 @@ export class MainComponent implements OnInit, OnDestroy
 		).subscribe((value: string) => this.pageTitle.setTitle(value));
 	}
 
-	ngOnDestroy(): void
-	{
+	ngOnDestroy(): void {
 		this.destroy$.next();
 		this.destroy$.complete();
 	}
