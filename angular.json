@@ -48,7 +48,10 @@
 									"with": "src/environments/environment.prod.ts"
 								}
 							],
-							"index": "src/index.ule_dk.html",
+							"index": {
+								"input": "src/index.ule_dk.html",
+								"output": "index.html"
+							},
 							"optimization": true,
 							"outputHashing": "all",
 							"sourceMap": false,
@@ -76,7 +79,10 @@
 									"with": "src/environments/environment.server-dev.ts"
 								}
 							],
-							"index": "src/index.dev_ule_dk.html",
+							"index": {
+								"input": "src/index.dev_ule_dk.html",
+								"output": "index.html"
+							},
 							"optimization": true,
 							"outputHashing": "all",
 							"sourceMap": false,
