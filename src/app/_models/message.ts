@@ -6,14 +6,14 @@
  */
 export interface Message {
 	code: number;
-	message: string;
+	placeholderMessage: string;
 	arguments: Pair[];
 }
 
 export function isMessage(o: any): o is Message {
 	return typeof o === 'object'
 		&& ('code' in o && typeof o.code === 'number')
-		&& ('message' in o && (o.message === null || typeof o.message === 'string'))
+		&& ('placeholderMessage' in o && (o.placeholderMessage === null || typeof o.placeholderMessage === 'string'))
 		&& ('arguments' in o && (o.arguments === null || Array.isArray(o.arguments)));
 }
 

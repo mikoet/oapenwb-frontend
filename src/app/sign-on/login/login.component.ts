@@ -1,20 +1,15 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
-// SPDX-License-Identifier: AGPL-3.0-only
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
-
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { first } from 'rxjs/operators';
 
-import { TranslocoService } from '@ngneat/transloco'
-
-import { AccountService } from '@app/shared/_services/account.service';
-
+import { Location } from '@angular/common';
+// SPDX-License-Identifier: AGPL-3.0-only
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isMessage } from '@app/_models/message';
 import { isUser } from '@app/_models/user';
-
+import { AccountService } from '@app/shared/_services/account.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
 	selector: 'app-login',
@@ -71,7 +66,7 @@ export class LoginComponent implements OnInit
 				},
 				error: error => {
 					if (isMessage(error)) {
-						this.errorMsg = error.message;
+						this.errorMsg = error.placeholderMessage;
 					} else if (typeof error === 'string') {
 						this.errorMsg = error;
 					} else {

@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Message } from '@app/_models/message';
-import { TranslocoService, TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { TRANSLOCO_SCOPE, TranslocoService } from '@ngneat/transloco';
 
 export class ErrorsInput
 {
@@ -37,7 +37,7 @@ export class ErrorsDialogComponent implements OnInit
 	getText(message: Message)
 	{
 		if (message) {
-			let text = 'E' + message.code + ': ' + message.message;
+			let text = 'E' + message.code + ': ' + message.placeholderMessage;
 			text = text.replace(/\{\{[a-zA-Z0-9_-]{1,64}\}\}/g, (match) => {
 				let varName = match.substr(2, match.length - 4);
 				for (let pair of message.arguments) {

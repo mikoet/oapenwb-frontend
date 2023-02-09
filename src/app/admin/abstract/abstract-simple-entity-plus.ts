@@ -1,21 +1,18 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
-// SPDX-License-Identifier: AGPL-3.0-only
-import { OnInit, AfterViewInit, ViewChild, Directive } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { FormGroup, NgForm } from '@angular/forms';
-
-import { MatTableDataSource } from '@angular/material/table';
-
-import { Observable, of as observableOf, EMPTY, Subscription } from 'rxjs';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { EMPTY, Observable, Subscription } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 
-import { TranslocoService } from '@ngneat/transloco'
-
-import { environment } from '@environments/environment';
-import { Response } from '@app/_models/response';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+// SPDX-License-Identifier: AGPL-3.0-only
+import { AfterViewInit, Directive, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, NgForm } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
 import { Message } from '@app/_models/message';
+import { Response } from '@app/_models/response';
+import { environment } from '@environments/environment';
+import { TranslocoService } from '@ngneat/transloco';
 
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { DataService } from '../_services/data.service';
 import { SimpleEntityHttpDatabase } from './abstract-simple-entity';
 
@@ -120,7 +117,7 @@ export abstract class AbstractSECPlus<T /*extends Entity*/> implements OnInit, A
 	protected handleMessage(message: Message)
 	{
 		// TODO Format the message appropriately, translate it if possible
-		this.addError(message.message);
+		this.addError(message.placeholderMessage);
 	}
 
 	protected loadEntities() : void
