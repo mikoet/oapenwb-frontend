@@ -1,17 +1,19 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
-// SPDX-License-Identifier: AGPL-3.0-only
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, BehaviorSubject, EMPTY } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, ReplaySubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+// SPDX-License-Identifier: AGPL-3.0-only
+import { Injectable } from '@angular/core';
+import { Message } from '@app/_models/message';
+import { PaginatedResponse, Pagination, Response } from '@app/_models/response';
+import { AccountService } from '@app/shared/_services/account.service';
 import { environment } from '@environments/environment';
 
-import { AccountService } from '@app/shared/_services/account.service';
-
-import { PaginatedResponse, Pagination, Response } from '@app/_models/response';
+import {
+	FilterOptions, LexemeDetailedDTO, LexemeSlimDTO, LSearchRequest, TextSearchType
+} from '../_models/admin-api';
 import { lexemesApiPath } from '../_models/admin-api-paths';
-import { FilterOptions, LexemeDetailedDTO, LexemeSlimDTO, LSearchRequest, TextSearchType } from '../_models/admin-api';
 
 /**
  * The LexemeQueryService...
@@ -25,6 +27,9 @@ export class LexemeQueryService
 
 	private _pagination = new BehaviorSubject<Pagination>(null);
 	readonly pagination = this._pagination.asObservable();
+
+	private _error = new ReplaySubject<Message|string>(1);
+	readonly error = this._error.asObservable();
 
 	// this is used as model in the ListComponent
 	public filter: string = '';
@@ -63,9 +68,22 @@ export class LexemeQueryService
 
 		this.http.patch<PaginatedResponse<LexemeSlimDTO[]>>(requestUrl, searchRequest).subscribe(
 			response => {
-				this.store.lexemes = response.data;
-				this._lexemes.next(Object.assign({}, this.store).lexemes);
-				this._pagination.next(response.pagination);
+				if (response?.status === 'success') {
+					this.store.lexemes = response.data;
+					this._lexemes.next(Object.assign({}, this.store).lexemes);
+					this._pagination.next(response.pagination);
+					this._error.next(null);
+				} else {
+					this.store.lexemes = null;
+					this._lexemes.next(null);
+					this._pagination.next(null);
+
+					if (response?.status === 'error') {
+						this._error.next(response.message);
+					} else {
+						this._error.next('Some error occured.');
+					}
+				}
 			},
 			// TODO this should also stop the blocking and give an error
 			error => console.warn('Could not load lexemes.')

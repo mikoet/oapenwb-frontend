@@ -1,18 +1,21 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+import { Observable, ReplaySubject } from 'rxjs';
+import { catchError, takeUntil, tap } from 'rxjs/operators';
+
 // SPDX-License-Identifier: AGPL-3.0-only
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Output, EventEmitter } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { DataService } from '@app/admin/_services/data.service';
-import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
-import { HeldLexeme, LexemeOrigin, LexemeService, SelectedLexeme } from '@app/admin/_services/lexeme.service';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { MatSelectionListChange } from '@angular/material/list';
 import { Pagination } from '@app/_models/response';
 import { LexemeSlimDTO } from '@app/admin/_models/admin-api';
-import { TranslocoService } from '@ngneat/transloco';
-import { MatSelectionListChange } from '@angular/material/list';
-import { FilterMenuComponent } from '../filter-menu/filter-menu.component';
+import { DataService } from '@app/admin/_services/data.service';
+import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
+import {
+	HeldLexeme, LexemeOrigin, LexemeService, SelectedLexeme
+} from '@app/admin/_services/lexeme.service';
 import { LockService } from '@app/admin/_services/lock.service';
-import { catchError, map, tap } from 'rxjs/operators';
+import { TranslocoService } from '@ngneat/transloco';
+
+import { FilterMenuComponent } from '../filter-menu/filter-menu.component';
 
 @Component({
 	selector: 'admin-lexeme-list',
@@ -34,13 +37,13 @@ export class ListComponent implements OnInit, OnDestroy
 	compareFunction = (o1: any, o2: any) => o1.index === o2.index && o1.id === o2.id && o1.origin === o2.origin;
 
 	// Data from LexemeQueryService
-	lexemes: Observable<LexemeSlimDTO[]>;
-	pagination: Observable<Pagination>;
-	private pageSubscription: Subscription;
+	lexemes$: Observable<LexemeSlimDTO[]>;
+	pagination$: Observable<Pagination>;
 
 	// Data from LexemeService
-	topLexemes: Observable<HeldLexeme[]>;
-	private activeSubscription: Subscription;
+	topLexemes$: Observable<HeldLexeme[]>;
+
+	private readonly destroy$ = new ReplaySubject<void>(1);
 
 	private _hasNext: boolean = false;
 	get hasNext(): boolean {
@@ -65,23 +68,33 @@ export class ListComponent implements OnInit, OnDestroy
 		public lexemeService: LexemeService, public data: DataService, private readonly lockService: LockService) { }
 
 	ngOnInit(): void {
-		this.lexemes = this.lexemeQuery.lexemes;
-		this.pagination = this.lexemeQuery.pagination;
+		this.lexemes$ = this.lexemeQuery.lexemes;
+		this.pagination$ = this.lexemeQuery.pagination;
 
-		this.pageSubscription = this.pagination.subscribe(pagination => {
+		this.pagination$.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(pagination => {
 			if (pagination !== null) {
 				this.offset = pagination.offset;
 				this.limit = pagination.limit;
 				this.total = pagination.total;
 				this._hasNext = (this.offset + this.limit) < this.total;
 				this._hasPrevious = this.offset > 0;
+			} else {
+				this.offset = 0;
+				this.limit = 0;
+				this.total = 0;
+				this._hasNext = false;
+				this._hasPrevious = false;
 			}
 			this._btnClicked = false;
 		});
 
-		this.topLexemes = this.lexemeService.heldLexemes;
+		this.topLexemes$ = this.lexemeService.heldLexemes;
 
-		this.activeSubscription = this.lexemeService.activeLexeme.subscribe(active => {
+		this.lexemeService.activeLexeme.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(active => {
 			if (active === null) {
 				this.selectedLexemes = [];
 			} else {
@@ -117,8 +130,8 @@ export class ListComponent implements OnInit, OnDestroy
 	}
 
 	ngOnDestroy(): void {
-		this.pageSubscription.unsubscribe();
-		this.activeSubscription.unsubscribe();
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	loadClicked() : void {

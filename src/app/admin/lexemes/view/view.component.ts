@@ -1,20 +1,27 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
-// SPDX-License-Identifier: AGPL-3.0-only
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
-import { DataService, ErrorSet } from '@app/admin/_services/data.service';
-import { LexemeOrigin, LexemeService, SelectedLexeme, SnackMessage } from '@app/admin/_services/lexeme.service';
-import { EditorComponent } from '../editor/editor.component';
-import { ListComponent } from '../list/list.component';
-import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
-import { ScopedBlocker } from '@app/util/scoped-blocker';
-import { YesNoDialogComponent } from '@app/admin/_components/yes-no-dialog/yes-no-dialog.component';
+// SPDX-License-Identifier: AGPL-3.0-only
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Message } from '@app/_models/message';
+import {
+	ErrorsDialogComponent
+} from '@app/admin/_components/errors-dialog/errors-dialog.component';
+import { YesNoDialogComponent } from '@app/admin/_components/yes-no-dialog/yes-no-dialog.component';
+import { DataService, ErrorSet } from '@app/admin/_services/data.service';
+import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
+import {
+	LexemeOrigin, LexemeService, SelectedLexeme, SnackMessage
+} from '@app/admin/_services/lexeme.service';
+import { ScopedBlocker } from '@app/util/scoped-blocker';
 import { TranslocoService } from '@ngneat/transloco';
-import { ErrorsDialogComponent } from '@app/admin/_components/errors-dialog/errors-dialog.component';
+
+import { EditorComponent } from '../editor/editor.component';
+import { ListComponent } from '../list/list.component';
 
 export class TransferStop
 {
@@ -46,17 +53,10 @@ export class ViewComponent implements OnInit, OnDestroy
 	list: ListComponent;
 
 	// from DataService
-	loading: Observable<boolean>;
-	errors: Observable<ErrorSet>;
+	loading$: Observable<boolean>;
+	errors$: Observable<ErrorSet>;
 
-	private loadingSubscription: Subscription;
-	private errorsSubscription: Subscription;
-	// from LexemeService
-	private activeSubscription: Subscription;
-	private errorChangeSubscription: Subscription;
-	private snackSubscription: Subscription;
-	// from LexemeQueryService
-	private pageSubscription: Subscription;
+	private readonly destroy$ = new ReplaySubject<void>(1);
 
 	constructor(
 		private readonly changeDetector: ChangeDetectorRef,
@@ -71,10 +71,12 @@ export class ViewComponent implements OnInit, OnDestroy
 	ngOnInit() : void {
 		this.blocker.blockUI = this.blockUI;
 
-		this.loading = this.data.loading;
-		this.errors = this.data.errors;
+		this.loading$ = this.data.loading;
+		this.errors$ = this.data.errors;
 
-		this.loadingSubscription = this.loading.subscribe(isLoading => {
+		this.loading$.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(isLoading => {
 			if (isLoading) {
 				this.blocker.start(BlockScopes.DataService);
 			} else {
@@ -82,30 +84,19 @@ export class ViewComponent implements OnInit, OnDestroy
 			}
 		});
 
-		this.errorChangeSubscription = this.lexemeService.errorChange.subscribe(errorCount => {
-			this.changeDetector.detectChanges();
-		});
-
-		this.snackSubscription = this.lexemeService.snackMessage.subscribe((message: SnackMessage) => {
-			if (message) {
-				const messageText: string = this.transloco.translate(message.uitID, message.arguments);
-				const actionText: string = this.transloco.translate('admin.close');
-				this.snackBar.open(messageText, actionText, {
-					duration: 3500,
-					horizontalPosition: 'start',
-					verticalPosition: 'bottom',
-				});
-			}
-		});
-
-		this.errorsSubscription = this.errors.subscribe(errorSet => {
+		this.errors$.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(errorSet => {
 			if (errorSet !== null) {
 				console.error('An error occured during initialisation:', errorSet);
 				this.blocker.stop(BlockScopes.DataService);
 			}
 		});
 
-		this.activeSubscription = this.lexemeService.activeLexeme.subscribe(active => {
+		// from LexemeService
+		this.lexemeService.activeLexeme.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(active => {
 			if (active !== null) {
 				this.editor.readFromService().subscribe(nothing => {
 					this.blocker.stop(BlockScopes.ActiveLexeme);
@@ -123,8 +114,50 @@ export class ViewComponent implements OnInit, OnDestroy
 			}
 		});
 
-		this.pageSubscription = this.lexemeQuery.pagination.subscribe(pagination => {
+		this.lexemeService.errorChange.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(errorCount => {
+			this.changeDetector.detectChanges();
+		});
+
+		this.lexemeService.snackMessage.pipe(
+			takeUntil(this.destroy$),
+		).subscribe((message: SnackMessage) => {
+			if (message) {
+				const messageText: string = this.transloco.translate(message.uitID, message.arguments);
+				const actionText: string = this.transloco.translate('admin.close');
+				this.snackBar.open(messageText, actionText, {
+					duration: 3500,
+					horizontalPosition: 'start',
+					verticalPosition: 'bottom',
+				});
+			}
+		});
+
+		// from LexemeQueryService
+		this.lexemeQuery.pagination.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(pagination => {
 			this.blocker.stop(BlockScopes.ListEntries);
+		});
+
+		this.lexemeQuery.error.pipe(
+			filter((message) => !!message),
+			takeUntil(this.destroy$),
+		).subscribe((message: Message|string) => {
+			const actionText: string = this.transloco.translate('admin.close');
+			let messageText: string = '';
+			if (typeof message === 'string') {
+				messageText = message;
+			} else {
+				// TODO Format message correctly
+				messageText = message?.placeholderMessage;
+			}
+			this.snackBar.open(messageText, actionText, {
+				duration: 3500,
+				horizontalPosition: 'start',
+				verticalPosition: 'bottom',
+			});
 		});
 
 		this.data.initialise();
@@ -132,13 +165,9 @@ export class ViewComponent implements OnInit, OnDestroy
 
 	ngOnDestroy() : void
 	{
-		// Unsubscribe all subscriptions
-		this.loadingSubscription.unsubscribe();
-		this.errorChangeSubscription.unsubscribe();
-		this.snackSubscription.unsubscribe();
-		this.errorsSubscription.unsubscribe();
-		this.activeSubscription.unsubscribe();
-		this.pageSubscription.unsubscribe();
+		this.destroy$.next();
+		this.destroy$.complete();
+
 		// Write current data to service
 		this.writeToService(false);
 		// Set active lexeme to null
