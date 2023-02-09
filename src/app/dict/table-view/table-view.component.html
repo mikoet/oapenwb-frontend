@@ -47,6 +47,7 @@
 						[formControl]="searchControl"
 						(keyup.enter)="executeSearch(searchInput)"
 						[matAutocomplete]="auto"
+						matAutocompletePosition="below"
 					/>
 					<button mat-button *ngIf="!!search.term" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
 						<mat-icon>close</mat-icon>
