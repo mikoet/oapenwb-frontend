@@ -15,12 +15,12 @@ import { environment } from '@environments/environment';
 // TODO This should be received from BaseConfig or similar
 export const LANG_PAIRS = [
 	'nds-de',
-	'nds-en',
 	'nds-nl',
+	'nds-en',
 	'-',
 	'nds-da',
-	'nds-fi',
 	'nds-sv',
+	'nds-fi',
 	'-',
 	'nds-*',
 ];
