@@ -5,7 +5,7 @@
 @import '../../../../theme/colors.scss';
 
 #result-area {
-	padding-top: 1.5rem;
+	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
 }
 
@@ -19,8 +19,8 @@ table {
 	font-size: 1.15em;
 	max-width: 900px;
 	margin: 0 auto; // center
-	padding-top: 20px;
-	padding-bottom: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 table tr th,
@@ -99,6 +99,17 @@ table tr:last-child td:last-child {
 @media only screen and (min-width: $min-width-smartphone-wide) {
 	// TODO bellow this width the table should take the whole width
 	//      currently .container in table-view-component blocks this (1.2em padding on the sides)
+}
+
+@media only screen and (min-width: $min-width-desktop) {
+	#result-area {
+		padding-top: 1.5rem;
+	}
+
+	table {
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
 }
 
 @media only screen and (min-width: $min-width-desktop-large) {

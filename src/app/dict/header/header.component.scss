@@ -135,10 +135,22 @@ ul {
 
 	.show-desktop {
 		display: block;
-		margin: 0 auto 60px auto;
+		margin: 0 auto 30px auto;
 	}
 
 	.hide-desktop {
 		display: none;
+	}
+
+	@media only screen and (min-height: 940px) {
+		.show-desktop {
+			margin: 0 auto 45px auto;
+		}
+	}
+	
+	@media only screen and (min-height: 1100px) {
+		.show-desktop {
+			margin: 0 auto 60px auto;
+		}
 	}
 }

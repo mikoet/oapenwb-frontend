@@ -50,7 +50,7 @@ h4 {
 .input-area {
 	grid-template-columns: auto;
 	gap: 2px 15px !important;
-	margin: 11px auto 1.5rem;
+	margin: 0 auto 0;
 
 	padding: 8px;
 	width: 95%;
@@ -144,6 +144,10 @@ h4 {
 			url("/assets/img/logo/w450@2x.png") 2x
 		);
 	}
+
+	.input-area {
+		margin: 11px auto 0;
+	}
 }
 
 @media only screen and (min-width: $min-width-desktop) {
@@ -163,15 +167,23 @@ h4 {
 		);
 	}
 
-	.hide-mobile {
-		display: inline-block;
-	}
-
 	.input-area {
-		max-width: 580px;
-		width: 100%;
+		margin: 11px auto 0.5rem;
 	}
 
+	@media only screen and (min-height: 820px) {
+		.hide-mobile {
+			display: inline-block;
+		}
+
+		.input-area {
+			max-width: 580px;
+			width: 100%;
+			margin: 11px auto 1.5rem;
+		}
+	}
+
+	/*
 	@keyframes move {
 		from {
 			transform: translateY(0px);
@@ -180,9 +192,10 @@ h4 {
 			transform: translateY(20px);
 		}
 	}
+	*/
 }
 
-@media only screen and (min-width: $min-width-desktop-large) {
+@media only screen and (min-width: $min-width-desktop-large) and (min-height: 940px) {
 	.top-section-row {
 		max-width: 830px;
 		grid-template-columns: 220px 1fr;
