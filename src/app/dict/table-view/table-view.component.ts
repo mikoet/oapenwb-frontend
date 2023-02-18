@@ -48,7 +48,7 @@ export class TableViewComponent implements OnInit, OnDestroy
 
 	destroy$ = new ReplaySubject(1);
 
-	private readonly isMobile : boolean;
+	private isMobile : boolean;
 
 	constructor(
 		public search: SearchService,
@@ -60,7 +60,7 @@ export class TableViewComponent implements OnInit, OnDestroy
 		private router: Router,
 		private zone: NgZone,
 	) {
-		this.isMobile = this.deviceService.isMobile();
+		this.isMobile = this.deviceService.isMobile() || window.innerWidth < 650;
 		if (isPlatformBrowser(platformId)) {
 			this.hasDesktopWidth = window.innerWidth >= 1024;
 		} else {
@@ -77,6 +77,7 @@ export class TableViewComponent implements OnInit, OnDestroy
 	@HostListener('window:resize', ['$event'])
 	onResize(event) {
 		this.hasDesktopWidth = event.target.innerWidth >= 1024;
+		this.isMobile = this.deviceService.isMobile() || window.innerWidth < 650;
 	}
 
 	ngOnInit(): void {
@@ -163,6 +164,16 @@ export class TableViewComponent implements OnInit, OnDestroy
 		if (!!element && this.isMobile) {
 			// Remove the focus on mobile devices so the onscreen keyboard gets closed
 			this.removeFocus(element);
+		}
+	}
+
+	onFocus(searchArea: any,): void {
+		if (this.isMobile) {
+			searchArea?.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+				inline: "nearest"
+			});
 		}
 	}
 

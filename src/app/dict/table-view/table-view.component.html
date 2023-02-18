@@ -10,7 +10,7 @@
 			</h4>
 		</div>
 
-		<div class="grid-container input-area">
+		<div #searchAreal class="grid-container input-area">
 			<div class="grid-container upper-area">
 				<app-lang-pair-select></app-lang-pair-select>
 				<app-direction-select></app-direction-select>
@@ -46,6 +46,7 @@
 						autocomplete="off"
 						[formControl]="searchControl"
 						(keyup.enter)="executeSearch(searchInput)"
+						(focus)="onFocus(searchAreal)"
 						[matAutocomplete]="auto"
 						matAutocompletePosition="below"
 					/>
