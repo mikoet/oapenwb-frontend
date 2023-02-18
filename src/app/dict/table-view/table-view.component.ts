@@ -38,8 +38,8 @@ export class TableViewComponent implements OnInit, OnDestroy
 	@ViewChild('searchFormField')
 	searchFormField: MatFormField;
 
-	@ViewChild(MatAutocompleteTrigger)
-	autocomplete: MatAutocompleteTrigger;
+	@ViewChild('searchInput', { read: MatAutocompleteTrigger })
+  	autoCompleteTrigger: MatAutocompleteTrigger;
 
 	searchControl = new FormControl();
 
@@ -139,7 +139,7 @@ export class TableViewComponent implements OnInit, OnDestroy
 	executeSearch(element?: HTMLElement): void
 	{
 		this.blockUI.start();
-		this.autocomplete?.closePanel();
+		this.autoCompleteTrigger?.closePanel();
 
 		this.search.performSearch().pipe(
 			take(1),
@@ -167,13 +167,20 @@ export class TableViewComponent implements OnInit, OnDestroy
 		}
 	}
 
-	onFocus(searchArea: any,): void {
+	onFocus(searchArea: any): void {
 		if (this.isMobile) {
-			searchArea?.scrollIntoView({
-				behavior: "smooth",
-				block: "start",
-				inline: "nearest"
-			});
+			// Prevents misplaced autocompletion list on iOS devices (and maybe others?)
+			this.search.resetAutocompletion();
+
+			// Timeout is needed to prevent scrolling to wrong position on iOS devices (and maybe others?)
+			// because iOS Safari also scrolls when it opens the onscreen keyboard.
+			setTimeout(() => {
+				searchArea?.scrollIntoView({
+					behavior: "smooth",
+					block: "start",
+					inline: "nearest"
+				});
+			}, 200);
 		}
 	}
 

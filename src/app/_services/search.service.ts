@@ -101,4 +101,8 @@ export class SearchService
 			map(result => result.data?.entries),
 		);
 	}
+
+	resetAutocompletion(): void {
+		this._autocompletion.next(null);
+	}
 }
