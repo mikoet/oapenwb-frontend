@@ -221,8 +221,8 @@ export class TableViewComponent implements OnInit, OnDestroy
 		this.updateCursorPosition(cursorPosition, text, textArea);
 	}
 	private addTextAtCursorPosition(cursorPosition, text) {
-		const front = this.searchControl.value.substring(0, cursorPosition);
-		const back = this.searchControl.value.substring(cursorPosition, this.searchControl.value.length);
+		const front = this.searchControl.value?.substring(0, cursorPosition) ?? '';
+		const back = this.searchControl.value?.substring(cursorPosition, this.searchControl.value?.length) ?? '';
 		this.searchControl.setValue(front + text + back);
 	}
 	private updateCursorPosition(cursorPosition, text, textArea) {
