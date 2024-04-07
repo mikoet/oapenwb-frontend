@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, isDevMode, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { LexemeType, Sememe, SynGroup, Variant } from '@app/admin/_models/admin-api';
 import { DataService, ExtCategory } from '@app/admin/_services/data.service';
@@ -87,12 +87,12 @@ export type SpecificsType = "Verb";
 	prepare = TabSememesComponent.prepare;
 
 	// Formular: sememe form
-	sememeForm: FormGroup;
+	sememeForm: UntypedFormGroup;
 	@ViewChild(FormGroupDirective)
 	sememeFormRef: FormGroupDirective;
 
 	// Formular: specifics form
-	specificsForm: FormGroup;
+	specificsForm: UntypedFormGroup;
 	specificsType: SpecificsType = null;
 	caseGovType: LexemeType = null;
 
@@ -105,9 +105,9 @@ export type SpecificsType = "Verb";
 	private categoriesSelect: HierarchicalSelectComponent;
 
 	// SynGroup form control
-	public synGroupCtrl: FormControl = new FormControl();
+	public synGroupCtrl: UntypedFormControl = new UntypedFormControl();
 	// Formular: synonym group form
-	synGroupForm: FormGroup;
+	synGroupForm: UntypedFormGroup;
 	@ViewChild(FormGroupDirective)
 	synGroupFormRef: FormGroupDirective;
 
@@ -292,7 +292,7 @@ export type SpecificsType = "Verb";
 	// Compare function for the fill lemma property
 	fillSpecCompare = (o1: any, o2: any) => o1 == o2;
 
-	constructor(private readonly changeDetector: ChangeDetectorRef, private readonly formBuilder: FormBuilder,
+	constructor(private readonly changeDetector: ChangeDetectorRef, private readonly formBuilder: UntypedFormBuilder,
 		public readonly transloco: TranslocoService, private readonly lexemeService: LexemeService,
 		public readonly data: DataService, private readonly lemmaService: LemmaService,
 		private readonly sememeService: SememeService, private readonly synGroupService: SynGroupQueryService)

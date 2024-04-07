@@ -4,7 +4,7 @@ import { first } from 'rxjs/operators';
 import { Location } from '@angular/common';
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isMessage } from '@app/_models/message';
 import { isUser } from '@app/_models/user';
@@ -18,13 +18,13 @@ import { TranslocoService } from '@ngneat/transloco';
 })
 export class LoginComponent implements OnInit
 {
-	form: FormGroup;
+	form: UntypedFormGroup;
 	returnURL: string;
 	errorMsg: string = '';
 
 	//matcher = new LoginErrorStateMatcher();
 
-	constructor(private formBuilder: FormBuilder,
+	constructor(private formBuilder: UntypedFormBuilder,
 		private location: Location,
 		private route: ActivatedRoute,
 		private router: Router,

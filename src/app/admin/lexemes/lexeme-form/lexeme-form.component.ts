@@ -1,13 +1,13 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroupDirective, NgForm, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, UntypedFormControl, FormGroupDirective, NgForm, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher
 {
 	public constructor(private mandatory: boolean) {}
-	isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean
+	isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean
 	{
 		//const isSubmitted = form && form.submitted;
 		//return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));

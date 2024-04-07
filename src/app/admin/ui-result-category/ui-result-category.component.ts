@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
@@ -20,7 +20,7 @@ export class UiResultCategoryComponent extends AbstractSEC<UiResultCategory>
 	// table attributes
 	displayedColumns: string[] = ['name', 'uitID', 'position', 'actions'];
 
-	constructor(private formBuilder: FormBuilder, httpClient: HttpClient, transloco: TranslocoService)
+	constructor(private formBuilder: UntypedFormBuilder, httpClient: HttpClient, transloco: TranslocoService)
 	{
 		super(httpClient, transloco, 'id', uiResultCategoryApiPath, {});
 	}

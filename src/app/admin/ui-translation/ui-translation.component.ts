@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -46,7 +46,7 @@ export class UiTranslationComponent extends AbstractSEC<UiTranslationSet> {
 	displayedColumns: string[] = this.basicColumns;
 
 	constructor(
-		private formBuilder: FormBuilder,
+		private formBuilder: UntypedFormBuilder,
 		httpClient: HttpClient,
 		transloco: TranslocoService,
 		private snackBar: MatSnackBar)

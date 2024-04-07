@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
@@ -21,7 +21,7 @@ export class UiLanguageComponent extends AbstractSEC<UiLanguage>
 	displayedColumns: string[] = ['locale', 'localName', 'isDefault', 'active', 'actions'];
 
 	constructor(
-		private formBuilder: FormBuilder,
+		private formBuilder: UntypedFormBuilder,
 		httpClient: HttpClient,
 		transloco: TranslocoService)
 	{

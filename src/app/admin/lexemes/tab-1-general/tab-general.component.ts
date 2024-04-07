@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Output, EventEmitter, isDevMode } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -10,7 +10,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { DataService } from '@app/admin/_services/data.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { TransferStop } from '../view/view.component';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { Lexeme } from '@app/admin/_models/admin-api';
@@ -31,7 +31,7 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 	public readonly showChangeData = SHOW_CHANGE_DATA;
 
 	// Form data
-	generalForm: FormGroup;
+	generalForm: UntypedFormGroup;
 	@ViewChild(FormGroupDirective) formRef: FormGroupDirective;
 
 	// Error counting
@@ -91,7 +91,7 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 	// For tag component
 	areTagsEditable: boolean = false;
 	separatorKeysCodes: number[] = [ENTER, COMMA];
-	tagCtrl = new FormControl();
+	tagCtrl = new UntypedFormControl();
 	filteredTags: Observable<string[]>;
 	tags: Set<string> = new Set([]);
 	allTags: string[] = [];
@@ -99,7 +99,7 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 	tagInput: ElementRef<HTMLInputElement>;
 
 
-	constructor(private readonly formBuilder: FormBuilder, private lexemeService: LexemeService,
+	constructor(private readonly formBuilder: UntypedFormBuilder, private lexemeService: LexemeService,
 		public readonly data: DataService)
 	{
 		this.generalForm = this.formBuilder.group({

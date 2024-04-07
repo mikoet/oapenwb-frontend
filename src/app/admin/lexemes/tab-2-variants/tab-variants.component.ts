@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, isDevMode, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { LexemeForm, Variant, LemmaTemplate, Orthography, Lemma } from '@app/admin/_models/admin-api';
 import { DataService, ExtLanguage } from '@app/admin/_services/data.service';
@@ -36,12 +36,12 @@ export class TabVariantsComponent implements OnInit, OnDestroy, VariantSupply
 	public readonly showChangeData = SHOW_CHANGE_DATA;
 
 	// Formular: top form
-	variantsForm: FormGroup;
+	variantsForm: UntypedFormGroup;
 	@ViewChild(FormGroupDirective)
 	variantsFormRef: FormGroupDirective;
 
 	// Formular: lemma form
-	lemmaForm: FormGroup;
+	lemmaForm: UntypedFormGroup;
 	@ViewChild(FormGroupDirective)
 	lemmaFormRef: FormGroupDirective; // Bruke ik dår meyr as eyn?
 
@@ -254,7 +254,7 @@ export class TabVariantsComponent implements OnInit, OnDestroy, VariantSupply
 	// Compare function for the fill lemma property
 	fillLemmaCompare = (o1: any, o2: any) => o1 == o2;
 
-	constructor(private readonly changeDetector: ChangeDetectorRef, private readonly formBuilder: FormBuilder,
+	constructor(private readonly changeDetector: ChangeDetectorRef, private readonly formBuilder: UntypedFormBuilder,
 		private readonly transloco: TranslocoService, private readonly lexemeService: LexemeService,
 		public readonly data: DataService)
 	{

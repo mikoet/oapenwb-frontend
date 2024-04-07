@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
-import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
+import { AbstractControl, UntypedFormArray, UntypedFormGroup } from "@angular/forms";
 
-export function countErrors(formGroup: FormGroup|FormArray) : number
+export function countErrors(formGroup: UntypedFormGroup|UntypedFormArray) : number
 {
 	let errorCount = 0;
 	for (let controlKey in formGroup.controls) {

@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, ChangeDetectorRef, Component, isDevMode, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -91,7 +91,7 @@ export class TabMappingsComponent implements OnInit, OnDestroy, AfterViewInit
 	}
 
 	// Formular: top form
-	mappingForm: FormGroup;
+	mappingForm: UntypedFormGroup;
 	@ViewChild(FormGroupDirective, {static: false})
 	_mappingFormRef: FormGroupDirective = null;
 	get mappingFormRef() {
@@ -347,7 +347,7 @@ export class TabMappingsComponent implements OnInit, OnDestroy, AfterViewInit
 		}
 	}
 
-	constructor(private readonly changeDetector: ChangeDetectorRef, private readonly formBuilder: FormBuilder,
+	constructor(private readonly changeDetector: ChangeDetectorRef, private readonly formBuilder: UntypedFormBuilder,
 		public readonly transloco: TranslocoService, private readonly lexemeService: LexemeService,
 		public readonly data: DataService, public readonly sememeService: SememeService)
 	{

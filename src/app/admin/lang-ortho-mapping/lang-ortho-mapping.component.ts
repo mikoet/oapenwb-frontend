@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 import { catchError, map, retry } from 'rxjs/operators';
 import { Response } from '@app/_models/response';
@@ -27,7 +27,7 @@ import { langApiPath, loMappingApiPath, orthoApiPath } from '../_models/admin-ap
 	displayedColumns: string[] = ['langID', 'orthographyID', 'position', 'actions'];
 
 	constructor(
-		private formBuilder: FormBuilder,
+		private formBuilder: UntypedFormBuilder,
 		httpClient: HttpClient,
 		transloco: TranslocoService)
 	{

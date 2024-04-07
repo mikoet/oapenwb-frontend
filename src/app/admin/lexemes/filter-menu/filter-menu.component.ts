@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { FilterOptions, Language, LexemeType, State, Tag, TextSearchType } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
@@ -16,15 +16,15 @@ import { Subscription } from 'rxjs';
 export class FilterMenuComponent implements OnInit, OnDestroy
 {
 	// Formular
-	form: FormGroup;
+	form: UntypedFormGroup;
 	get langsFormArray() {
-		return this.form.controls.languages as FormArray;
+		return this.form.controls.languages as UntypedFormArray;
 	}
 	get typesFormArray() {
-		return this.form.controls.types as FormArray;
+		return this.form.controls.types as UntypedFormArray;
 	}
 	get tagsFormArray() {
-		return this.form.controls.tags as FormArray;
+		return this.form.controls.tags as UntypedFormArray;
 	}
 
 	// Search type
@@ -82,13 +82,13 @@ export class FilterMenuComponent implements OnInit, OnDestroy
 		this.active = value;
 	}
 
-	constructor(private readonly formBuilder: FormBuilder, private readonly data: DataService,
+	constructor(private readonly formBuilder: UntypedFormBuilder, private readonly data: DataService,
 		public readonly lexemeQuery: LexemeQueryService)
 	{
 		this.form = this.formBuilder.group({
-			languages: new FormArray([]),
-			types: new FormArray([]),
-			tags: new FormArray([])
+			languages: new UntypedFormArray([]),
+			types: new UntypedFormArray([]),
+			tags: new UntypedFormArray([])
 		});
 	}
 
@@ -138,14 +138,14 @@ export class FilterMenuComponent implements OnInit, OnDestroy
 		this.langsSubscription = this.data.languages.subscribe(languageMap => {
 			// Clear the form array and newly fill it
 			this.langsFormArray.clear();
-			languageMap.values.forEach((language) => this.langsFormArray.push(new FormControl(false)));
+			languageMap.values.forEach((language) => this.langsFormArray.push(new UntypedFormControl(false)));
 			this.languages = [...languageMap.values];
 		});
 
 		this.typesSubscription = this.data.lexemeTypes.subscribe(types => {
 			// Clear the form array and newly fill it
 			this.typesFormArray.clear();
-			types.forEach((type) => this.typesFormArray.push(new FormControl(false)));
+			types.forEach((type) => this.typesFormArray.push(new UntypedFormControl(false)));
 			this.types = [...types];
 		});
 
@@ -172,7 +172,7 @@ export class FilterMenuComponent implements OnInit, OnDestroy
 			}
 			// Clear the form array and newly fill it
 			this.tagsFormArray.clear();
-			tagsArray.forEach((tagObj) => this.tagsFormArray.push(new FormControl(selectedTags.hasOwnProperty(tagObj.tag))));
+			tagsArray.forEach((tagObj) => this.tagsFormArray.push(new UntypedFormControl(selectedTags.hasOwnProperty(tagObj.tag))));
 			this.tags = tagsArray;
 		});
 	}

@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, UntypedFormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ListComponent } from '@app/admin/lexemes/list/list.component';
 import { TabSememesComponent } from '@app/admin/lexemes/tab-3-sememes/tab-sememes.component';
@@ -53,10 +53,10 @@ export class SynGroupLinkComponent implements OnInit, OnDestroy, ControlValueAcc
 		return o1 == o2 || (o1.type == o2.type && o1.id == o2.id);
 	}
 
-	public linkCtrl: FormControl = new FormControl();
+	public linkCtrl: UntypedFormControl = new UntypedFormControl();
 	private previousValue: any = null; // just to keep the previous value
 	// Control for filter field
-	public linkFilteringCtrl: FormControl = new FormControl();
+	public linkFilteringCtrl: UntypedFormControl = new UntypedFormControl();
 
 	// The loaded or created SynGroup that is kept internal and can be accessed from the outside
 	_synGroup: SynGroup = null;

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -24,7 +24,7 @@ import { FormTypePositionsDialog } from './form-type-positions-dialog';
 	// table attributes
 	displayedColumns: string[] = ['lexemeTypeID', 'langID', 'actions'];
 
-	constructor(private formBuilder: FormBuilder, data: DataService, httpClient: HttpClient, transloco: TranslocoService,
+	constructor(private formBuilder: UntypedFormBuilder, data: DataService, httpClient: HttpClient, transloco: TranslocoService,
 		private dialog: MatDialog)
 	{
 		super(data, httpClient, transloco, 'id', typeLangConfigsApiPath, {});

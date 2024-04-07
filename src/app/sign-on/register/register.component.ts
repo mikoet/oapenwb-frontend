@@ -4,7 +4,7 @@ import { first } from 'rxjs/operators';
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit } from '@angular/core';
 import {
-	AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators
+	AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isMessage } from '@app/_models/message';
@@ -41,7 +41,7 @@ export function mustMatch(controlName: string, matchingControlName: string)
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-	form: FormGroup;
+	form: UntypedFormGroup;
 	returnURL: string;
 	errorMsg: string = '';
 
@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
 		};
 	}
 
-	constructor(private formBuilder: FormBuilder,
+	constructor(private formBuilder: UntypedFormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
 		private accountService: AccountService,

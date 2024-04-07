@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { first } from 'rxjs/operators';
 
@@ -21,13 +21,13 @@ import { isUser } from '@app/_models/user';
   styleUrls: ['./forgot-pw.component.scss']
 })
 export class ForgotPwComponent implements OnInit {
-	form: FormGroup;
+	form: UntypedFormGroup;
 	returnURL: string;
 	errorMsg: string = '';
 
 	//matcher = new LoginErrorStateMatcher();
 
-	constructor(private formBuilder: FormBuilder,
+	constructor(private formBuilder: UntypedFormBuilder,
 		private location: Location,
 		private route: ActivatedRoute,
 		private router: Router,

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 import { catchError, map, retry } from 'rxjs/operators';
 import { Response } from '@app/_models/response';
@@ -24,7 +24,7 @@ export class LanguageComponent extends AbstractSEC<Language> {
 	// table attributes
 	displayedColumns: string[] = ['locale', 'localName', 'uitID', 'uitID_abbr', 'parentID', 'mainOrthographyID', 'actions'];
 
-	constructor(private formBuilder: FormBuilder, httpClient: HttpClient, transloco: TranslocoService)
+	constructor(private formBuilder: UntypedFormBuilder, httpClient: HttpClient, transloco: TranslocoService)
 	{
 		super(httpClient, transloco, 'id', langApiPath, {});
 	}
