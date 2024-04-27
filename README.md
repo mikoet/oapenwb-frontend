@@ -33,6 +33,10 @@ oapenwb is in development stage. The administrator's interface is quiet usable.
 
 [//]: # (Shared block end)
 
+## pnpm
+
+Install packages via `pnpm install --shamefully-hoist`.
+
 ## License
 
 Copyright 2022 Michael Köther
