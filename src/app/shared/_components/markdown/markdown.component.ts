@@ -27,7 +27,7 @@ export class MarkdownComponent implements OnInit, OnDestroy
 
 	source: string = '';
 	activeLocale: string = '';
-	destroy$ = new ReplaySubject(1);
+	destroy$ = new ReplaySubject<void>(1);
 
 	constructor(
 		private transloco: TranslocoService,

@@ -21,7 +21,7 @@ import { TranslocoService } from '@ngneat/transloco';
 })
 export class MainComponent implements OnInit, OnDestroy
 {
-	private destroy$ = new ReplaySubject();
+	private destroy$ = new ReplaySubject<void>(1);
 
 	constructor(
 		public transloco: TranslocoService,

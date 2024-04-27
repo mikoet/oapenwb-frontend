@@ -46,7 +46,7 @@ export class TableViewComponent implements OnInit, OnDestroy
 	performedSearch = false;
 	hasDesktopWidth = false;
 
-	destroy$ = new ReplaySubject(1);
+	destroy$ = new ReplaySubject<void>(1);
 
 	private isMobile : boolean;
 
