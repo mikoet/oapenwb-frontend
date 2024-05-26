@@ -109,7 +109,7 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 			parserID: [null, Validators.pattern("[a-zA-Z0-9-]+_[a-zA-Z0-9-]+")],
 			tags: [[]],
 			notes: [],
-			showVariantDetailsFrom: [],
+			showVariantsFrom: [],
 			active: [false, Validators.required],
 		});
 		this.filteredTags = this.tagCtrl.valueChanges.pipe(
@@ -137,14 +137,14 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 		this.typeSubscription = this.generalForm.controls['typeID'].valueChanges.subscribe(newValue => {       
 			let oldValue = this.generalForm.value['typeID'];
 			if (this._trackChanges && oldValue != newValue) {
-				this.generalForm.get('showVariantDetailsFrom').setValue(null);
+				this.generalForm.get('showVariantsFrom').setValue(null);
 			}
 	 	});
 
 		 this.langSubscription = this.generalForm.controls['langID'].valueChanges.subscribe(newValue => {       
 			let oldValue = this.generalForm.value['langID'];
 			if (this._trackChanges && oldValue != newValue) {
-				this.generalForm.get('showVariantDetailsFrom').setValue(null);
+				this.generalForm.get('showVariantsFrom').setValue(null);
 			}
 	 	});
 
@@ -199,8 +199,8 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 			let values = this.generalForm.getRawValue();
 			// WA0001
 			let lexemeLinkValue = this.lexemeLink.getValue();
-			if (values.showVariantDetailsFrom != lexemeLinkValue) {
-				values.showVariantDetailsFrom = lexemeLinkValue;
+			if (values.showVariantsFrom != lexemeLinkValue) {
+				values.showVariantsFrom = lexemeLinkValue;
 			}
 			if (values.parserID == '') {
 				// ParserID must not be an empty string but then null instead
@@ -280,7 +280,7 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 		return result;
 	}
 
-	disableShowVariantDetailsFrom() : boolean
+	disableShowVariantsFrom() : boolean
 	{
 		let result = true;
 		if (this.lexemeService.store.active?.origin === LexemeOrigin.TopList) {
@@ -301,7 +301,7 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 			doEnablingControl(this.generalForm.controls['typeID'], !this.enableTypeIdAndLangId());
 			doEnablingControl(this.generalForm.controls['langID'], !this.enableTypeIdAndLangId());
 			doEnablingControl(this.generalForm.controls['parserID'], this.disableParserID());
-			doEnablingControl(this.generalForm.controls['showVariantDetailsFrom'], this.disableShowVariantDetailsFrom());
+			doEnablingControl(this.generalForm.controls['showVariantsFrom'], this.disableShowVariantsFrom());
 		} else {
 			this.areTagsEditable = false;
 			this.generalForm.disable({ emitEvent: false });
