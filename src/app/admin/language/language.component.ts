@@ -80,6 +80,8 @@ export class LanguageComponent extends AbstractSEC<Language> {
 			uitID_abbr: new FormControl('', Validators.required),
 			uitID: new FormControl('', Validators.required),
 			mainOrthographyID: new FormControl<number|null>(null, Validators.required),
+			// NOTE form control is not yet shown in the UI but it's part of the model
+			importAbbreviation: new FormControl<string|null>({ value: null, disabled: true }),
 		});
 
 		// Load the Orthographies for the select-box
