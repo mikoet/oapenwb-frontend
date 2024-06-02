@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-08-07 20:06:21.
+// Generated using typescript-generator version 2.32.889 on 2024-06-02 22:40:26.
 
 export interface LSearchRequest {
     filter: string;
@@ -95,6 +95,7 @@ export interface Language extends IEntity<number> {
     uitID: string;
     uitID_abbr: string;
     mainOrthographyID: number;
+    importAbbreviation: string;
 }
 
 export interface LangOrthoMapping extends IEntity<number> {
@@ -203,7 +204,7 @@ export interface Lexeme extends IRPCEntity<number> {
     changed: boolean;
 }
 
-export interface Variant extends IRPCEntity<number> {
+export interface Variant extends IRPCEntity<number>, Cloneable {
     id: number;
     version: number;
     createdAt: Date;
@@ -318,12 +319,15 @@ export interface UiTranslationSet extends IEntity<string> {
 export interface Serializable {
 }
 
-export interface Lemma {
+export interface Lemma extends Cloneable {
     pre: string;
     main: string;
     post: string;
     also: string;
     fillLemma: number;
+}
+
+export interface Cloneable {
 }
 
 export interface SynGroup extends IRPCEntity<number>, IEntity<number> {
@@ -342,8 +346,8 @@ export interface IEntity<T> {
 }
 
 export interface IRPCEntity<T> {
-    id: T;
     apiAction: ApiAction;
+    id: T;
 }
 
 export type TextSearchType = "PostgreWeb" | "Prefixed";

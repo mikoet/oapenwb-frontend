@@ -21,6 +21,7 @@ export class ExtLanguage implements Language
 	uitID: string;
 	uitID_abbr: string;
 	mainOrthographyID: number;
+	importAbbreviation: string;
 
 	_children?: ExtLanguage[];
 	_orthographies?: Orthography[];
