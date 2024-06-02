@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Orthography } from '../_models/admin-api';
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
@@ -29,8 +29,10 @@ export class OrthographyComponent extends AbstractSEC<Orthography>
 	// table attributes
 	displayedColumns: string[] = ['abbreviation', 'uitID', 'parent', 'publicly', 'description', 'actions'];
 
-	constructor(private formBuilder: UntypedFormBuilder, httpClient: HttpClient, transloco: TranslocoService)
-	{
+	constructor(
+		httpClient: HttpClient,
+		transloco: TranslocoService,
+	) {
 		super(httpClient, transloco, 'id', orthoApiPath, { publicly: true });
 	}
 
@@ -76,14 +78,14 @@ export class OrthographyComponent extends AbstractSEC<Orthography>
 
 	buildForm(): void
 	{
-		this.entityForm = this.formBuilder.group({
-			id: [null],
-			version: [null],
-			abbreviation: ['', Validators.required],
-			uitID: ['', Validators.required],
-			parentID: [''],
-			publicly: [true, Validators.required],
-			description: ['']
+		this.entityForm = new FormGroup({
+			id: new FormControl<number|null>(null),
+			version: new FormControl<number|null>(null),
+			abbreviation: new FormControl('', { validators: Validators.required, nonNullable: true }),
+			uitID: new FormControl('', { validators: Validators.required, nonNullable: true }),
+			parentID: new FormControl<number|null>(null),
+			publicly: new FormControl(false, { validators: Validators.required, nonNullable: true }),
+			description: new FormControl<string|null>(null),
 		});
 	}
 

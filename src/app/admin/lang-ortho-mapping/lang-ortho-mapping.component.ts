@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { catchError, map, retry } from 'rxjs/operators';
 import { Response } from '@app/_models/response';
@@ -27,7 +27,6 @@ import { langApiPath, loMappingApiPath, orthoApiPath } from '../_models/admin-ap
 	displayedColumns: string[] = ['langID', 'orthographyID', 'position', 'actions'];
 
 	constructor(
-		private formBuilder: UntypedFormBuilder,
 		httpClient: HttpClient,
 		transloco: TranslocoService)
 	{
@@ -70,12 +69,12 @@ import { langApiPath, loMappingApiPath, orthoApiPath } from '../_models/admin-ap
 
 	buildForm(): void
 	{
-		this.entityForm = this.formBuilder.group({
-			id: [null],
-			version: [null],
-			langID: [null, Validators.required],
-			orthographyID: [null, Validators.required],
-			position: [0, Validators.required]
+		this.entityForm = new FormGroup({
+			id: new FormControl<number|null>(null),
+			version: new FormControl<number|null>(null),
+			langID: new FormControl<number|null>(null, Validators.required),
+			orthographyID: new FormControl<number|null>(null, Validators.required),
+			position: new FormControl(0, { nonNullable: true }),
 		});
 
 		// Load the Languages for the select-box

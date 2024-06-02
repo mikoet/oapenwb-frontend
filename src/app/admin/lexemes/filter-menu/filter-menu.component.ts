@@ -1,12 +1,12 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FilterOptions, Language, LexemeType, State, Tag, TextSearchType } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
 import { Dictionary } from '@app/util/hashmap';
-import { Subscription } from 'rxjs';
+import { ReplaySubject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'app-filter-menu',
@@ -16,15 +16,21 @@ import { Subscription } from 'rxjs';
 export class FilterMenuComponent implements OnInit, OnDestroy
 {
 	// Formular
-	form: UntypedFormGroup;
+	form = new FormGroup({
+		languages: new FormArray<FormControl<boolean>>([]),
+		types: new FormArray<FormControl<boolean>>([]),
+		tags: new FormArray<FormControl<boolean>>([]),
+	});
+
+	// hwa FIXME behöve ik düsse getters noch?
 	get langsFormArray() {
-		return this.form.controls.languages as UntypedFormArray;
+		return this.form.controls.languages as FormArray; // hwa Add typisation here?
 	}
 	get typesFormArray() {
-		return this.form.controls.types as UntypedFormArray;
+		return this.form.controls.types as FormArray;
 	}
 	get tagsFormArray() {
-		return this.form.controls.tags as UntypedFormArray;
+		return this.form.controls.tags as FormArray;
 	}
 
 	// Search type
@@ -36,7 +42,6 @@ export class FilterMenuComponent implements OnInit, OnDestroy
 	}
 
 	// Languages subscription and languages attribute
-	private langsSubscription: Subscription;
 	languages: Language[] = []; // the indices of this array are in sync with those of the form array (!)
 	langClicked($event: any, index: number) : void
 	{
@@ -49,7 +54,6 @@ export class FilterMenuComponent implements OnInit, OnDestroy
 	}
 
 	// LexemeTypes subscription and types attribute
-	private typesSubscription: Subscription;
 	types: LexemeType[] = []; // the indices of this array are in sync with those of the form array (!)
 	typeClicked($event: any, index: number) : void
 	{
@@ -62,7 +66,6 @@ export class FilterMenuComponent implements OnInit, OnDestroy
 	}
 
 	// Tags subscription and filtered tags attribute (without unused tags)
-	private tagsSubscription: Subscription;
 	tags: Tag[] = []; // the indices of this array are in sync with those of the form array (!)
 	tagClicked($event: any, index: number) : void
 	{
@@ -82,15 +85,12 @@ export class FilterMenuComponent implements OnInit, OnDestroy
 		this.active = value;
 	}
 
-	constructor(private readonly formBuilder: UntypedFormBuilder, private readonly data: DataService,
-		public readonly lexemeQuery: LexemeQueryService)
-	{
-		this.form = this.formBuilder.group({
-			languages: new UntypedFormArray([]),
-			types: new UntypedFormArray([]),
-			tags: new UntypedFormArray([])
-		});
-	}
+	private readonly destroy$ = new ReplaySubject<void>();
+
+	constructor(
+		private readonly data: DataService,
+		public readonly lexemeQuery: LexemeQueryService,
+	) { }
 
 	/**
 	 * @returns a instance of FilterOptions if any filter is set, or null
@@ -135,21 +135,27 @@ export class FilterMenuComponent implements OnInit, OnDestroy
 
 	ngOnInit(): void
 	{
-		this.langsSubscription = this.data.languages.subscribe(languageMap => {
+		this.data.languages.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(languageMap => {
 			// Clear the form array and newly fill it
 			this.langsFormArray.clear();
-			languageMap.values.forEach((language) => this.langsFormArray.push(new UntypedFormControl(false)));
+			languageMap.values.forEach((language) => this.langsFormArray.push(new FormControl(false)));
 			this.languages = [...languageMap.values];
 		});
 
-		this.typesSubscription = this.data.lexemeTypes.subscribe(types => {
+		this.data.lexemeTypes.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(types => {
 			// Clear the form array and newly fill it
 			this.typesFormArray.clear();
-			types.forEach((type) => this.typesFormArray.push(new UntypedFormControl(false)));
+			types.forEach((type) => this.typesFormArray.push(new FormControl(false)));
 			this.types = [...types];
 		});
 
-		this.tagsSubscription = this.data.tags.subscribe(tags => {
+		this.data.tags.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(tags => {
 			// only take the tags with a usageCount > 0 (there may be guarded once which are unused)
 			let tagsArray: Tag[] = [];
 			for (let tag of tags) {
@@ -172,16 +178,15 @@ export class FilterMenuComponent implements OnInit, OnDestroy
 			}
 			// Clear the form array and newly fill it
 			this.tagsFormArray.clear();
-			tagsArray.forEach((tagObj) => this.tagsFormArray.push(new UntypedFormControl(selectedTags.hasOwnProperty(tagObj.tag))));
+			tagsArray.forEach((tagObj) => this.tagsFormArray.push(new FormControl(selectedTags.hasOwnProperty(tagObj.tag))));
 			this.tags = tagsArray;
 		});
 	}
 
 	ngOnDestroy(): void
 	{
-		this.langsSubscription.unsubscribe();
-		this.typesSubscription.unsubscribe();
-		this.tagsSubscription.unsubscribe();
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	reset() : void

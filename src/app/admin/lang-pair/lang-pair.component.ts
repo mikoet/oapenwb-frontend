@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { catchError, map, retry } from 'rxjs/operators';
 import { Response } from '@app/_models/response';
 
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@ngneat/transloco';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 import { LangPair, Language } from '../_models/admin-api';
@@ -24,8 +24,10 @@ import { langApiPath, langPairApiPath } from '../_models/admin-api-paths';
 	// table attributes
 	displayedColumns: string[] = ['id', 'langOneID', 'langTwoID', 'position', 'actions'];
 
-	constructor(private formBuilder: UntypedFormBuilder, httpClient: HttpClient, transloco: TranslocoService)
-	{
+	constructor(
+		httpClient: HttpClient,
+		transloco: TranslocoService,
+	) {
 		super(httpClient, transloco, 'id', langPairApiPath, {});
 	}
 
@@ -48,12 +50,12 @@ import { langApiPath, langPairApiPath } from '../_models/admin-api-paths';
 
 	buildForm(): void
 	{
-		this.entityForm = this.formBuilder.group({
-			id: [null, Validators.required],
-			version: [null],
-			langOneID: [null, Validators.required],
-			langTwoID: [null, Validators.required],
-			position: [0, Validators.required]
+		this.entityForm = new FormGroup({
+			id: new FormControl('', Validators.required),
+			version: new FormControl<number|null>(null),
+			langOneID: new FormControl<number|null>(null, Validators.required),
+			langTwoID: new FormControl<number|null>(null, Validators.required),
+			position: new FormControl(0, { validators: Validators.required, nonNullable: true }),
 		});
 
 		// Load the Languages for the select-box

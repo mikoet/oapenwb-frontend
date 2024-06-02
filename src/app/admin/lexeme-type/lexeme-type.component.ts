@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { catchError, map, retry } from 'rxjs/operators';
 import { Response } from '@app/_models/response';
@@ -37,8 +37,10 @@ import { langApiPath, lexemeTypeApiPath, uiResultCategoryApiPath } from '../_mod
 	// table attributes
 	displayedColumns: string[] = ['name', 'uitID', 'uiCategoryID', 'actions'];
 
-	constructor(private formBuilder: UntypedFormBuilder, httpClient: HttpClient, transloco: TranslocoService)
-	{
+	constructor(
+		httpClient: HttpClient,
+		transloco: TranslocoService,
+	) {
 		super(httpClient, transloco, 'id', lexemeTypeApiPath, {});
 	}
 
@@ -122,12 +124,12 @@ import { langApiPath, lexemeTypeApiPath, uiResultCategoryApiPath } from '../_mod
 			return false;
 		};
 
-		this.entityForm = this.formBuilder.group({
-			id: [null],
-			version: [null],
-			uitID: ['', Validators.required],
-			name: ['', Validators.required],
-			uiCategoryID: [null]
+		this.entityForm = new FormGroup({
+			id: new FormControl<number|null>(null),
+			version: new FormControl<number|null>(null),
+			uitID: new FormControl('', { validators: Validators.required, nonNullable: true }),
+			name: new FormControl('', { validators: Validators.required, nonNullable: true }),
+			uiCategoryID: new FormControl<number|null>(null),
 		});
 
 		// Load the Languages for the select-box

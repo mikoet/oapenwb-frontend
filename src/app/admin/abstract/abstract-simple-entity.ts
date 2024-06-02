@@ -6,7 +6,7 @@ import { catchError, map, retry } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, Directive, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormGroup, NgForm } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Message } from '@app/_models/message';
 import { Response } from '@app/_models/response';
@@ -26,7 +26,7 @@ export abstract class AbstractSEC<T /*extends Entity*/> implements OnInit, After
 
 	// every entity form using this base class must have the '#formDirective="ngForm"' property
 	@ViewChild('formDirective') private formDirective: NgForm;
-	entityForm: UntypedFormGroup;
+	entityForm: FormGroup;
 	get f() { return this.entityForm.controls; }
 
 	// table attributes

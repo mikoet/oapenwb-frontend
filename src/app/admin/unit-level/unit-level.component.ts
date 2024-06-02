@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -22,8 +22,11 @@ import { UIT_ID_REGEX } from '../_util/uit-id';
 	// table attributes
 	displayedColumns: string[] = ['uitID', 'uitID_abbr', 'description', 'actions'];
 
-	constructor(private formBuilder: UntypedFormBuilder, data: DataService, httpClient: HttpClient, transloco: TranslocoService)
-	{
+	constructor(
+		data: DataService,
+		httpClient: HttpClient,
+		transloco: TranslocoService,
+	) {
 		super(data, httpClient, transloco, 'id', unitLevelsApiPath, {});
 	}
 
@@ -33,12 +36,12 @@ import { UIT_ID_REGEX } from '../_util/uit-id';
 
 	buildForm(): void
 	{
-		this.entityForm = this.formBuilder.group({
-			id: [null],
-			version: [null],
-			uitID_abbr: [null, Validators.compose([Validators.required, Validators.pattern(UIT_ID_REGEX)])],
-			uitID: [null,  Validators.compose([Validators.required, Validators.pattern(UIT_ID_REGEX)])],
-			description: [null]
+		this.entityForm = new FormGroup({
+			id: new FormControl<number|null>(null),
+			version: new FormControl<number|null>(null),
+			uitID_abbr: new FormControl<string|null>(null, [Validators.required, Validators.pattern(UIT_ID_REGEX)]),
+			uitID: new FormControl<string|null>(null, [Validators.required, Validators.pattern(UIT_ID_REGEX)]),
+			description: new FormControl<string|null>(null),
 		});
 	}
 

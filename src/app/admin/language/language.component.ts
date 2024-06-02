@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { catchError, map, retry } from 'rxjs/operators';
 import { Response } from '@app/_models/response';
@@ -24,8 +24,10 @@ export class LanguageComponent extends AbstractSEC<Language> {
 	// table attributes
 	displayedColumns: string[] = ['locale', 'localName', 'uitID', 'uitID_abbr', 'parentID', 'mainOrthographyID', 'actions'];
 
-	constructor(private formBuilder: UntypedFormBuilder, httpClient: HttpClient, transloco: TranslocoService)
-	{
+	constructor(
+		httpClient: HttpClient,
+		transloco: TranslocoService,
+	) {
 		super(httpClient, transloco, 'id', langApiPath, {});
 	}
 
@@ -69,15 +71,15 @@ export class LanguageComponent extends AbstractSEC<Language> {
 
 	buildForm(): void
 	{
-		this.entityForm = this.formBuilder.group({
-			id: [null],
-			version: [null],
-			parentID: [null],
-			locale: ['', Validators.required],
-			localName: ['', Validators.required],
-			uitID: ['', Validators.required],
-			uitID_abbr: ['', Validators.required],
-			mainOrthographyID: [null, Validators.required],
+		this.entityForm = new FormGroup({
+			id: new FormControl<number|null>(null),
+			version: new FormControl<number|null>(null),
+			parentID: new FormControl<number|null>(null),
+			locale: new FormControl('', Validators.required),
+			localName: new FormControl('', Validators.required),
+			uitID_abbr: new FormControl('', Validators.required),
+			uitID: new FormControl('', Validators.required),
+			mainOrthographyID: new FormControl<number|null>(null, Validators.required),
 		});
 
 		// Load the Orthographies for the select-box

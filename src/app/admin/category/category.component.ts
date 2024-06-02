@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -21,8 +21,11 @@ import { AbstractSECPlus } from '../abstract/abstract-simple-entity-plus';
 	// table attributes
 	displayedColumns: string[] = ['uitID', 'uitID_abbr', 'parentID', 'description', 'actions'];
 
-	constructor(private formBuilder: UntypedFormBuilder, data: DataService, httpClient: HttpClient, transloco: TranslocoService)
-	{
+	constructor(
+		data: DataService,
+		httpClient: HttpClient,
+		transloco: TranslocoService,
+	) {
 		super(data, httpClient, transloco, 'id', categoriesApiPath, {});
 	}
 
@@ -32,13 +35,13 @@ import { AbstractSECPlus } from '../abstract/abstract-simple-entity-plus';
 
 	buildForm(): void
 	{
-		this.entityForm = this.formBuilder.group({
-			id: [null],
-			version: [null],
-			uitID_abbr: [null, Validators.required],
-			uitID: [null, Validators.required],
-			parentID: [null],
-			description: [null]
+		this.entityForm = new FormGroup({
+			id: new FormControl<number|null>(null),
+			version: new FormControl<number|null>(null),
+			uitID_abbr: new FormControl<string|null>(null, Validators.required),
+			uitID: new FormControl<string|null>(null, Validators.required),
+			parentID: new FormControl<number|null>(null),
+			description: new FormControl<string|null>(null),
 		});
 	}
 

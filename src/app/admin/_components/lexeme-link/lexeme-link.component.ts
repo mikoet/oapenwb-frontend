@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { ControlValueAccessor, UntypedFormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ListComponent } from '@app/admin/lexemes/list/list.component';
 import { LexemeSlimDTO } from '@app/admin/_models/admin-api';
 import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
@@ -22,10 +22,10 @@ import { debounceTime, tap, filter, takeUntil, switchMap } from 'rxjs/operators'
 })
 export class LexemeLinkComponent implements OnInit, OnDestroy, ControlValueAccessor
 {
-	public linkCtrl: UntypedFormControl = new UntypedFormControl();
+	public readonly linkCtrl = new FormControl<number | null>(null);
 	private previousValue: any = null; // just to keep the previous value
 	// Control for filter field
-	public linkFilteringCtrl: UntypedFormControl = new UntypedFormControl();
+	public readonly linkFilteringCtrl = new FormControl('');
 
 	@Input()
 	typeID: number = null;
@@ -97,11 +97,14 @@ export class LexemeLinkComponent implements OnInit, OnDestroy, ControlValueAcces
 	// WA0001
 	getValue() : number
 	{
+		return this.linkCtrl.value;
+		/* FIXME remove if above line is sufficient
 		let value = this.linkCtrl.value;
 		if (!!value) {
 			return parseInt(value);
 		}
 		return null;
+		*/
 	}
 
 	// Code for interface ControlValueAccessor
@@ -109,9 +112,9 @@ export class LexemeLinkComponent implements OnInit, OnDestroy, ControlValueAcces
 	onChange: any = () => {}
 	onTouch: any = () => {}
 
-	writeValue(input: string): void {
+	writeValue(input: number): void {
 		if (!!input) {
-			this.lexemeQuery.loadSlimByID(parseInt(input)).subscribe(slimDTO => {
+			this.lexemeQuery.loadSlimByID(input).subscribe(slimDTO => {
 				this.filteredLexemes.next([ slimDTO ]);
 				this.linkCtrl.setValue(input, { emitEvent: false });
 			})

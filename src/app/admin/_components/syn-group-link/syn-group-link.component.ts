@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, UntypedFormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ListComponent } from '@app/admin/lexemes/list/list.component';
 import { TabSememesComponent } from '@app/admin/lexemes/tab-3-sememes/tab-sememes.component';
@@ -53,10 +53,10 @@ export class SynGroupLinkComponent implements OnInit, OnDestroy, ControlValueAcc
 		return o1 == o2 || (o1.type == o2.type && o1.id == o2.id);
 	}
 
-	public linkCtrl: UntypedFormControl = new UntypedFormControl();
+	public readonly linkCtrl = new FormControl<Selection | null>(null);
 	private previousValue: any = null; // just to keep the previous value
 	// Control for filter field
-	public linkFilteringCtrl: UntypedFormControl = new UntypedFormControl();
+	public readonly linkFilteringCtrl = new FormControl('');
 
 	// The loaded or created SynGroup that is kept internal and can be accessed from the outside
 	_synGroup: SynGroup = null;
@@ -266,11 +266,15 @@ export class SynGroupLinkComponent implements OnInit, OnDestroy, ControlValueAcc
 	// WA0001
 	getValue() : number
 	{
+		return this.linkCtrl.value?.id ?? null;
+
+		/* FIXME NGU14 remove if above code works
 		let value = this.linkCtrl.value;
 		if (!!value) {
 			return parseInt(value);
 		}
 		return null;
+		*/
 	}
 
 	formatPresentation(text: string) : string

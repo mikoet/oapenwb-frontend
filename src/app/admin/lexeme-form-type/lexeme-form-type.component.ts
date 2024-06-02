@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { catchError, map, retry } from 'rxjs/operators';
 import { Response } from '@app/_models/response';
 
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@ngneat/transloco';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 import { LexemeFormType, LexemeType } from '../_models/admin-api';
@@ -35,8 +35,10 @@ export class LexemeFormTypeComponent extends AbstractSEC<LexemeFormType> {
 	// table attributes
 	displayedColumns: string[] = ['lexemeTypeID', 'name', 'uitID', 'mandatory', 'position', 'actions'];
 
-	constructor(private formBuilder: UntypedFormBuilder, httpClient: HttpClient, transloco: TranslocoService)
-	{
+	constructor(
+		httpClient: HttpClient,
+		transloco: TranslocoService,
+	) {
 		super(httpClient, transloco, 'id', lexemeFormTypeApiPath, { mandatory: false });
 	}
 
@@ -120,15 +122,15 @@ export class LexemeFormTypeComponent extends AbstractSEC<LexemeFormType> {
 			return false;
 		};
 
-		this.entityForm = this.formBuilder.group({
-			id: [null],
-			version: [null],
-			lexemeTypeID: [null, Validators.required],
-			name: [null, Validators.required],
-			uitID: ['', Validators.required],
-			description: [null],
-			mandatory: [false, Validators.required],
-			position: [0, Validators.required],
+		this.entityForm = new FormGroup({
+			id: new FormControl<number|null>(null),
+			version: new FormControl<number|null>(null),
+			lexemeTypeID: new FormControl<number>(null, { validators: Validators.required, nonNullable: true }),
+			name: new FormControl('', { validators: Validators.required, nonNullable: true }),
+			uitID: new FormControl('', { validators: Validators.required, nonNullable: true }),
+			description: new FormControl<string|null>(null),
+			mandatory: new FormControl(false, { validators: Validators.required, nonNullable: true }),
+			position: new FormControl(0, { validators: Validators.required, nonNullable: true }),
 		});
 
 		// Load the LexemeTypes for the select-box

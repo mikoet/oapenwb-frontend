@@ -1,7 +1,18 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import {
+	Component,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+} from '@angular/core';
+import {
+	FormArray,
+	FormControl,
+	FormGroup,
+	FormGroupDirective,
+	Validators,
+} from '@angular/forms';
 import { LexemeFormType, LexemeForm } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { NumericKeyMap } from '@app/util/hashmap';
@@ -23,10 +34,14 @@ interface PositionedForm
 export class LexemeFormsComponent implements OnInit, OnDestroy
 {
 	// Formular: word forms form
-	formGroup: UntypedFormGroup;
+	formGroup = new FormGroup({
+		lexemeForms: new FormArray<FormControl<string>>([] /* , Validators.required */),
+	}, {
+		updateOn: 'blur',
+	});
 	@ViewChild(FormGroupDirective) formRef: FormGroupDirective;
-	get lexemeFormsCtrl() : UntypedFormArray {
-		return this.formGroup.controls.lexemeForms as UntypedFormArray;
+	get lexemeFormsCtrl(): FormArray<FormControl<string>> {
+		return this.formGroup.controls.lexemeForms;
 	}
 
 	// Type data
@@ -61,13 +76,9 @@ export class LexemeFormsComponent implements OnInit, OnDestroy
 		this.doEnabling();
     }
 
-	constructor(private readonly changeDetector: ChangeDetectorRef, private formBuilder: UntypedFormBuilder,
-		private data: DataService)
-	{
-		this.formGroup = this.formBuilder.group({
-			lexemeForms: this.formBuilder.array([] /*, [Validators.required]*/)
-		}, { updateOn: 'blur' });
-	}
+	constructor(
+		private data: DataService,
+	) { }
 
 	setData(lexemeForms: LexemeForm[]) : void
 	{
@@ -201,11 +212,11 @@ export class LexemeFormsComponent implements OnInit, OnDestroy
 			initialValue = form.text;
 			disabled = form.state === 4 ? true : false; // 4 === STATE_GENERATED_PROTECTED
 		}
-		let control: UntypedFormControl;
+		let control: FormControl<string>;
 		if (formType.mandatory) {
-			control = new UntypedFormControl({ value: initialValue, disabled: disabled }, Validators.required);
+			control = new FormControl<string>({ value: initialValue, disabled: disabled }, Validators.required);
 		} else {
-			control = new UntypedFormControl({ value: initialValue, disabled: disabled });
+			control = new FormControl<string>({ value: initialValue, disabled: disabled });
 		}
 
 		this.lexemeFormsCtrl.push(control);

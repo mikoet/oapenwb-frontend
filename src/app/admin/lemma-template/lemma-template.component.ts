@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -22,8 +22,11 @@ export class LemmaTemplateComponent extends AbstractSECPlus<LemmaTemplate>
 	// table attributes
 	displayedColumns: string[] = ['name', 'lexemeTypeID', 'langID', 'dialectIDs', 'orthographyID', 'actions'];
 
-	constructor(private formBuilder: UntypedFormBuilder, data: DataService, httpClient: HttpClient, transloco: TranslocoService)
-	{
+	constructor(
+		data: DataService,
+		httpClient: HttpClient,
+		transloco: TranslocoService,
+	) {
 		super(data, httpClient, transloco, 'id', lemmaTemplatesApiPath, {});
 	}
 
@@ -85,18 +88,18 @@ export class LemmaTemplateComponent extends AbstractSECPlus<LemmaTemplate>
 
 	buildForm(): void
 	{
-		this.entityForm = this.formBuilder.group({
-			id: [null],
-			version: [null],
-			name: [null],
-			lexemeTypeID: [null, Validators.required],
-			langID: [null],
-			dialectIDs: [null],
-			orthographyID: [null],
-			preText: [null],
-			mainText: [null, Validators.required],
-			postText: [null],
-			alsoText: [null]
+		this.entityForm = new FormGroup({
+			id: new FormControl<number|null>(null),
+			version: new FormControl<number|null>(null),
+			name: new FormControl<string|null>(null),
+			lexemeTypeID: new FormControl<number|null>(null, Validators.required),
+			langID: new FormControl<number|null>(null),
+			dialectIDs: new FormControl<number[]|null>(null),
+			orthographyID: new FormControl<number|null>(null),
+			preText: new FormControl<string|null>(null),
+			mainText: new FormControl('', Validators.required),
+			postText: new FormControl<string|null>(null),
+			alsoText: new FormControl<string|null>(null),
 		});
 	}
 
