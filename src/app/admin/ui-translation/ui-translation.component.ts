@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -46,11 +46,10 @@ export class UiTranslationComponent extends AbstractSEC<UiTranslationSet> {
 	displayedColumns: string[] = this.basicColumns;
 
 	constructor(
-		private formBuilder: UntypedFormBuilder,
 		httpClient: HttpClient,
 		transloco: TranslocoService,
-		private snackBar: MatSnackBar)
-	{
+		private snackBar: MatSnackBar,
+	) {
 		super(httpClient, transloco, ['scopeID', 'uitID'], uiTranslationsApiPath, {scopeID: '', essential: false});
 	}
 
@@ -74,17 +73,17 @@ export class UiTranslationComponent extends AbstractSEC<UiTranslationSet> {
 		this.dataSource.filter = UiTranslationComponent.magicFilterString + this.filterValue;
 	}
 
+	onUiLanguagesChanged(arg: any)
+	{
+		this.applySelectedUiLanguages();
+		this.dataSource.filter = this.selectedScope + UiTranslationComponent.magicFilterString + this.filterValue;
+	}
+
 	onUiScopeChanged(arg: any)
 	{
 		// Add the language ID (to always have some change in the filter when changing the language) and the magic filter-string
 		// as a seperator
 		this.dataSource.filter = this.selectedScope + UiTranslationComponent.magicFilterString + this.filterValue;
-	}
-
-	onUiLanguagesChanged(arg: any)
-	{
-		this.applySelectedUiLanguages();
-		this.dataSource.filter = this.filterValue;
 	}
 
 	private applySelectedUiLanguages()
@@ -151,11 +150,11 @@ export class UiTranslationComponent extends AbstractSEC<UiTranslationSet> {
 		// Create the entityForm, but it will be recreated a bit later when the UiLanguages
 		// are loaded and can only be fully specified then.
 		// However, this creation avoids exceptions being thrown.
-		this.entityForm = this.formBuilder.group({
-			scopeID: [''],
-			uitID: ['', [Validators.required, Validators.minLength(2)]],
-			essential: [false, Validators.required],
-			translations: this.formBuilder.group({}),
+		this.entityForm = new FormGroup({
+			scopeID: new FormControl('', { nonNullable: true }),
+			uitID: new FormControl('', { validators: [ Validators.required, Validators.minLength(2) ], nonNullable: true }),
+			essential: new FormControl(false, { validators: Validators.required, nonNullable: true }),
+			translations: new FormGroup({}),
 		});
 
 		// Load the available UiLanguages
@@ -178,7 +177,7 @@ export class UiTranslationComponent extends AbstractSEC<UiTranslationSet> {
 			).subscribe((data: UiLanguage[]) => {
 				// Collect all UiLanguages for the select elements as well as the form group
 				let selectableUiLanguages: SelectableUiLanguage[] = [];
-				let translationsGroup = {};
+				let translationsFormControls: { [key: string]: FormControl<string|null> } = {};
 				let selectedLanguages = [];
 				let count: number = 0;
 				for (let lang of data) {
@@ -186,7 +185,7 @@ export class UiTranslationComponent extends AbstractSEC<UiTranslationSet> {
 						locale: lang.locale,
 						name: lang.localName,
 					});
-					translationsGroup[lang.locale] = '';
+					translationsFormControls[lang.locale] = new FormControl<string|null>('');
 					// Add the first 3 languages as selected languages...
 					if (count < 3) {
 						selectedLanguages.push(lang.locale);
@@ -198,11 +197,12 @@ export class UiTranslationComponent extends AbstractSEC<UiTranslationSet> {
 				this.applySelectedUiLanguages();
 
 				// !!! Create the entityForm
-				this.entityForm = this.formBuilder.group({
-					scopeID: [''],
-					uitID: ['', [Validators.required, Validators.minLength(2)]],
-					essential: [false, Validators.required],
-					translations: this.formBuilder.group(translationsGroup),
+				const translationsGroup = new FormGroup(translationsFormControls);
+				this.entityForm = new FormGroup({
+					scopeID: new FormControl('', { nonNullable: true }),
+					uitID: new FormControl('', { validators: [ Validators.required, Validators.minLength(2) ], nonNullable: true }),
+					essential: new FormControl(false, { validators: Validators.required, nonNullable: true }),
+					translations: translationsGroup,
 				});
 			});
 

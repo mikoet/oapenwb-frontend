@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
@@ -20,19 +20,21 @@ export class UiResultCategoryComponent extends AbstractSEC<UiResultCategory>
 	// table attributes
 	displayedColumns: string[] = ['name', 'uitID', 'position', 'actions'];
 
-	constructor(private formBuilder: UntypedFormBuilder, httpClient: HttpClient, transloco: TranslocoService)
-	{
+	constructor(
+		httpClient: HttpClient,
+		transloco: TranslocoService
+	) {
 		super(httpClient, transloco, 'id', uiResultCategoryApiPath, {});
 	}
 
 	buildForm(): void
 	{
-		this.entityForm = this.formBuilder.group({
-			id: [null],
-			version: [null],
-			name: ['', Validators.required],
-			uitID: ['', Validators.required],
-			position: [0, Validators.required]
+		this.entityForm = new FormGroup({
+			id: new FormControl<number|null>(null),
+			version: new FormControl<number|null>(null),
+			name: new FormControl('', { validators: Validators.required, nonNullable: true }),
+			uitID: new FormControl('', { validators: Validators.required, nonNullable: true }),
+			position: new FormControl(0, { validators: Validators.required, nonNullable: true }),
 		});
 	}
 

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
@@ -21,7 +21,6 @@ export class UiLanguageComponent extends AbstractSEC<UiLanguage>
 	displayedColumns: string[] = ['locale', 'localName', 'isDefault', 'active', 'actions'];
 
 	constructor(
-		private formBuilder: UntypedFormBuilder,
 		httpClient: HttpClient,
 		transloco: TranslocoService)
 	{
@@ -30,12 +29,12 @@ export class UiLanguageComponent extends AbstractSEC<UiLanguage>
 
 	buildForm(): void
 	{
-		this.entityForm = this.formBuilder.group({
-			locale: ['', Validators.required],
-			version: [null],
-			localName: ['', Validators.required],
-			isDefault: [false, Validators.required],
-			active: [false, Validators.required]
+		this.entityForm = new FormGroup({
+			locale: new FormControl('', { validators: Validators.required, nonNullable: true }),
+			version: new FormControl<number|null>(null),
+			localName: new FormControl('', { validators: Validators.required, nonNullable: true }),
+			isDefault: new FormControl(false, { validators: Validators.required, nonNullable: true }),
+			active: new FormControl(false, { validators: Validators.required, nonNullable: true }),
 		});
 	}
 
