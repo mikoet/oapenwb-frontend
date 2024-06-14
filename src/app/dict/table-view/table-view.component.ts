@@ -11,7 +11,7 @@ import { isPlatformBrowser } from '@angular/common';
 import {
 	Component, HostListener, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, ViewChild
 } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatFormField } from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,7 +41,7 @@ export class TableViewComponent implements OnInit, OnDestroy
 	@ViewChild('searchInput', { read: MatAutocompleteTrigger })
   	autoCompleteTrigger: MatAutocompleteTrigger;
 
-	searchControl = new UntypedFormControl();
+	readonly searchControl = new FormControl('');
 
 	performedSearch = false;
 	hasDesktopWidth = false;

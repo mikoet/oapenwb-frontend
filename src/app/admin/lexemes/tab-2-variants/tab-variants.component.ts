@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, isDevMode, EventEmitter, Output } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { FormGroup, Validators, FormGroupDirective, FormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
-import { LexemeForm, Variant, LemmaTemplate, Orthography, Lemma } from '@app/admin/_models/admin-api';
+import { LexemeForm, Variant, LemmaTemplate, Orthography, Lemma, MetaInfo } from '@app/admin/_models/admin-api';
 import { DataService, ExtLanguage } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { Subscription } from 'rxjs';
@@ -36,12 +36,24 @@ export class TabVariantsComponent implements OnInit, OnDestroy, VariantSupply
 	public readonly showChangeData = SHOW_CHANGE_DATA;
 
 	// Formular: top form
-	variantsForm: UntypedFormGroup;
+	readonly variantsForm = new FormGroup({
+		id: new FormControl<number|null>({ value: null, disabled: true }),
+		dialectIDs: new FormControl<number[]|null>(null),
+		orthographyID: new FormControl<number|null>(null, Validators.required),
+		metaInfos: new FormControl<MetaInfo[]|null>(null),
+		active: new FormControl(true, Validators.required),
+	});
 	@ViewChild(FormGroupDirective)
 	variantsFormRef: FormGroupDirective;
 
 	// Formular: lemma form
-	lemmaForm: UntypedFormGroup;
+	lemmaForm = new FormGroup({
+		fillLemma: new FormControl<number>(null, Validators.required),
+		pre: new FormControl<string|null>(null),
+		main: new FormControl<string|null>(null, Validators.required),
+		post: new FormControl<string|null>(null),
+		also: new FormControl<string|null>(null),
+	});
 	@ViewChild(FormGroupDirective)
 	lemmaFormRef: FormGroupDirective; // Bruke ik dår meyr as eyn?
 
@@ -254,26 +266,12 @@ export class TabVariantsComponent implements OnInit, OnDestroy, VariantSupply
 	// Compare function for the fill lemma property
 	fillLemmaCompare = (o1: any, o2: any) => o1 == o2;
 
-	constructor(private readonly changeDetector: ChangeDetectorRef, private readonly formBuilder: UntypedFormBuilder,
-		private readonly transloco: TranslocoService, private readonly lexemeService: LexemeService,
-		public readonly data: DataService)
-	{
-		this.variantsForm = this.formBuilder.group({
-			id: [{value: '', disabled: true}],
-			dialectIDs: [null],
-			orthographyID: [null, Validators.required],
-			metaInfos: [null],
-			active: [null]
-		});
-
-		this.lemmaForm = this.formBuilder.group({
-			fillLemma: [null, Validators.required],
-			pre: [null],
-			main: [null, Validators.required],
-			post: [null],
-			also: [null],
-		});
-	}
+	constructor(
+		private readonly changeDetector: ChangeDetectorRef,
+		private readonly transloco: TranslocoService,
+		private readonly lexemeService: LexemeService,
+		public readonly data: DataService,
+	) { }
 	
 	ngOnInit(): void
 	{

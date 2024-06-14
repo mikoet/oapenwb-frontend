@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, Component, forwardRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ControlValueAccessor, UntypedFormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { NumericKeyMap } from '@app/util/hashmap';
 import { DataService, ExtCategory } from '@app/admin/_services/data.service';
@@ -206,7 +206,7 @@ export class HierarchicalSelectComponent implements OnInit, AfterViewInit, OnDes
 
 	//
 
-	itemsControl: UntypedFormControl = new UntypedFormControl();
+	readonly itemsControl = new FormControl<number[] | null>([]);
 
 	// Code for interface ControlValueAccessor
 

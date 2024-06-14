@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { first } from 'rxjs/operators';
 
@@ -21,18 +21,23 @@ import { isUser } from '@app/_models/user';
   styleUrls: ['./forgot-pw.component.scss']
 })
 export class ForgotPwComponent implements OnInit {
-	form: UntypedFormGroup;
+
+	readonly form = new FormGroup({
+		// TODO Add validator for email address
+		 email: new FormControl('', Validators.required),
+	});
+
 	returnURL: string;
 	errorMsg: string = '';
 
 	//matcher = new LoginErrorStateMatcher();
 
-	constructor(private formBuilder: UntypedFormBuilder,
+	constructor(
 		private location: Location,
 		private route: ActivatedRoute,
 		private router: Router,
-		private accountService: AccountService)
-	{
+		private accountService: AccountService,
+	) {
 		// redirect to home if already logged in
 		if (this.accountService.currentUserValue) {
 			this.router.navigate(['/']);
@@ -44,10 +49,6 @@ export class ForgotPwComponent implements OnInit {
 
 	ngOnInit(): void
 	{
-		this.form = this.formBuilder.group({
-			email: ['', [Validators.required, /*Validators.email*/]]
-		});
-
 		// get return url from route parameters or default to '/'
 		this.returnURL = this.route.snapshot.queryParams['returnURL'] || '/';
 	}

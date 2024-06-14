@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, isDevMode, Output, EventEmitter } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { LexemeType, Sememe, SynGroup, Variant } from '@app/admin/_models/admin-api';
 import { DataService, ExtCategory } from '@app/admin/_services/data.service';
@@ -12,7 +12,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { ApiAction } from '@app/admin/_models/enums';
 import { countErrors, doEnablingControl, transferValues } from '@app/admin/_util/form-utils';
 import { VariantSupply } from '../tab-2-variants/variantSupply';
-import { SynGroupLinkComponent } from '@app/admin/_components/syn-group-link/syn-group-link.component';
+import { Selection, SynGroupLinkComponent } from '@app/admin/_components/syn-group-link/syn-group-link.component';
 import { LemmaService } from '@app/_services/lemma.service';
 import { SememeSupply } from './sememeSupply';
 import { SememeService } from '@app/admin/_services/sememe.service';
@@ -32,18 +32,25 @@ class InnerCategory
 
 export type SpecificsType = "Verb";
 
+// TODO How to get this into admin-api.ts for Sememe#fillSpec?
+export enum FillSpecType {
+	NoSpec = 1,
+	FromTemplate = 2,
+	Manually = 3,
+}
+
 @Component({
 	selector: 'lex-tab-sememes',
 	templateUrl: './tab-sememes.component.html',
 	styleUrls: ['./tab-sememes.component.scss']
-  })
-  export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
+})
+export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 {
 	public readonly isDevMode: boolean = isDevMode();
 	public readonly showChangeData = SHOW_CHANGE_DATA;
 
 	private _sgSememes: string = null;
-	sgSememes() : string
+	get sgSememes() : string
 	{
 		if (!this._sgSememes) {
 			let synGroup = this.sememes[this.selectedSememe]?.synGroup;
@@ -87,12 +94,23 @@ export type SpecificsType = "Verb";
 	prepare = TabSememesComponent.prepare;
 
 	// Formular: sememe form
-	sememeForm: UntypedFormGroup;
+	readonly sememeForm = new FormGroup({
+		id: new FormControl<number|null>({ value: null, disabled: true }),
+		internalName: new FormControl('', Validators.required),
+		variantIDs: new FormControl<number[]|null>(null, Validators.required),
+		dialectIDs: new FormControl<number[]|null>(null),
+		levelIDs: new FormControl<number[]|null>(null),
+		categoryIDs: new FormControl<number[]|null>(null),
+		fillSpec: new FormControl<FillSpecType>(FillSpecType.NoSpec, { nonNullable: true }), // FIXME NGU14 by problemen ümstellen up null etc. as dat was
+		specTemplate: new FormControl<string|null>(null),
+		spec: new FormControl<string|null>(null),
+		active: new FormControl<boolean|null>(null),
+	});
 	@ViewChild(FormGroupDirective)
 	sememeFormRef: FormGroupDirective;
 
 	// Formular: specifics form
-	specificsForm: UntypedFormGroup;
+	specificsForm: FormGroup;
 	specificsType: SpecificsType = null;
 	caseGovType: LexemeType = null;
 
@@ -105,9 +123,15 @@ export type SpecificsType = "Verb";
 	private categoriesSelect: HierarchicalSelectComponent;
 
 	// SynGroup form control
-	public synGroupCtrl: UntypedFormControl = new UntypedFormControl();
+	public synGroupCtrl = new FormControl<Selection|null>(null);
 	// Formular: synonym group form
-	synGroupForm: UntypedFormGroup;
+	readonly synGroupForm = new FormGroup({
+		// id: new FormControl({value: '', disabled: true}),	// not needed in the formGroup, might even lead to problems
+		// sememeIDs: new FormControl<number[]|null>(null),		// cannot be part of the formGroup in current code design as its empty…
+																// …value would overwrite the sememeIDs in a newly created SynGroup
+		description: new FormControl<string|null>(null),              	// used to edit the SynGroup's description
+		presentation: new FormControl({value: '', disabled: true}),		// used for the presentation
+	});
 	@ViewChild(FormGroupDirective)
 	synGroupFormRef: FormGroupDirective;
 
@@ -292,46 +316,29 @@ export type SpecificsType = "Verb";
 	// Compare function for the fill lemma property
 	fillSpecCompare = (o1: any, o2: any) => o1 == o2;
 
-	constructor(private readonly changeDetector: ChangeDetectorRef, private readonly formBuilder: UntypedFormBuilder,
-		public readonly transloco: TranslocoService, private readonly lexemeService: LexemeService,
-		public readonly data: DataService, private readonly lemmaService: LemmaService,
-		private readonly sememeService: SememeService, private readonly synGroupService: SynGroupQueryService)
-	{
-		this.sememeForm = this.formBuilder.group({
-			id: [{value: '', disabled: true}],
-			internalName: [null, Validators.required],
-			variantIDs: [null, Validators.required],
-			dialectIDs: [null],
-			levelIDs: [null],
-			categoryIDs: [null],
-			fillSpec: [null],
-			specTemplate: [null],
-			spec: [null],
-			active: [null]
-		});
-
+	constructor(
+		private readonly changeDetector: ChangeDetectorRef,
+		public readonly transloco: TranslocoService,
+		private readonly lexemeService: LexemeService,
+		public readonly data: DataService,
+		private readonly lemmaService: LemmaService,
+		private readonly sememeService: SememeService,
+		private readonly synGroupService: SynGroupQueryService,
+	) {
 		this.buildSpecificForm();
-
-		this.synGroupForm = this.formBuilder.group({
-			// id: [{value: '', disabled: true}], // not needed in the formGroup, might even lead to problems
-			// sememeIDs: [null],                 // cannot be part of the formGroup in current code design as its empty
-			                                      // value would overwrite the sememeIDs in a newly created SynGroup
-			description: [null],                  // used to edit the SynGroup's description
-			presentation: [{value: '', disabled: true}] // used for the presentation
-		});
 	}
 
 	private buildSpecificForm() : void
 	{
 		switch (this.specificsType) {
 			case 'Verb':
-				this.specificsForm = this.formBuilder.group({
-					caseGovernment: [null], // ID of a lexeme of type iCG
+				this.specificsForm = new FormGroup({
+					caseGovernment: new FormControl<number|null>(null), // ID of a lexeme of type iCG
 				});
 				break;
 			
 			default:
-				this.specificsForm = this.formBuilder.group({
+				this.specificsForm = new FormGroup({
 				});
 				break;
 		}

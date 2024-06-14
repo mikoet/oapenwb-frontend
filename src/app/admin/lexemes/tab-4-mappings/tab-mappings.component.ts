@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, ChangeDetectorRef, Component, isDevMode, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -91,7 +91,15 @@ export class TabMappingsComponent implements OnInit, OnDestroy, AfterViewInit
 	}
 
 	// Formular: top form
-	mappingForm: UntypedFormGroup;
+	readonly mappingForm = new FormGroup({
+		//id: new FormControl<number|null>({ value: null, disabled: true }),
+		thisSememe: new FormControl<number>(null, { validators: Validators.required, nonNullable: true }),
+		langPair: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+		//__twisted: [null],
+		thatSememe: new FormControl<number>(null, { validators: Validators.required, nonNullable: true }),
+		weight: new FormControl<number>(null, Validators.required),
+	} /*, { updateOn: 'blur' } */);
+
 	@ViewChild(FormGroupDirective, {static: false})
 	_mappingFormRef: FormGroupDirective = null;
 	get mappingFormRef() {
@@ -347,19 +355,13 @@ export class TabMappingsComponent implements OnInit, OnDestroy, AfterViewInit
 		}
 	}
 
-	constructor(private readonly changeDetector: ChangeDetectorRef, private readonly formBuilder: UntypedFormBuilder,
-		public readonly transloco: TranslocoService, private readonly lexemeService: LexemeService,
-		public readonly data: DataService, public readonly sememeService: SememeService)
-	{
-		this.mappingForm = this.formBuilder.group({
-			//id: [{value: '', disabled: true}],
-			thisSememe: [null, Validators.required],
-			langPair: [null, Validators.required],
-			//__twisted: [null],
-			thatSememe: [null, Validators.required],
-			weight: [null, Validators.required]
-		} /*, { updateOn: 'blur' } */);
-	}
+	constructor(
+		private readonly changeDetector: ChangeDetectorRef,
+		public readonly transloco: TranslocoService,
+		private readonly lexemeService: LexemeService,
+		public readonly data: DataService,
+		public readonly sememeService: SememeService,
+	) { }
 
 	ngOnInit(): void
 	{

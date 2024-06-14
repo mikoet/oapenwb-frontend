@@ -1,10 +1,9 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
-import { first } from 'rxjs/operators';
-
 // SPDX-License-Identifier: AGPL-3.0-only
+import { first } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import {
-	AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators
+	AbstractControl, FormControl, FormGroup, ValidationErrors, Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isMessage } from '@app/_models/message';
@@ -35,13 +34,31 @@ export function mustMatch(controlName: string, matchingControlName: string)
 }
 */
 
+const EMAIL_PATTERN = "\\b[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*\\b";
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-	form: UntypedFormGroup;
+	readonly form = new FormGroup({
+		firstname: new FormControl('', Validators.required),
+		lastname: new FormControl('', Validators.required),
+		username: new FormControl(''),
+		email: new FormControl('', [
+			Validators.required,
+			Validators.pattern(EMAIL_PATTERN),
+		]),
+		token: new FormControl('', Validators.required),
+		password: new FormControl('', [
+			Validators.required,
+			Validators.minLength(10),
+		]),
+		password2: new FormControl('', RegisterComponent.matchValues('password')),
+		compliance: new FormControl(false, { nonNullable: true, validators: Validators.requiredTrue }),
+	});
+
 	returnURL: string;
 	errorMsg: string = '';
 
@@ -58,7 +75,7 @@ export class RegisterComponent implements OnInit {
 		};
 	}
 
-	constructor(private formBuilder: UntypedFormBuilder,
+	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
 		private accountService: AccountService,
@@ -74,17 +91,6 @@ export class RegisterComponent implements OnInit {
 
 	ngOnInit(): void
 	{
-		this.form = this.formBuilder.group({
-			firstname: ['', Validators.required],
-			lastname: ['', Validators.required],
-			username: [''],
-			email: ['', [Validators.required, Validators.pattern("\\b[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*\\b")]],
-			token: ['', Validators.required],
-			password: ['', [Validators.required,  Validators.minLength(10)]],
-			password2: ['', RegisterComponent.matchValues('password')],
-			compliance: ['', Validators.requiredTrue]
-		});
-
 		// needed for changes on password after changes on password2
 		this.form.get('password').valueChanges.subscribe(() => {
 			this.form.get('password2').updateValueAndValidity();

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Output, EventEmitter, isDevMode } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -10,10 +10,9 @@ import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { DataService } from '@app/admin/_services/data.service';
-import { UntypedFormControl } from '@angular/forms';
 import { TransferStop } from '../view/view.component';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
-import { Lexeme } from '@app/admin/_models/admin-api';
+import { Lexeme, Tag } from '@app/admin/_models/admin-api';
 import { MatSelectChange } from '@angular/material/select';
 import { countErrors, doEnablingControl } from '@app/admin/_util/form-utils';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -31,7 +30,17 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 	public readonly showChangeData = SHOW_CHANGE_DATA;
 
 	// Form data
-	generalForm: UntypedFormGroup;
+	readonly generalForm = new FormGroup({
+		id: new FormControl<number|null>({ value: null, disabled: true }),
+		typeID: new FormControl<number|null>(null, Validators.required),
+		langID: new FormControl<number|null>(null, Validators.required),
+		parserID: new FormControl<string|null>(null, Validators.pattern("[a-zA-Z0-9-]+_[a-zA-Z0-9-]+")),
+		tags: new FormControl<string[]|null>([]),
+		notes: new FormControl<string|null>(null),
+		showVariantsFrom: new FormControl<number|null>(null),
+		active: new FormControl(false, { validators: Validators.required, nonNullable: true }),
+	});
+	
 	@ViewChild(FormGroupDirective) formRef: FormGroupDirective;
 
 	// Error counting
@@ -91,7 +100,7 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 	// For tag component
 	areTagsEditable: boolean = false;
 	separatorKeysCodes: number[] = [ENTER, COMMA];
-	tagCtrl = new UntypedFormControl();
+	tagCtrl = new FormControl('');
 	filteredTags: Observable<string[]>;
 	tags: Set<string> = new Set([]);
 	allTags: string[] = [];
@@ -99,22 +108,14 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 	tagInput: ElementRef<HTMLInputElement>;
 
 
-	constructor(private readonly formBuilder: UntypedFormBuilder, private lexemeService: LexemeService,
-		public readonly data: DataService)
-	{
-		this.generalForm = this.formBuilder.group({
-			id: [{value: '', disabled: true}],
-			typeID: [null, Validators.required],
-			langID: [null, Validators.required],
-			parserID: [null, Validators.pattern("[a-zA-Z0-9-]+_[a-zA-Z0-9-]+")],
-			tags: [[]],
-			notes: [],
-			showVariantsFrom: [],
-			active: [false, Validators.required],
-		});
+	constructor(
+		private lexemeService: LexemeService,
+		public readonly data: DataService,
+	) {
 		this.filteredTags = this.tagCtrl.valueChanges.pipe(
 			startWith(null),
-			map((tag: string | null) => tag ? this._filterTags(tag) : this.allTags.slice()));
+			map((tag: string | null) => tag ? this._filterTags(tag) : this.allTags.slice()),
+		);
 	}
 
 	ngOnInit(): void
@@ -244,13 +245,13 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 
 	addTag(event: MatChipInputEvent): void {
 		const value = (event.value || '').trim();
-		if (value) {
+		if (!!value) {
 			this.tags.add(value);
 			this._changed = true;
 			this.writeTrackingDataToService();
 		}
 		// Clear the input value
-		event.chipInput!.clear();
+		event.chipInput?.clear();
 		this.tagCtrl.setValue(null);
 	}
 
