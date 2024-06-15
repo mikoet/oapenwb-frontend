@@ -267,14 +267,6 @@ export class SynGroupLinkComponent implements OnInit, OnDestroy, ControlValueAcc
 	getValue() : number
 	{
 		return this.linkCtrl.value?.id ?? null;
-
-		/* FIXME NGU14 remove if above code works
-		let value = this.linkCtrl.value;
-		if (!!value) {
-			return parseInt(value);
-		}
-		return null;
-		*/
 	}
 
 	formatPresentation(text: string) : string

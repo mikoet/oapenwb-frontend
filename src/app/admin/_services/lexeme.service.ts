@@ -208,7 +208,7 @@ export class LexemeService
 			//if (section == 'variants') {
 			// check changed and count errors for the variants
 			for (let variant of lexemeDTO.variants) {
-				changed = variant.changed ? true : changed;
+				changed = variant.changed || changed;
 				let varEC = variant['__errorCount'];
 				if (!!varEC) {
 					// if __errorCount was defined it will be counted
@@ -220,14 +220,14 @@ export class LexemeService
 			//if (section == 'sememes') {
 			// check changed and count errors for the sememes
 			for (let sememe of lexemeDTO.sememes) {
-				changed = sememe.changed ? true : changed;
+				changed = sememe.changed || changed;
 				let semEC = sememe['__errorCount'];
 				if (!!semEC) {
 					// if __errorCount was defined it will be counted
 					errorCount += semEC;
 				}
 				if (!!sememe.synGroup) {
-					changed = sememe.synGroup.changed ? true : changed;
+					changed = sememe.synGroup.changed || changed;
 					// No error counting for SynGroups as of now.
 				}
 			}
@@ -236,7 +236,7 @@ export class LexemeService
 			//if (section == 'mappings') {
 			// check changed flag on mappings (no error count here yet)
 			for (let mapping of lexemeDTO.mappings) {
-				changed = mapping.changed ? true : changed;
+				changed = mapping.changed || changed;
 			}
 			//}
 

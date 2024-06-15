@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
 
-// FIXME NGU14 Löpt dat hyr sou?
 export function countErrors(formGroup: FormGroup|FormArray) : number
 {
 	let errorCount = 0;

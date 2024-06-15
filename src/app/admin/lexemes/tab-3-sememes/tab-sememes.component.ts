@@ -6,7 +6,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { LexemeType, Sememe, SynGroup, Variant } from '@app/admin/_models/admin-api';
 import { DataService, ExtCategory } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
-import { Subscription } from 'rxjs';
+import { ReplaySubject, takeUntil } from 'rxjs';
 import { TransferStop } from '../view/view.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { ApiAction } from '@app/admin/_models/enums';
@@ -101,7 +101,7 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 		dialectIDs: new FormControl<number[]|null>(null),
 		levelIDs: new FormControl<number[]|null>(null),
 		categoryIDs: new FormControl<number[]|null>(null),
-		fillSpec: new FormControl<FillSpecType>(FillSpecType.NoSpec, { nonNullable: true }), // FIXME NGU14 by problemen ümstellen up null etc. as dat was
+		fillSpec: new FormControl<FillSpecType>(FillSpecType.NoSpec, { nonNullable: true }),
 		specTemplate: new FormControl<string|null>(null),
 		spec: new FormControl<string|null>(null),
 		active: new FormControl<boolean|null>(null),
@@ -173,9 +173,14 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 	private _variantSupply: VariantSupply;
 	set variantSupply(supply: VariantSupply) {
 		this._variantSupply = supply;
+
 		// Subscribe to the emitters
-		this.variantAddedSubscription = supply.addedEmitter.subscribe(variant => this.variantAdded);
-		this.variantRemovedSubscription = supply.removedEmitter.subscribe(variant => this.variantRemoved);
+		supply.addedEmitter.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(variant => this.variantAdded);
+		supply.removedEmitter.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(variant => this.variantRemoved);
 	}
 
 	// Error counting
@@ -192,28 +197,21 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 		return this._trackChanges;
 	}
 	// Was the data (Sememe or SynGroup) in this tab changed since last creating, loading or saving?
-	private _sememeChanged: boolean = false;
-	get sememeChanged() : boolean {
+	private _sememeChanged = false;
+	get sememeChanged(): boolean {
 		return this._sememeChanged;
 	}
-	private _synGroupChanged: boolean = false;
-	get synGroupChanged() : boolean {
+	private _synGroupChanged = false;
+	get synGroupChanged(): boolean {
 		return this._synGroupChanged;
 	}
-	get changed() : boolean {
+	get changed(): boolean {
 		return this._sememeChanged || this._synGroupChanged;
 	}
 	private _trackErrors: boolean = false;
 	public get trackErrors() : boolean {
 		return this._trackErrors;
 	}
-
-	// Subscriptions
-	private loadingSubscription: Subscription;
-	private sememeChangeSubscription: Subscription;
-	private synGroupFormChangeSub: Subscription;
-	private variantAddedSubscription: Subscription;
-	private variantRemovedSubscription: Subscription;
 
 	// Type data
 	private _basedOnType: number; // will be set through the editor
@@ -316,6 +314,8 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 	// Compare function for the fill lemma property
 	fillSpecCompare = (o1: any, o2: any) => o1 == o2;
 
+	private readonly destroy$ = new ReplaySubject<void>(1);
+
 	constructor(
 		private readonly changeDetector: ChangeDetectorRef,
 		public readonly transloco: TranslocoService,
@@ -346,17 +346,35 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 
 	ngOnInit(): void
 	{
-		this.loadingSubscription = this.data.loading.subscribe(isLoading => {
+		this.data.loading.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(isLoading => {
 			this.caseGovType = this.data.store.lexemeTypesByName.get('iCG');
 		});
-		this.sememeChangeSubscription = this.sememeForm.valueChanges.subscribe(() => {
+
+		this.sememeForm.valueChanges.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(() => {
 			this._errors = countErrors(this.sememeForm);
 			if (this._trackChanges === true) {
 				this._sememeChanged = true;
 			}
 			this.writeTrackingDataToService();
 		});
-		this.synGroupFormChangeSub = this.synGroupForm.valueChanges.subscribe(() => {
+
+		this.specificsForm.valueChanges.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(() => {
+			this._errors = countErrors(this.sememeForm);
+			if (this._trackChanges === true) {
+				this._sememeChanged = true;
+			}
+			this.writeTrackingDataToService();
+		});
+
+		this.synGroupForm.valueChanges.pipe(
+			takeUntil(this.destroy$),
+		).subscribe(() => {
 			// Currently there cannot be any errors in the SynGroup form, so we don't count them
 			if (this._trackChanges === true) {
 				this._sememeChanged = true; // This is not optimal and should be changed in the future. But that'd also mean to change
@@ -371,11 +389,8 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 
 	ngOnDestroy(): void
 	{
-		this.loadingSubscription.unsubscribe();
-		this.sememeChangeSubscription.unsubscribe();
-		this.synGroupFormChangeSub.unsubscribe();
-		this.variantAddedSubscription.unsubscribe();
-		this.variantRemovedSubscription.unsubscribe();
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	// TODO 003
@@ -473,6 +488,7 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 					activeSememe.apiAction = ApiAction.Update;
 				}
 			}
+
 			if (this._trackChanges && this._synGroupChanged) {
 				if (!!this.synGroupLink && !!this.synGroupLink.synGroup) {
 					let synGroup = this.synGroupLink.synGroup;
@@ -482,10 +498,12 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 					}
 				}
 			}
+
 			if (this._trackErrors) {
 				// Attributes starting with __ are special in that they'll be removed before sending the data to the backend
 				this.sememes[this.selectedSememe]['__errorCount'] = this.errors;
 			}
+
 			if (this.trackChanges || this.trackErrors) {
 				// Right now all we can do is write back all sememes to the lexemeService.
 				// But we do not update all values, though. That's done only in storeActiveSememe().
