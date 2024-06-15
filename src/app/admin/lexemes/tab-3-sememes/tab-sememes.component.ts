@@ -6,7 +6,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { LexemeType, Sememe, SynGroup, Variant } from '@app/admin/_models/admin-api';
 import { DataService, ExtCategory } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
-import { ReplaySubject, takeUntil } from 'rxjs';
+import { ReplaySubject, Subscription, takeUntil } from 'rxjs';
 import { TransferStop } from '../view/view.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { ApiAction } from '@app/admin/_models/enums';
@@ -258,13 +258,13 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 	get variantsControl() {
 		return this.sememeForm.get('variantIDs');
 	}
-	get variants() {
+	get variants() {
 		if (!!this._variantSupply) {
 			return this._variantSupply.variants;
 		}
 		return [];
 	}
-	get variantNames() {
+	get variantNames() {
 		if (!!this._variantSupply) {
 			return this._variantSupply.variantNames;
 		}
@@ -328,12 +328,25 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 		this.buildSpecificForm();
 	}
 
+	private specificsFormSubscription: Subscription = undefined;
+
 	private buildSpecificForm() : void
 	{
+		this.specificsFormSubscription?.unsubscribe();
+		this.specificsFormSubscription = undefined;
+
 		switch (this.specificsType) {
 			case 'Verb':
 				this.specificsForm = new FormGroup({
 					caseGovernment: new FormControl<number|null>(null), // ID of a lexeme of type iCG
+				});
+
+				this.specificsFormSubscription = this.specificsForm.valueChanges.subscribe(() => {
+					this._errors = countErrors(this.sememeForm);
+					if (this._trackChanges === true) {
+						this._sememeChanged = true;
+					}
+					this.writeTrackingDataToService();
 				});
 				break;
 			
@@ -362,16 +375,6 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 			this.writeTrackingDataToService();
 		});
 
-		this.specificsForm.valueChanges.pipe(
-			takeUntil(this.destroy$),
-		).subscribe(() => {
-			this._errors = countErrors(this.sememeForm);
-			if (this._trackChanges === true) {
-				this._sememeChanged = true;
-			}
-			this.writeTrackingDataToService();
-		});
-
 		this.synGroupForm.valueChanges.pipe(
 			takeUntil(this.destroy$),
 		).subscribe(() => {
@@ -389,6 +392,8 @@ export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 
 	ngOnDestroy(): void
 	{
+		this.specificsFormSubscription?.unsubscribe();
+
 		this.destroy$.next();
 		this.destroy$.complete();
 	}

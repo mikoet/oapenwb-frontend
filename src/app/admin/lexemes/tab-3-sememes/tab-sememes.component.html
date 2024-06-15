@@ -104,7 +104,7 @@
 		<div class="grid-container lexeme-tab" [formGroup]="synGroupForm">
 
 			<admin-syn-group-link #synGroupLink class="row1 col1 colspan3" [formControl]="synGroupCtrl" [langID]="basedOnLanguage"
-				[sememeID]="selectedSememeID()" (synGroupChange)="synGroupChange($event)"></admin-syn-group-link><!-- [disableControl]="disableShowVariantsFrom()" -->
+				[sememeID]="selectedSememeID()" (synGroupChange)="synGroupChange($event)"></admin-syn-group-link>
 
 			<mat-form-field class="row2 col1 colspan3">
 				<mat-label>{{ t('description') }}</mat-label>
