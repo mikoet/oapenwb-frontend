@@ -5,8 +5,8 @@ import { filter, takeUntil } from 'rxjs/operators';
 
 // SPDX-License-Identifier: AGPL-3.0-only
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Message } from '@app/_models/message';
 import {
 	ErrorsDialogComponent

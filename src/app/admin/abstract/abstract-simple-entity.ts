@@ -7,7 +7,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, Directive, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 import { Message } from '@app/_models/message';
 import { Response } from '@app/_models/response';
 import { environment } from '@environments/environment';

@@ -11,7 +11,7 @@ import { typeLangConfigsApiPath } from '../_models/admin-api-paths';
 import { DataService, Entities } from '../_services/data.service';
 import { KeyMap } from '@app/util/hashmap';
 import { AbstractSECPlus } from '../abstract/abstract-simple-entity-plus';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { FormTypePositionsDialog } from './form-type-positions-dialog';
 
 @Component({

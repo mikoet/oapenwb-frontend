@@ -12,8 +12,8 @@ import {
 	Component, HostListener, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, ViewChild
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MatFormField } from '@angular/material/form-field';
+import { MatLegacyAutocompleteTrigger as MatAutocompleteTrigger } from '@angular/material/legacy-autocomplete';
+import { MatLegacyFormField as MatFormField } from '@angular/material/legacy-form-field';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Direction } from '@app/_models/dict-api';
 import { LemmaService } from '@app/_services/lemma.service';
