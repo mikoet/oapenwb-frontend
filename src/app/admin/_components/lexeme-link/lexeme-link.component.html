@@ -8,7 +8,7 @@
 				placeholderLabel="{{ ta('search') }}" noEntriesFoundLabel="{{ ta('noLexemesFound') }}">
 			</ngx-mat-select-search>
 		</mat-option>
-		<mat-option>({{ ta('none') }})</mat-option>
+		<mat-option [value]="null">({{ ta('none') }})</mat-option>
 		<mat-option *ngFor="let slimDTO of filteredLexemes | async" [value]="slimDTO.id">
 			{{ buildLemma(slimDTO) }}
 		</mat-option>

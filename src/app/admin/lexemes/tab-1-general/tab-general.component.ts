@@ -12,10 +12,10 @@ import { map, startWith } from 'rxjs/operators';
 import { DataService } from '@app/admin/_services/data.service';
 import { TransferStop } from '../view/view.component';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
-import { Lexeme, Tag } from '@app/admin/_models/admin-api';
+import { Lexeme } from '@app/admin/_models/admin-api';
 import { MatSelectChange } from '@angular/material/select';
 import { countErrors, doEnablingControl } from '@app/admin/_util/form-utils';
-import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { LexemeLinkComponent } from '@app/admin/_components/lexeme-link/lexeme-link.component';
 import { SHOW_CHANGE_DATA } from '../editor/editor.component';
 
@@ -127,12 +127,12 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 			}
 			this.allTags = allTags;
 		});
-		this.valueChangesSubscription = this.generalForm.valueChanges.subscribe((value) => {
-			this._errorCount = countErrors(this.generalForm);
-			if (this._trackChanges === true) {
+		this.valueChangesSubscription = this.generalForm.valueChanges.subscribe((values) => {
+			if (this._trackChanges) {
+				this._errorCount = countErrors(this.generalForm);
 				this._changed = true;
+				this.writeTrackingDataToService();
 			}
-			this.writeTrackingDataToService();
 		});
 
 		this.typeSubscription = this.generalForm.controls['typeID'].valueChanges.subscribe(newValue => {       
@@ -180,6 +180,11 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 			});
 			this.parserIdWasSet = !!lexeme.parserID && lexeme.parserID.length > 0;
 			this._changed = lexeme.changed;
+
+			// Count errors once at the end (this is done in generalForm.valueChanges subscriptions if change tracking is on)
+			this._errorCount = countErrors(this.generalForm);
+			this.writeTrackingDataToService();
+
 			this.doEnabling();
 		}
 
@@ -198,12 +203,7 @@ export class TabGeneralComponent implements OnInit, OnDestroy
 				return [stop];
 			}
 			let values = this.generalForm.getRawValue();
-			// WA0001
-			let lexemeLinkValue = this.lexemeLink.getValue();
-			if (values.showVariantsFrom != lexemeLinkValue) {
-				values.showVariantsFrom = lexemeLinkValue;
-			}
-			if (values.parserID == '') {
+			if (values.parserID === '') {
 				// ParserID must not be an empty string but then null instead
 				values.parserID = null;
 			}

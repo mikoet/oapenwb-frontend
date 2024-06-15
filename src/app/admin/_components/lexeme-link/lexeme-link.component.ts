@@ -5,7 +5,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { ListComponent } from '@app/admin/lexemes/list/list.component';
 import { LexemeSlimDTO } from '@app/admin/_models/admin-api';
 import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { debounceTime, tap, filter, takeUntil, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -43,15 +43,16 @@ export class LexemeLinkComponent implements OnInit, OnDestroy, ControlValueAcces
 	public filteredLexemes: ReplaySubject<LexemeSlimDTO[]> = new ReplaySubject<LexemeSlimDTO[]>(1);
 
 	/** Subject that emits when the component has been destroyed. */
-	protected _onDestroy = new Subject<void>();
+	protected destroy$ = new ReplaySubject<void>(1);
 
-	public constructor(private readonly lexemeQuery: LexemeQueryService) {}
+	constructor(
+		private readonly lexemeQuery: LexemeQueryService,
+	) { }
 
 	ngOnInit() {
 		this.linkFilteringCtrl.valueChanges.pipe(
 			filter(search => !!search),
 			tap(() => this.searching = true),
-			takeUntil(this._onDestroy),
 			debounceTime(200),
 			switchMap(search => {
 				return this.lexemeQuery.loadTransient(search, {
@@ -61,22 +62,24 @@ export class LexemeLinkComponent implements OnInit, OnDestroy, ControlValueAcces
 					state: 'Both'
 				});
 			}),
-			takeUntil(this._onDestroy)
-		).subscribe(response => {
-			this.searching = false;
-			if (response.status === 'success') {
-				this.filteredLexemes.next(response.data);
-			}
-		}, error => {
-			// no errors in our simulated example
-			this.searching = false;
-			// handle error...
+			takeUntil(this.destroy$),
+		).subscribe({
+			next: (response) => {
+				this.searching = false;
+				if (response.status === 'success') {
+					this.filteredLexemes.next(response.data);
+				}
+			},
+			error: (error) => {
+				// TODO handle error
+				this.searching = false;
+			},
 		});
 		
 		this.linkCtrl.valueChanges.pipe(
-			takeUntil(this._onDestroy)
+			takeUntil(this.destroy$)
 		).subscribe(value => {
-			if (this.previousValue != value) {
+			if (this.previousValue !== value) {
 				// Only call this when the value changed to avoid unnecessary change flag toggles on the lexeme
 				this.onChange(value);
 			}
@@ -85,8 +88,8 @@ export class LexemeLinkComponent implements OnInit, OnDestroy, ControlValueAcces
 	}
 
 	ngOnDestroy() {
-		this._onDestroy.next();
-		this._onDestroy.complete();
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	buildLemma(lexeme: LexemeSlimDTO) : string
@@ -98,13 +101,6 @@ export class LexemeLinkComponent implements OnInit, OnDestroy, ControlValueAcces
 	getValue() : number
 	{
 		return this.linkCtrl.value;
-		/* FIXME remove if above line is sufficient
-		let value = this.linkCtrl.value;
-		if (!!value) {
-			return parseInt(value);
-		}
-		return null;
-		*/
 	}
 
 	// Code for interface ControlValueAccessor
@@ -112,16 +108,23 @@ export class LexemeLinkComponent implements OnInit, OnDestroy, ControlValueAcces
 	onChange: any = () => {}
 	onTouch: any = () => {}
 
-	writeValue(input: number): void {
-		if (!!input) {
-			this.lexemeQuery.loadSlimByID(input).subscribe(slimDTO => {
-				this.filteredLexemes.next([ slimDTO ]);
-				this.linkCtrl.setValue(input, { emitEvent: false });
-			})
+	writeValue(value: number): void {
+		if (!!value) {
+			this.previousValue = value;
+			this.linkCtrl.setValue(value, { emitEvent: false });
+
+			this.lexemeQuery.loadSlimByID(value).subscribe((slimDTO) => {
+				if (!!slimDTO) {
+					this.filteredLexemes.next([ slimDTO ]);
+				} else {
+					// Error case. How to handle this properly?
+					this.linkCtrl.setValue(null);
+				}
+			});
 		} else {
+			this.previousValue = null;
 			this.filteredLexemes.next([]);
-			this.linkCtrl.reset();
-			//this.linkCtrl.setValue(null, { emitEvent: false });
+			this.linkCtrl.reset(null, { emitEvent: false });
 		}
 		
 		// TODO Can the slimDTO be loaded here if it is not available?
