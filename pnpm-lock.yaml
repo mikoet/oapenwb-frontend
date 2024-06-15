@@ -51,8 +51,8 @@ importers:
         specifier: ^6.1.0
         version: 6.5.2
       '@ngneat/transloco':
-        specifier: ^3.1.3
-        version: 3.2.0(@angular/core@15.2.10(rxjs@7.8.1)(zone.js@0.11.8))(rxjs@7.8.1)(typescript@4.8.4)
+        specifier: ^4.3.0
+        version: 4.3.0(@angular/core@15.2.10(rxjs@7.8.1)(zone.js@0.11.8))(fs-extra@10.0.0)(glob@10.4.1)(rxjs@7.8.1)(typescript@4.8.4)
       express:
         specifier: ^4.15.2
         version: 4.19.2
@@ -106,7 +106,7 @@ importers:
         specifier: ^15.2.10
         version: 15.2.10
       '@ngneat/transloco-keys-manager':
-        specifier: ^3.3.3
+        specifier: ^3.5.0
         version: 3.8.0(typescript@4.8.4)
       '@types/express':
         specifier: ^4.17.11
@@ -1236,6 +1236,7 @@ packages:
 
   '@ngneat/transloco-keys-manager@3.8.0':
     resolution: {integrity: sha512-wQqSIEc0BT99WRceT0CNAyxWQ1arLD4Yhb9Z1Bps3hslb2vbVayuu/QZscpsstqulYIoW0Jn2ytgdYPHzBA1AQ==}
+    deprecated: 'NOTICE: Transloco has moved to a new scope, this package will no longer receive updates. please use @jsverse/transloco-keys-manager instead.'
     hasBin: true
 
   '@ngneat/transloco-utils@3.0.4':
@@ -1244,10 +1245,13 @@ packages:
   '@ngneat/transloco-utils@3.0.5':
     resolution: {integrity: sha512-Xn9GaLUocXSPMhErNHbUyoloDm9sb+JaYszZJFL9F8em6frPQDSJxcYk9pV0caWpAU8INlksJSYgx1LXAH18mw==}
 
-  '@ngneat/transloco@3.2.0':
-    resolution: {integrity: sha512-S9Lh3T5I9ck/HPD93HzGwLFBzjzoeUUBr4xL58lXtCHjGMVi9A9oCSgscKOZn/XfQiUwIO0dRhCVhqdT+sUGlQ==}
+  '@ngneat/transloco@4.3.0':
+    resolution: {integrity: sha512-KUhGvp1ki+jvrM2PO27Tgzme1HkFmvDgS+7VyGxHta35wZEyoH6/r/EAXvfurPeYgaP6IaEMhUvAVT1WDgYwUg==}
+    deprecated: 'NOTICE: Transloco has moved to a new scope, this package will no longer receive updates. please use @jsverse/transloco instead.'
     peerDependencies:
-      '@angular/core': '>=12.0.0'
+      '@angular/core': '>=13.0.0'
+      fs-extra: '>=9.1.0'
+      glob: '>=7.1.7'
       rxjs: '>=6.0.0'
 
   '@ngtools/webpack@15.2.11':
@@ -2994,6 +2998,7 @@ packages:
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
     engines: {node: '>=12'}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   globals@11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
@@ -6738,7 +6743,7 @@ snapshots:
 
   '@ngneat/transloco-utils@3.0.4':
     dependencies:
-      cosmiconfig: 7.0.1
+      cosmiconfig: 7.1.0
       tslib: 2.6.2
 
   '@ngneat/transloco-utils@3.0.5(typescript@4.8.4)':
@@ -6748,11 +6753,13 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@ngneat/transloco@3.2.0(@angular/core@15.2.10(rxjs@7.8.1)(zone.js@0.11.8))(rxjs@7.8.1)(typescript@4.8.4)':
+  '@ngneat/transloco@4.3.0(@angular/core@15.2.10(rxjs@7.8.1)(zone.js@0.11.8))(fs-extra@10.0.0)(glob@10.4.1)(rxjs@7.8.1)(typescript@4.8.4)':
     dependencies:
       '@angular/core': 15.2.10(rxjs@7.8.1)(zone.js@0.11.8)
       '@ngneat/transloco-utils': 3.0.5(typescript@4.8.4)
       flat: 5.0.2
+      fs-extra: 10.0.0
+      glob: 10.4.1
       lodash.kebabcase: 4.1.1
       ora: 5.4.1
       replace-in-file: 6.3.5
