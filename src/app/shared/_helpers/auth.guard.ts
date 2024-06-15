@@ -3,10 +3,10 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { TranslocoService } from '@ngneat/transloco'
+import { TranslocoService } from '@ngneat/transloco'
 import { AccountService } from '../_services/account.service';
 
-import { getRouteStrWithoutLang } from '../_pipes/routing.pipe';
+import { getRouteStrWithoutLang } from '../_pipes/routing.pipe';
 import { ROUTE_LOGIN } from '@app/routes';
 
 @Injectable({ providedIn: 'root' })

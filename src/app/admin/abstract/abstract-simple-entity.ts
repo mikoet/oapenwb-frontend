@@ -159,7 +159,7 @@ export abstract class AbstractSEC<T /*extends Entity*/> implements OnInit, After
 
 	onSubmit(): void
 	{
-		if (this.entityForm.valid) {
+		if (this.entityForm.valid) {
 			let entity: T = this.entityForm.getRawValue();
 			let observable: Observable<Response<any>> = null;
 

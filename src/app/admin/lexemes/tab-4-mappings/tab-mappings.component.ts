@@ -129,7 +129,7 @@ export class TabMappingsComponent implements OnInit, OnDestroy, AfterViewInit
 
 	onSubmit(): void
 	{
-		if (this.mappingFormRef.valid) {
+		if (this.mappingFormRef.valid) {
 			if (this.editingIndex == -1) {
 				// Create a new mapping and store it
 				let thisThat: ThisThatMapping = this.mappingForm.getRawValue();
@@ -232,13 +232,13 @@ export class TabMappingsComponent implements OnInit, OnDestroy, AfterViewInit
 	get sememesControl() {
 		return this.mappingForm.get('thisSememe');
 	}
-	get sememes() {
+	get sememes() {
 		if (!!this._sememeSupply) {
 			return this._sememeSupply.sememes;
 		}
 		return [];
 	}
-	get sememeNames() {
+	get sememeNames() {
 		if (!!this._sememeSupply) {
 			return this._sememeSupply.sememeNames;
 		}

@@ -6,7 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
-import { TranslocoService } from '@ngneat/transloco'
+import { TranslocoService } from '@ngneat/transloco'
 import { UiTranslationScope } from '../_models/admin-api';
 import { uiScopeApiPath } from '../_models/admin-api-paths';
 

@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@ngneat/transloco';
 
 import { Level } from '../_models/admin-api';
 import { unitLevelsApiPath } from '../_models/admin-api-paths';

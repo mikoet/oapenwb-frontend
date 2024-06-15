@@ -150,7 +150,7 @@ export abstract class AbstractSECPlus<T /*extends Entity*/> implements OnInit, A
 
 	onSubmit(): void
 	{
-		if (this.entityForm.valid) {
+		if (this.entityForm.valid) {
 			let entity: T = this.entityForm.value;
 			let observable: Observable<Response<any>> = null;
 

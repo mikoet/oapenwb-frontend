@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Orthography } from '../_models/admin-api';
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
-import { TranslocoService } from '@ngneat/transloco'
+import { TranslocoService } from '@ngneat/transloco'
 import { orthoApiPath } from '../_models/admin-api-paths';
 
 interface ParentableOrtho

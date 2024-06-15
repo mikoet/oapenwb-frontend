@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Pipe, PipeTransform } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco'
+import { TranslocoService } from '@ngneat/transloco'
 
 import { allRoutesMap } from '@app/shared/all-routes-map';
 import { RouteDesc } from '@app/shared/_helpers/route-desc';
