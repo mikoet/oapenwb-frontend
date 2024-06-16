@@ -7,7 +7,7 @@ import { MainComponent } from './dict/main/main.component';
 import { TableViewComponent } from './dict/table-view/table-view.component';
 
 import { ROUTE_DICT, ROUTE_TABLE_VIEW, ROUTE_SIGN_ON, ROUTE_ADMIN, ROUTE_DUTIES, ROUTE_IMPRINT, ROUTE_TERMS_OF_USE, ROUTE_DATA_PRIVACY, ROUTE_MAINTENANCE } from './routes';
-import { AuthGuard } from '@app/shared/_helpers/auth.guard';
+import { ADMIN_AUTH_FN } from '@app/shared/_helpers/auth.guard';
 import { ImprintComponent } from './dict/duty/imprint/imprint.component';
 import { DEFAULT_UI_LOCALE } from './_config/config';
 
@@ -54,7 +54,7 @@ const routes: Routes = [
 			{
 				// Lazy load the Admin module
 				path: ROUTE_ADMIN.path,
-				canActivate: [AuthGuard],
+				canActivate: [ ADMIN_AUTH_FN ],
 				loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
 			},
 			// todo { path: '**', component: PageNotFoundComponent }
