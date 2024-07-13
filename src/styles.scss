@@ -110,3 +110,38 @@ $editor-subheading-margin: 18px;
 .rowspan4 { grid-row-end: span 4; }
 .rowspan8 { grid-row-end: span 8; }
 // Grid end
+
+
+// Material overrides
+
+// Used to shrink the height of the area below the input within the mat-form-field component,
+// as used for the front page's search field.
+mat-form-field {
+	&[search-field] {
+		.mat-mdc-form-field-bottom-align {
+			height: 0.2rem;
+		}
+	}
+}
+
+// Used for the search field autocomplete drop-down.
+.mdc-list-item {
+	&[stretch-item] {
+		.mdc-list-item {
+			&__primary-text {
+				width: 100%;
+			}
+		}
+	}
+}
+
+// Used for the search direction drop-down.
+.mat-mdc-menu-item {
+	&[stretch-item] {
+		.mat-mdc-menu-item-text {
+			display: flex;
+			width: 100%;
+			min-width: 120px;
+		}
+	}
+}

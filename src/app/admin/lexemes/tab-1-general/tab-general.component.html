@@ -44,13 +44,13 @@
 
 		<mat-form-field class="row4 col1 colspan3">
 			<mat-label>{{ t('tags') }}</mat-label>
-			<mat-chip-list #tagsList aria-label="Tags input" formControlName="tags">
-				<mat-chip *ngFor="let tag of tags" [selectable]="areTagsEditable" [removable]="areTagsEditable" (removed)="removeTag(tag)">
+			<mat-chip-grid #tagsList aria-label="Tags input" formControlName="tags">
+				<mat-chip-row *ngFor="let tag of tags" [removable]="areTagsEditable" (removed)="removeTag(tag)"><!-- FIXME NG Material [selectable]="areTagsEditable" -->
 					{{ tag }}<mat-icon matChipRemove *ngIf="areTagsEditable">cancel</mat-icon>
-				</mat-chip>
+				</mat-chip-row>
 				<input #tagInput [formControl]="tagCtrl" [matAutocomplete]="auto" [matChipInputFor]="tagsList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
 					(matChipInputTokenEnd)="addTag($event)">
-			</mat-chip-list>
+			</mat-chip-grid>
 			<mat-autocomplete #auto="matAutocomplete" (optionSelected)="tagSelected($event)">
 				<mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
 					{{ tag }}

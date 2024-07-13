@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelectChange } from '@angular/material/select';
 import { ListComponent } from '@app/admin/lexemes/list/list.component';
 import { TabSememesComponent } from '@app/admin/lexemes/tab-3-sememes/tab-sememes.component';
 import { LexemeSlimPlus, LexemeSlimDTO, SSearchResult, SememeSlim } from '@app/admin/_models/admin-api';

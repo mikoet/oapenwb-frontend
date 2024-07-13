@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatLegacyTabGroup as MatTabGroup } from '@angular/material/legacy-tabs';
+import { MatTabGroup } from '@angular/material/tabs';
 import { DataService } from '@app/admin/_services/data.service';
 import { LexemeService } from '@app/admin/_services/lexeme.service';
 import { Observable } from 'rxjs';

@@ -3,9 +3,9 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Output, EventEmitter, isDevMode } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
-import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
-import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -13,9 +13,9 @@ import { DataService } from '@app/admin/_services/data.service';
 import { TransferStop } from '../view/view.component';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { Lexeme } from '@app/admin/_models/admin-api';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelectChange } from '@angular/material/select';
 import { countErrors, doEnablingControl } from '@app/admin/_util/form-utils';
-import { MatLegacySlideToggleChange as MatSlideToggleChange } from '@angular/material/legacy-slide-toggle';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { LexemeLinkComponent } from '@app/admin/_components/lexeme-link/lexeme-link.component';
 import { SHOW_CHANGE_DATA } from '../editor/editor.component';
 

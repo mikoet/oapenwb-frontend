@@ -3,13 +3,16 @@
 <div *transloco="let t; read: 'admin'" class="margin-view">
 	<h1 class="entity-headline">{{ t('uiScopes') }}</h1>
 
-	<mat-card *ngIf="errors.length > 0" style="overflow: auto;">
-		<button style="float: right;" mat-icon-button attr.aria-label="{{ t('close') }}" (click)="resetErrors()"><mat-icon>close</mat-icon></button>
-		<mat-error *ngFor="let error of errors" class="error">{{error}}</mat-error>
+	<mat-card appearance="outlined" *ngIf="errors.length > 0" style="overflow: auto;">
+		<mat-card-content>
+			<button style="float: right;" mat-icon-button attr.aria-label="{{ t('close') }}" (click)="resetErrors()"><mat-icon>close</mat-icon></button>
+			<mat-error *ngFor="let error of errors" class="error">{{error}}</mat-error>
+		</mat-card-content>
 	</mat-card>
 	<br *ngIf="errors.length > 0">
-	<mat-card>
-		<section>
+
+	<mat-card appearance="outlined">
+		<mat-card-content>
 			<form [formGroup]="entityForm" #formDirective="ngForm" (ngSubmit)="onSubmit()" autocomplete="off">
 				<div class="grid-container" style="grid-template-columns: repeat(4, 1fr);">
 					<mat-form-field>
@@ -28,59 +31,62 @@
 					<button mat-raised-button type="submit" color="primary" [disabled]="entityForm.invalid">{{ !isUpdate ? t('create') : t('update') }}</button>
 				</div>
 			</form>
-		</section>
+		</mat-card-content>
 	</mat-card>
 	<br>
-	<mat-card>
-		<section>
-			<div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
-				<mat-form-field>
-					<mat-label>{{ t('filter') }}</mat-label>
-					<input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterValue" placeholder="{{ t('filterExample') }}">
-					<button mat-button *ngIf="filterValue" matSuffix mat-icon-button attr.aria-label="{{ t('clear') }}"
-							(click)="filterValue=''; applyFilter(null);" attr.aria-label="{{ t('emptyField') }}">
-						<mat-icon>close</mat-icon>
-					</button>
-				</mat-form-field>
-			</div>
-		</section>
-		<section>
-			<div class="table-container">
-			
-				<table mat-table [dataSource]="dataSource" class="data-table">
-				<ng-container matColumnDef="id">
-					<th mat-header-cell *matHeaderCellDef>{{ t('id') }}</th>
-					<td mat-cell *matCellDef="let row">{{row.id}}</td>
-				</ng-container>
-			
-				<ng-container matColumnDef="description">
-					<th mat-header-cell *matHeaderCellDef>{{ t('description') }}</th>
-					<td mat-cell *matCellDef="let row">{{row.description}}</td>
-				</ng-container>
-			
-				<ng-container matColumnDef="essential">
-					<th mat-header-cell *matHeaderCellDef>{{ t('essential') }}</th>
-					<td mat-cell *matCellDef="let row">
-						<mat-checkbox [(ngModel)]="row.essential" disabled="true"></mat-checkbox>
-					</td>
-				</ng-container>
 
-				<ng-container matColumnDef="actions">
-					<th mat-header-cell *matHeaderCellDef>{{ t('action') }}</th>
-					<td mat-cell *matCellDef="let row">
-						<button mat-icon-button color="primary" attr.aria-label="{{ t('editEntry') }}" (click)="onEditRow(row)" *ngIf="!row.essential">
-							<mat-icon>edit</mat-icon>
+	<mat-card appearance="outlined">
+		<mat-card-content>
+			<section>
+				<div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+					<mat-form-field>
+						<mat-label>{{ t('filter') }}</mat-label>
+						<input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterValue" placeholder="{{ t('filterExample') }}">
+						<button mat-button *ngIf="filterValue" matSuffix mat-icon-button attr.aria-label="{{ t('clear') }}"
+								(click)="filterValue=''; applyFilter(null);" attr.aria-label="{{ t('emptyField') }}">
+							<mat-icon>close</mat-icon>
 						</button>
-						<button mat-icon-button color="primary" attr.aria-label="{{ t('deleteEntry') }}" (click)="onDeleteRow(row)" *ngIf="!row.essential">
-							<mat-icon>delete</mat-icon>
-						</button>
-					</td>
-				</ng-container>
-				
-				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-				</table>
+					</mat-form-field>
 				</div>
-		</section>
+			</section>
+			<section>
+				<div class="table-container">
+				
+					<table mat-table [dataSource]="dataSource" class="data-table">
+					<ng-container matColumnDef="id">
+						<th mat-header-cell *matHeaderCellDef>{{ t('id') }}</th>
+						<td mat-cell *matCellDef="let row">{{row.id}}</td>
+					</ng-container>
+				
+					<ng-container matColumnDef="description">
+						<th mat-header-cell *matHeaderCellDef>{{ t('description') }}</th>
+						<td mat-cell *matCellDef="let row">{{row.description}}</td>
+					</ng-container>
+				
+					<ng-container matColumnDef="essential">
+						<th mat-header-cell *matHeaderCellDef>{{ t('essential') }}</th>
+						<td mat-cell *matCellDef="let row">
+							<mat-checkbox [(ngModel)]="row.essential" disabled="true"></mat-checkbox>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="actions">
+						<th mat-header-cell *matHeaderCellDef>{{ t('action') }}</th>
+						<td mat-cell *matCellDef="let row">
+							<button mat-icon-button color="primary" attr.aria-label="{{ t('editEntry') }}" (click)="onEditRow(row)" *ngIf="!row.essential">
+								<mat-icon>edit</mat-icon>
+							</button>
+							<button mat-icon-button color="primary" attr.aria-label="{{ t('deleteEntry') }}" (click)="onDeleteRow(row)" *ngIf="!row.essential">
+								<mat-icon>delete</mat-icon>
+							</button>
+						</td>
+					</ng-container>
+					
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+					</table>
+					</div>
+			</section>
+		</mat-card-content>
 	</mat-card>
 </div>

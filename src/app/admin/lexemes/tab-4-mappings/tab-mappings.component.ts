@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, ChangeDetectorRef, Component, isDevMode, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatSelectChange } from '@angular/material/select';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { LangPair, Mapping, Sememe } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';

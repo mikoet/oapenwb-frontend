@@ -36,13 +36,20 @@
 			</div>
 	
 			<div class="searchArea">
-				<mat-form-field #searchFormField class="searchField" appearance="outline" color="primary">
+				<mat-form-field
+					#searchFormField
+					search-field
+					class="searchField"
+					appearance="outline"
+					color="primary"
+				>
 					<mat-label>{{ t('search.question') }}</mat-label>
 					<input
 						#searchInput
 						id="searchText"
 						name="search"
-						matInput type="search"
+						matInput
+						type="search"
 						autocomplete="off"
 						[formControl]="searchControl"
 						(keyup.enter)="executeSearch(searchInput)"
@@ -50,14 +57,32 @@
 						[matAutocomplete]="auto"
 						matAutocompletePosition="below"
 					/>
-					<button mat-button *ngIf="!!search.term" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+
+					<button
+						*ngIf="!!search.term"
+						mat-icon-button
+						matSuffix
+						aria-label="Clear"
+						(click)="clearSearch()"
+					>
 						<mat-icon>close</mat-icon>
 					</button>
-					<button mat-button matSuffix mat-icon-button aria-label="Search" (click)="executeSearch(searchInput)">
+
+					<button
+						mat-icon-button
+						matSuffix
+						aria-label="Search"
+						(click)="executeSearch(searchInput)"
+					>
 						<mat-icon>search</mat-icon>
 					</button>
+
 					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="executeSearch(searchInput)">
-						<mat-option *ngFor="let option of search.autocompletion | async" [value]="option.searchWord">
+						<mat-option
+							stretch-item
+							*ngFor="let option of search.autocompletion | async"
+							[value]="option.searchWord"
+						>
 							<div class="grid-container autocomplete-option">
 								<span
 									class="autocomplete-content content-bottomed"

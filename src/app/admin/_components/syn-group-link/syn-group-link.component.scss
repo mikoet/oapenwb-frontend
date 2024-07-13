@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 // TODO deprecated: ::ng-deep
-::ng-deep .mat-optgroup-label {
+::ng-deep .mat-mdc-optgroup-label {
 	overflow: visible !important;
 }
 
 @for $i from 1 through 7 {
 	// TODO deprecated: ::ng-deep
 	// setting the height of the panel doesn't work without the ::ng-deep
-	::ng-deep .mat-select-panel.panelHeight-#{$i} { 
+	::ng-deep .mat-mdc-select-panel.panelHeight-#{$i} { 
 		min-height: calc(3em * #{$i});
 	}
 }

@@ -4,7 +4,7 @@ import { catchError, takeUntil, tap } from 'rxjs/operators';
 
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { MatLegacySelectionListChange as MatSelectionListChange } from '@angular/material/legacy-list';
+import { MatSelectionListChange } from '@angular/material/list';
 import { Pagination } from '@app/_models/response';
 import { LexemeSlimDTO } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';

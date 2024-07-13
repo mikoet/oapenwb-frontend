@@ -15,7 +15,7 @@
 		<div style="display: block; overflow-x: auto; overflow-y: auto; position: relative; word-wrap: break-word;
 				height: 100%; width: 100%; min-width: 640px;">
 			<!-- hidden: lexemeService.store.active === null -->
-			<mat-tab-group #editorTabs [hidden]="false" animationDuration="0ms">
+			<mat-tab-group #editorTabs [hidden]="false" animationDuration="0ms" mat-stretch-tabs="false">
 				<mat-tab style="min-width: 100px !important;">
 					<ng-template mat-tab-label>
 						<span [matBadge]="tabGeneral.errorCount" [matBadgeHidden]="tabGeneral.errorCount === 0"

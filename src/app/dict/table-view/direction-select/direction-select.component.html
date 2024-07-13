@@ -1,17 +1,33 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 <div *transloco="let t">
-	<button mat-button matTooltip="{{ t('search.direction:tt') }}" matTooltipPosition="above" matTooltipShowDelay="50"
-		[matMenuTriggerFor]="directionMenu">{{ t('search.direction:' + search.direction) }}</button>
+	<button
+		mat-button
+		matTooltip="{{ t('search.direction:tt') }}"
+		matTooltipPosition="above"
+		matTooltipShowDelay="50"
+		[matMenuTriggerFor]="directionMenu"
+	>{{ t('search.direction:' + search.direction) }}</button>
+
 	<mat-menu #directionMenu="matMenu">
-		<button mat-menu-item (click)="choose('Both')">{{ t('search.direction:Both') }}
-			<span class="right">&nbsp;&lt;–&gt;</span>
+
+		<button mat-menu-item stretch-item (click)="choose('Both')">
+			<div>{{ t('search.direction:Both') }}</div>
+			<div class="spacer"></div>
+			<div class="right">&nbsp;&lt;–&gt;</div>
 		</button>
-		<button mat-menu-item (click)="choose('Right')">{{ t('search.direction:Right') }}
-			<span class="right">&nbsp;–&gt;</span>
+
+		<button mat-menu-item stretch-item (click)="choose('Right')">
+			<div>{{ t('search.direction:Right') }}</div>
+			<div class="spacer"></div>
+			<div class="right">&nbsp;–&gt;</div>
 		</button>
-		<button mat-menu-item (click)="choose('Left')">{{ t('search.direction:Left') }}
-			<span class="right">&nbsp;&lt;–</span>
+
+		<button mat-menu-item stretch-item (click)="choose('Left')">
+			<div>{{ t('search.direction:Left') }}</div>
+			<div class="spacer"></div>
+			<div class="right">&nbsp;&lt;–</div>
 		</button>
+
 	</mat-menu>
 </div>

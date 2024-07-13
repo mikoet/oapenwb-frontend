@@ -9,7 +9,7 @@
 }
 
 .btn-container {
-	grid-template-columns: auto 120px 120px;
+	grid-template-columns: auto 160px 160px;
 	margin-top: 12px;
 }
 // Grid end
@@ -75,6 +75,12 @@
 .editorSubHeading {
 	padding-top: $editor-subheading-margin;
 	padding-left: $editor-subheading-margin;
+}
+
+// Tabs of the editor
+.mat-mdc-tab {
+	min-width: 72px !important;
+	padding: 0 32px !important;
 }
 // End: Lexeme Editor
 

@@ -12,8 +12,8 @@ import {
 	Component, HostListener, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, ViewChild
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatLegacyAutocompleteTrigger as MatAutocompleteTrigger } from '@angular/material/legacy-autocomplete';
-import { MatLegacyFormField as MatFormField } from '@angular/material/legacy-form-field';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatFormField } from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Direction } from '@app/_models/dict-api';
 import { LemmaService } from '@app/_services/lemma.service';
@@ -97,13 +97,6 @@ export class TableViewComponent implements OnInit, OnDestroy
 			takeUntil(this.destroy$),
 		).subscribe();
 
-		// Optical fix
-		this.transloco.langChanges$.pipe(
-			takeUntil(this.destroy$),
-		).subscribe(locale => {
-			setTimeout(() => this.searchFormField.updateOutlineGap());
-		});
-
 		this.readQueryParams();
 	}
 
@@ -144,19 +137,18 @@ export class TableViewComponent implements OnInit, OnDestroy
 		this.search.performSearch().pipe(
 			take(1),
 			takeUntil(this.destroy$),
-		).subscribe(
-			response => {
+		).subscribe({
+			next: (response) => {
 				if (!this.performedSearch) {
 					this.performedSearch = true;
-					this.zone.run(() => this.searchFormField.updateOutlineGap());
 				}
 				this.blockUI.stop();
 			},
-			error => {
+			error: (error) => {
 				// TODO Show an error text in this case
 				console.error('Error performing search request', error);
 				this.blockUI.stop();
-			}
+			}}
 		);
 
 		this.adaptNavigation();

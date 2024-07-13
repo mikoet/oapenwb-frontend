@@ -5,7 +5,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 
 import { NumericKeyMap } from '@app/util/hashmap';
 import { DataService, ExtCategory } from '@app/admin/_services/data.service';
-import { MatLegacySelect as MatSelect, MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 
 export type ItemType = "Category";

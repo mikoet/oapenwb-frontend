@@ -19,6 +19,7 @@
 
 // Overwriting the behaviour of checkboxes of having all text in one single line.
 // See: https://github.com/angular/components/issues/8416
+/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version.*/
 .mat-checkbox-layout {
 	white-space: normal !important;
 }
@@ -32,8 +33,8 @@
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
 //    `@include mat.legacy-typography-hierarchy($fontConfig);`
-@include mat.all-legacy-component-typographies($fontConfig);
-@include mat.legacy-core();
+@include mat.all-component-typographies($fontConfig);
+@include mat.core();
 @include multi-line-option-typography($fontConfig);
 
 // Theme Config
@@ -122,27 +123,31 @@ $darkTheme: (
 );
 
 // Theme Init
-@include mat.all-legacy-component-themes($theme);
-@include mat.legacy-button-color($theme);
+@include mat.all-component-themes($theme);
+@include mat.button-color($theme);
+@include mat.fab-color($theme);
+@include mat.icon-button-color($theme);
 @include multi-line-option-theme($theme);
 
 .theme-alternate {
-	@include mat.all-legacy-component-colors($darkTheme);
-	@include mat.legacy-button-color($darkTheme);
+	@include mat.all-component-colors($darkTheme);
+	@include mat.button-color($darkTheme);
+	@include mat.fab-color($darkTheme);
+	@include mat.icon-button-color($darkTheme);
 	@include multi-line-option-theme($darkTheme);
 }
 
 // Specific component overrides, pieces that are not in line with the general theming
 
 // Handle buttons appropriately, with respect to line-height
-.mat-raised-button, .mat-stroked-button, .mat-flat-button {
+.mat-mdc-raised-button, .mat-mdc-outlined-button, .mat-mdc-unelevated-button {
 	padding: 0 1.15em;
 	margin: 0 .65em;
 	min-width: 3em;
 	line-height: 36.4px
 }
 
-.mat-standard-chip {
+.mat-mdc-standard-chip {
 	padding: .5em .85em;
 	min-height: 2.5em;
 }

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, isDevMode, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelectChange } from '@angular/material/select';
 import { LexemeType, Sememe, SynGroup, Variant } from '@app/admin/_models/admin-api';
 import { DataService, ExtCategory } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
