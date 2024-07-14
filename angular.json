@@ -118,10 +118,10 @@
 					"options": {},
 					"configurations": {
 						"production": {
-							"browserTarget": "oapenWB:build:production"
+							"buildTarget": "oapenWB:build:production"
 						},
 						"development": {
-							"browserTarget": "oapenWB:build:development"
+							"buildTarget": "oapenWB:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
@@ -129,7 +129,7 @@
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "oapenWB:build"
+						"buildTarget": "oapenWB:build"
 					}
 				},
 				"test": {
