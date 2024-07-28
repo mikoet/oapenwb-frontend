@@ -7,7 +7,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 /**
  * The MainComponent is the main component of the dictionary's visitor view.

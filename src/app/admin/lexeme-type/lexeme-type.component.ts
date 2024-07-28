@@ -9,7 +9,7 @@ import { Response } from '@app/_models/response';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
-import { TranslocoService } from '@ngneat/transloco'
+import { TranslocoService } from '@jsverse/transloco'
 import { Language, LexemeType, UiResultCategory } from '../_models/admin-api';
 import { langApiPath, lexemeTypeApiPath, uiResultCategoryApiPath } from '../_models/admin-api-paths';
 

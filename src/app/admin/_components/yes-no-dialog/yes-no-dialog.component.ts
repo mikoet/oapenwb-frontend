@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TranslocoService, TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { TranslocoService, TRANSLOCO_SCOPE } from '@jsverse/transloco';
 
 export class YesNoInput
 {

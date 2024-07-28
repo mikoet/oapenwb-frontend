@@ -1,8 +1,9 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
-@import "@angular/material/theming";
+@use '@angular/material' as mat;
 
+// TODO Material without SASS
 @mixin multi-line-option-theme($theme) {
 	.multi-line-option {
 		/* TODO(mdc-migration): The following rule targets internal classes of option that may no longer apply for the MDC version.*/

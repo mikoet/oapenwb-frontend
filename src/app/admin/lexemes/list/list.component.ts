@@ -13,7 +13,7 @@ import {
 	HeldLexeme, LexemeOrigin, LexemeService, SelectedLexeme
 } from '@app/admin/_services/lexeme.service';
 import { LockService } from '@app/admin/_services/lock.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { FilterMenuComponent } from '../filter-menu/filter-menu.component';
 

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit } from '@angular/core';
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
 	selector: 'dict-header',

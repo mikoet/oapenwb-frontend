@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, Input, OnChanges } from '@angular/core';
 import { NavigationNode } from '@app/admin/navigation/navigation.model';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
 	selector: 'app-nav-item',

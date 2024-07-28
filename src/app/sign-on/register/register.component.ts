@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { isMessage } from '@app/_models/message';
 import { isUser } from '@app/_models/user';
 import { AccountService } from '@app/shared/_services/account.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 // custom validator to check that two fields match
 /*

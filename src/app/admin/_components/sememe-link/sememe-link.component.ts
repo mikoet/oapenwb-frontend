@@ -10,7 +10,7 @@ import { DataService } from '@app/admin/_services/data.service';
 import { SememeService } from '@app/admin/_services/sememe.service';
 import { SCOPE_LEXEME_TYPES } from '@app/_base/ui-scopes';
 import { Response } from '@app/_models/response';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { debounceTime, tap, filter, takeUntil, switchMap } from 'rxjs/operators';
 

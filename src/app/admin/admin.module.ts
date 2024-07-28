@@ -34,7 +34,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 import { TranslocoRootModule } from '@app/transloco-root.module';
-import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { TRANSLOCO_SCOPE } from '@jsverse/transloco';
 
 import { BlockUIModule } from 'ng-block-ui';
 

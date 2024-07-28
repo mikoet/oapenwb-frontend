@@ -9,7 +9,7 @@ import { LangPair, Mapping, Sememe } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { KeyMap } from '@app/util/hashmap';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Subscription } from 'rxjs';
 import { SememeSupply } from '../tab-3-sememes/sememeSupply';
 import { TransferStop } from '../view/view.component';

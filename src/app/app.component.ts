@@ -7,7 +7,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { DEFAULT_UI_LOCALE } from './_config/config';
 

@@ -8,7 +8,7 @@ import { DataService, ExtCategory } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { ReplaySubject, Subscription, takeUntil } from 'rxjs';
 import { TransferStop } from '../view/view.component';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ApiAction } from '@app/admin/_models/enums';
 import { countErrors, doEnablingControl, transferValues } from '@app/admin/_util/form-utils';
 import { VariantSupply } from '../tab-2-variants/variantSupply';

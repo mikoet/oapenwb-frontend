@@ -9,7 +9,7 @@ import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service
 import { Subscription } from 'rxjs';
 import { TransferStop } from '../view/view.component';
 import { LexemeFormsComponent } from '../lexeme-forms/lexeme-forms.component';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ApiAction } from '@app/admin/_models/enums';
 import { countErrors, doEnablingControl } from '@app/admin/_util/form-utils';
 import { VariantSupply } from './variantSupply';

@@ -7,7 +7,7 @@ import { FormTypePos, LexemeFormType } from '../_models/admin-api';
 import { DataService, Entities } from '../_services/data.service';
 import { Subscription } from 'rxjs';
 import { KeyMap } from '@app/util/hashmap';
-import { TranslocoService, TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { TranslocoService, TRANSLOCO_SCOPE } from '@jsverse/transloco';
 import { DEFAULT_UI_LOCALE } from '@app/_config/config';
 
 export class DialogData

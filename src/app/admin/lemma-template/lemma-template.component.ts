@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { LemmaTemplate } from '../_models/admin-api';
 import { lemmaTemplatesApiPath } from '../_models/admin-api-paths';

@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, of as observableOf } from 'rxjs';
 import { catchError, first, map } from 'rxjs/operators';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { AccountService } from '@app/shared/_services/account.service';
 

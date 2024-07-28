@@ -43,7 +43,7 @@ For upgrading see: https://github.com/angular-eslint/angular-eslint#migrating-fr
 `npm run i18n:find`
 
 More about the detective:
-https://www.npmjs.com/package/@ngneat/transloco-keys-manager#-installation
+https://www.npmjs.com/package/@jsverse/transloco-keys-manager#-installation
 
 
 ## What else to say

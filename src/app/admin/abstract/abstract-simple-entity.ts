@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Message } from '@app/_models/message';
 import { Response } from '@app/_models/response';
 import { environment } from '@environments/environment';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 /**
  * AbstractSEC stands for Abstract Simple Entity Component.

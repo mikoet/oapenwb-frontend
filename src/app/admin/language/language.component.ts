@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, map, retry } from 'rxjs/operators';
 import { Response } from '@app/_models/response';
 
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 import { Language, Orthography } from '../_models/admin-api';

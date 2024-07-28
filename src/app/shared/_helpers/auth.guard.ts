@@ -3,7 +3,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { TranslocoService } from '@ngneat/transloco'
+import { TranslocoService } from '@jsverse/transloco'
 import { AccountService } from '../_services/account.service';
 
 import { getRouteStrWithoutLang } from '../_pipes/routing.pipe';

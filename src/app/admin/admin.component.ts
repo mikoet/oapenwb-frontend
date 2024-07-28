@@ -5,7 +5,7 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, isDevMode, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { AccountService } from '@app/shared/_services/account.service';
 import { getRouteStrWithoutLang } from '@app/shared/_pipes/routing.pipe';

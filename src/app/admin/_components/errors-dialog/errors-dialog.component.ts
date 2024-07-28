@@ -3,7 +3,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Message } from '@app/_models/message';
-import { TRANSLOCO_SCOPE, TranslocoService } from '@ngneat/transloco';
+import { TRANSLOCO_SCOPE, TranslocoService } from '@jsverse/transloco';
 
 export class ErrorsInput
 {

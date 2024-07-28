@@ -18,7 +18,7 @@ import {
 	LexemeOrigin, LexemeService, SelectedLexeme, SnackMessage
 } from '@app/admin/_services/lexeme.service';
 import { ScopedBlocker } from '@app/util/scoped-blocker';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { EditorComponent } from '../editor/editor.component';
 import { ListComponent } from '../list/list.component';

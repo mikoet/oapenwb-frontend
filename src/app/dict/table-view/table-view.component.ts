@@ -19,7 +19,7 @@ import { Direction } from '@app/_models/dict-api';
 import { LemmaService } from '@app/_services/lemma.service';
 import { SearchService } from '@app/_services/search.service';
 import { QP_TABLE_VIEW_DIRECTION, QP_TABLE_VIEW_PAIR, QP_TABLE_VIEW_TERM } from '@app/routes';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 function isDirection(str: string): str is Direction {
 	return ['Both', 'Left', 'Right'].includes(str);

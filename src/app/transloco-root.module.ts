@@ -3,13 +3,14 @@ import { EMPTY } from 'rxjs';
 
 // SPDX-License-Identifier: AGPL-3.0-only
 import { HttpClient } from '@angular/common/http';
-import { Injectable, NgModule, NgZone } from '@angular/core';
+import { Injectable, NgModule, NgZone, isDevMode } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import {
+	provideTransloco,
 	Translation, TRANSLOCO_CONFIG, TRANSLOCO_FALLBACK_STRATEGY, TRANSLOCO_LOADER, translocoConfig,
 	TranslocoFallbackStrategy, TranslocoLoader, TranslocoModule
-} from '@ngneat/transloco';
+} from '@jsverse/transloco';
 
 import { DEFAULT_UI_LOCALE } from './_config/config';
 import { ROUTE_MAINTENANCE } from './routes';
@@ -50,23 +51,24 @@ export class DictFallbackStrategy implements TranslocoFallbackStrategy
 @NgModule({
 	exports: [TranslocoModule],
 	providers: [
-		{
-			provide: TRANSLOCO_CONFIG,
-			useValue: translocoConfig({
-				availableLangs: ['nds', 'de', 'en'],
+		provideTransloco({
+            config: {
+                availableLangs: ['nds', 'de', 'en'],
 				defaultLang: DEFAULT_UI_LOCALE,
-				reRenderOnLangChange: true,
-				prodMode: environment.production,
-			})
-		},
-		{
-			provide: TRANSLOCO_LOADER,
-			useClass: TranslocoHttpLoader
-		},
-		{
-			provide: TRANSLOCO_FALLBACK_STRATEGY,
-			useClass: DictFallbackStrategy
-		}
+                reRenderOnLangChange: true,
+                prodMode: !isDevMode(),
+            },
+            loader: TranslocoHttpLoader
+        }),
+		// TODO Wat is med dee to doon nå den wessel up dat nye transloco?
+		// {
+		// 	provide: TRANSLOCO_LOADER,
+		// 	useClass: TranslocoHttpLoader
+		// },
+		// {
+		// 	provide: TRANSLOCO_FALLBACK_STRATEGY,
+		// 	useClass: DictFallbackStrategy
+		// },
 	]
 })
 export class TranslocoRootModule { }
