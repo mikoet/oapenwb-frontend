@@ -51,7 +51,6 @@ import { NavigationService } from '@app/admin/navigation/navigation.service';
 import { SharedModule } from '@app/shared/shared.module';
 
 import { DisableControlDirective } from './_directives/disable-control.directive';
-import { MultiLineOptionDirective } from './_directives/multi-line-option.directive';
 
 import { DataService } from './_services/data.service';
 import { LexemeQueryService } from './_services/lexeme-query.service';
@@ -142,7 +141,7 @@ const material = [
 	declarations: [
 		// Directives
 		DisableControlDirective,
-		MultiLineOptionDirective,
+
 		// Components
 		AdminComponent,
 		SideMenuComponent,
@@ -185,7 +184,7 @@ const material = [
 		SynGroupLinkComponent,
 		SememeLinkComponent,
 		HierarchicalSelectComponent,
-		DialectsSelectComponent
+		DialectsSelectComponent,
 	],
 	imports: [
 		BlockUIModule.forRoot({
@@ -199,7 +198,7 @@ const material = [
 		HttpClientModule,
 		ReactiveFormsModule,
 		SharedModule,
-		TranslocoRootModule
+		TranslocoRootModule,
 	],
 	providers: [
 		httpInterceptorProviders,

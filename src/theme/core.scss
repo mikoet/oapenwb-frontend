@@ -10,12 +10,10 @@
 // have to load a single css file for Angular Material in your app.
 
 @use '@angular/material' as mat;
+
 @import './light.scss';
-//@import './dark.scss';
 @import './typography.scss';
 @import './colors.scss';
-
-@import '../app/admin/_directives/multi-line-option-theme.scss';
 
 // Overwriting the behaviour of checkboxes of having all text in one single line.
 // See: https://github.com/angular/components/issues/8416
@@ -35,8 +33,6 @@
 //    `@include mat.legacy-typography-hierarchy($fontConfig);`
 @include mat.all-component-typographies($fontConfig);
 @include mat.core();
-// TODO Material without SASS
-// @include multi-line-option-typography($fontConfig);
 
 // Theme Config
 
@@ -111,8 +107,8 @@ $theme-warn: mat.define-palette($mat-warn, main, lighter, darker);;
 //   accent: $theme-accent,
 //   warn: $theme-warn,
 //   is-dark: false,
-//   foreground: $mat-light-theme-foreground,
-//   background: $mat-light-theme-background,
+//   foreground: $mat-light-theme-foreground, // TODO Wo wardt dat nu setted?
+//   background: $mat-light-theme-background, // TODO Wo wardt dat nu setted?
 // );
 
 $theme: mat.define-light-theme((
@@ -125,14 +121,12 @@ $theme: mat.define-light-theme((
 	density: 0,
 ));
 
-
 // Theme Init
 @include mat.all-component-themes($theme);
 @include mat.button-color($theme);
 @include mat.fab-color($theme);
 @include mat.icon-button-color($theme);
-// TODO Material without SASS
-//@include multi-line-option-theme($theme);
+
 
 /***************************************************************************************************
  * 
