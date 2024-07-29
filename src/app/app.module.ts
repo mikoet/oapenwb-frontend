@@ -3,7 +3,7 @@
 
 import { BlockUIModule } from 'ng-block-ui';
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -52,34 +52,36 @@ const material = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainComponent,
-    TableViewComponent,
-    ResultTableComponent,
-    LangPairSelectComponent,
-    DirectionSelectComponent,
-    FooterComponent,
-    HeaderComponent,
-    ImprintComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-	BlockUIModule.forRoot({
-		delayStart: 500,
-		/*delayStop: 500*/
-	}),
-    AppRoutingModule,
-	BrowserAnimationsModule,
-	FontAwesomeModule,
-	FormsModule,
-	material,
-	HttpClientModule,
-	ReactiveFormsModule,
-	TranslocoRootModule,
-	SharedModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+	declarations: [
+        AppComponent,
+        MainComponent,
+        TableViewComponent,
+        ResultTableComponent,
+        LangPairSelectComponent,
+        DirectionSelectComponent,
+        FooterComponent,
+        HeaderComponent,
+        ImprintComponent
+    ],
+    bootstrap: [
+		AppComponent,
+	],
+	imports: [
+		BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        BlockUIModule.forRoot({
+            delayStart: 500,
+            /*delayStop: 500*/
+        }),
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FontAwesomeModule,
+        FormsModule,
+        material,
+        ReactiveFormsModule,
+        TranslocoRootModule,
+        SharedModule
+	],
+	providers: [
+		provideHttpClient(withInterceptorsFromDi()),
+	] })
 export class AppModule { }
