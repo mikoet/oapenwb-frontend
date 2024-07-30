@@ -1,29 +1,13 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
-// Fonts
-//@use '@angular/material' as mat;
+@use '@angular/material' as mat;
 @import '../assets/fonts/material-icons';
-//@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
-//font-family: 'Titillium Web', sans-serif;
-//@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400");
 
-$main-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+$mainFonts: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
-$fontConfig: (
-	font-family: $main-font,
-	display-4: mat.m2-define-typography-level(112px, 112px, 300, $main-font, -0.0134em), // alternativ "Titillium Web"
-	display-3: mat.m2-define-typography-level(56px, 56px, 400, $main-font, -0.0089em),
-	display-2: mat.m2-define-typography-level(45px, 48px, 400, $main-font, 0.0000em),
-	display-1: mat.m2-define-typography-level(34px, 40px, 400, $main-font, 0.0074em),
-	headline: mat.m2-define-typography-level(24px, 32px, 400, $main-font, 0.0000em),
-	title: mat.m2-define-typography-level(20px, 32px, 500, $main-font, 0.0075em),
-	subheading-2: mat.m2-define-typography-level(16px, 28px, 400, $main-font, 0.0094em),
-	subheading-1: mat.m2-define-typography-level(15px, 24px, 500, $main-font, 0.0067em),
-	body-2: mat.m2-define-typography-level(14px, 24px, 500, $main-font, 0.0179em),
-	body-1: mat.m2-define-typography-level(14px, 20px, 400, $main-font, 0.0179em),
-	button: mat.m2-define-typography-level(14px, 14px, 500, $main-font, 0.0893em),
-	caption: mat.m2-define-typography-level(12px, 20px, 400, $main-font, 0.0333em),
-	// line-height (param. 2) 1.2 instead of 1.25 (default) to not have cut off p, g, y at the bottom
-	input: mat.m2-define-typography-level(inherit, 1.2, 400, $main-font, 1.5px)
+$typographyConfig: mat.m2-define-typography-config(
+	$font-family: $mainFonts,
 );
+
+@include mat.typography-hierarchy($typographyConfig);

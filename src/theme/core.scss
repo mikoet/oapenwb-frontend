@@ -6,21 +6,11 @@
 * https://materialtheme.arcsine.dev
 */
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-
 @use '@angular/material' as mat;
 
 @import './light.scss';
 @import './typography.scss';
 @import './colors.scss';
-
-// Overwriting the behaviour of checkboxes of having all text in one single line.
-// See: https://github.com/angular/components/issues/8416
-/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version.*/
-.mat-checkbox-layout {
-	white-space: normal !important;
-}
 
 // Compute font config
 // TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
@@ -30,8 +20,8 @@
 //  If you specify typography styles for the components you use elsewhere, you should delete this line.
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy($fontConfig);`
-@include mat.all-component-typographies($fontConfig);
+//    `@include mat.legacy-typography-hierarchy($typographyConfig);`
+@include mat.all-component-typographies($typographyConfig);
 @include mat.core();
 
 // Theme Config
@@ -117,7 +107,7 @@ $theme: mat.m2-define-light-theme((
 		accent: $theme-accent,
 		warn: $theme-warn,
 	),
-	typography: mat.m2-define-typography-config(),
+	typography: $typographyConfig,
 	density: 0,
 ));
 
