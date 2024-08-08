@@ -4,7 +4,7 @@ import { catchError, takeUntil, tap } from 'rxjs/operators';
 
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { MatSelectionListChange } from '@angular/material/list';
+import { MatSelectionListChange, MatSelectionList, MatListOption, MatListItemIcon, MatListItemTitle, MatListItemLine } from '@angular/material/list';
 import { Pagination } from '@app/_models/response';
 import { LexemeSlimDTO } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
@@ -16,11 +16,22 @@ import { LockService } from '@app/admin/_services/lock.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 import { FilterMenuComponent } from '../filter-menu/filter-menu.component';
+import { MatDivider } from '@angular/material/divider';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgFor, NgIf, NgClass, AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatToolbar } from '@angular/material/toolbar';
 
 @Component({
-	selector: 'admin-lexeme-list',
-	templateUrl: './list.component.html',
-	styleUrls: ['./list.component.scss']
+    selector: 'admin-lexeme-list',
+    templateUrl: './list.component.html',
+    styleUrls: ['./list.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatFormField, MatLabel, MatInput, FormsModule, MatIconButton, MatIcon, FilterMenuComponent, MatSelectionList, NgFor, MatListOption, MatListItemIcon, MatListItemTitle, MatTooltip, MatListItemLine, NgIf, MatDivider, NgClass, AsyncPipe]
 })
 export class ListComponent implements OnInit, OnDestroy
 {

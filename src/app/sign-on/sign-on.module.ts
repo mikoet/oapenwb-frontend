@@ -33,24 +33,22 @@ const material = [
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
-		material,
-		TranslocoRootModule,
-		SharedModule,
-		SignOnRoutingModule,
-		FormsModule,
-		ReactiveFormsModule,
-		RouterModule,
-	],
-	declarations: [
-		LoginComponent,
-		SimpleCardFormComponent,
-		RegisterComponent,
-		ForgotPwComponent,
-	],
-	providers: [
-		{ provide: TRANSLOCO_SCOPE, useValue: 'son' }
-	]
+    imports: [
+        CommonModule,
+        material,
+        TranslocoRootModule,
+        SharedModule,
+        SignOnRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        LoginComponent,
+        SimpleCardFormComponent,
+        RegisterComponent,
+        ForgotPwComponent,
+    ],
+    providers: [
+        { provide: TRANSLOCO_SCOPE, useValue: 'son' }
+    ]
 })
 export class SignOnModule { }

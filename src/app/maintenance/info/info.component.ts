@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { ROUTE_TABLE_VIEW } from '@app/routes';
 import { getRouteStrWithoutLang } from '@app/shared/_pipes/routing.pipe';
 import { DEFAULT_UI_LOCALE } from '@app/_config/config';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const sentences = [
 	{
@@ -43,9 +44,11 @@ const sentences = [
 ]
 
 @Component({
-	selector: 'app-info',
-	templateUrl: './info.component.html',
-	styleUrls: ['./info.component.scss']
+    selector: 'app-info',
+    templateUrl: './info.component.html',
+    styleUrls: ['./info.component.scss'],
+    standalone: true,
+    imports: [FontAwesomeModule]
 })
 export class InfoComponent implements OnInit, OnDestroy
 {

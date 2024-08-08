@@ -4,11 +4,15 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MarkdownComponent as MarkdownComponent_1 } from 'ngx-markdown';
+import { NgIf } from '@angular/common';
 
 @Component({
-	selector: 'oapenwb-markdown',
-	templateUrl: './markdown.component.html',
-	styleUrls: ['./markdown.component.scss']
+    selector: 'oapenwb-markdown',
+    templateUrl: './markdown.component.html',
+    styleUrls: ['./markdown.component.scss'],
+    standalone: true,
+    imports: [NgIf, MarkdownComponent_1]
 })
 export class MarkdownComponent implements OnInit, OnDestroy
 {

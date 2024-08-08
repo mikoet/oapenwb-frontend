@@ -1,10 +1,10 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Location, NgIf } from '@angular/common';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { first } from 'rxjs/operators';
 
@@ -14,11 +14,19 @@ import { AccountService } from '@app/shared/_services/account.service';
 
 import { isMessage } from '@app/_models/message';
 import { isUser } from '@app/_models/user';
+import { RoutingPipe } from '@app/shared/_pipes/routing.pipe';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatError } from '@angular/material/form-field';
+import { SimpleCardFormComponent } from '../simple-card-form/simple-card-form.component';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-forgot-pw',
-  templateUrl: './forgot-pw.component.html',
-  styleUrls: ['./forgot-pw.component.scss']
+    selector: 'app-forgot-pw',
+    templateUrl: './forgot-pw.component.html',
+    styleUrls: ['./forgot-pw.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, SimpleCardFormComponent, FormsModule, ReactiveFormsModule, MatFormField, MatInput, NgIf, MatError, MatButton, RouterLink, RoutingPipe]
 })
 export class ForgotPwComponent implements OnInit {
 

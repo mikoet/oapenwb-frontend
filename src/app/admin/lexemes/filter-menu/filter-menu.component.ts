@@ -1,17 +1,28 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterOptions, Language, LexemeType, State, Tag, TextSearchType } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
 import { Dictionary } from '@app/util/hashmap';
 import { ReplaySubject, Subscription, takeUntil } from 'rxjs';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { NgFor } from '@angular/common';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { MatDivider } from '@angular/material/divider';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIconButton } from '@angular/material/button';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
-	selector: 'app-filter-menu',
-	templateUrl: './filter-menu.component.html',
-	styleUrls: ['./filter-menu.component.scss']
+    selector: 'app-filter-menu',
+    templateUrl: './filter-menu.component.html',
+    styleUrls: ['./filter-menu.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, FormsModule, ReactiveFormsModule, MatIconButton, MatMenuTrigger, MatTooltip, MatIcon, MatMenu, MatMenuItem, MatDivider, MatRadioGroup, MatRadioButton, NgFor, MatCheckbox]
 })
 export class FilterMenuComponent implements OnInit, OnDestroy
 {

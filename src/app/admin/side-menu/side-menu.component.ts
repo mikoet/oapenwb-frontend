@@ -4,11 +4,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { NavigationService } from '@app/admin/navigation/navigation.service';
 import { CurrentNodes, NavigationNode } from '@app/admin/navigation/navigation.service';
+import { NavMenuComponent } from './layout/nav-menu/nav-menu.component';
 
 @Component({
-  selector: 'admin-side-menu',
-  templateUrl: './side-menu.component.html',
-  styleUrls: ['./side-menu.component.scss']
+    selector: 'admin-side-menu',
+    templateUrl: './side-menu.component.html',
+    styleUrls: ['./side-menu.component.scss'],
+    standalone: true,
+    imports: [NavMenuComponent]
 })
 export class SideMenuComponent implements OnInit
 {

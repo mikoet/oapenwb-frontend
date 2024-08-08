@@ -3,9 +3,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'app-link-type',
-	templateUrl: './link-type.component.html',
-	styleUrls: ['./link-type.component.scss']
+    selector: 'app-link-type',
+    templateUrl: './link-type.component.html',
+    styleUrls: ['./link-type.component.scss'],
+    standalone: true
 })
 export class LinkTypeComponent implements OnInit
 {

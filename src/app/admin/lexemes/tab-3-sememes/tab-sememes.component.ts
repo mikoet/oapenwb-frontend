@@ -1,14 +1,14 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, isDevMode, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
+import { FormControl, FormGroup, FormGroupDirective, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectChange, MatSelect, MatSelectTrigger } from '@angular/material/select';
 import { LexemeType, Sememe, SynGroup, Variant } from '@app/admin/_models/admin-api';
 import { DataService, ExtCategory } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { ReplaySubject, Subscription, takeUntil } from 'rxjs';
 import { TransferStop } from '../view/view.component';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
 import { ApiAction } from '@app/admin/_models/enums';
 import { countErrors, doEnablingControl, transferValues } from '@app/admin/_util/form-utils';
 import { VariantSupply } from '../tab-2-variants/variantSupply';
@@ -21,6 +21,19 @@ import { SememeLinkComponent } from '@app/admin/_components/sememe-link/sememe-l
 import { SynGroupQueryService } from '@app/admin/_services/syn-group-query.service';
 import { DialectsSelectComponent } from '@app/admin/_components/dialects-select/dialects-select.component';
 import { HierarchicalSelectComponent } from '@app/admin/_components/hierarchical-select/hierarchical-select.component';
+import { LemmaComponentComponent } from '../../../shared/_components/lemma-component/lemma-component.component';
+import { SynGroupLinkComponent as SynGroupLinkComponent_1 } from '../../_components/syn-group-link/syn-group-link.component';
+import { LexemeLinkComponent } from '../../_components/lexeme-link/lexeme-link.component';
+import { HierarchicalSelectComponent as HierarchicalSelectComponent_1 } from '../../_components/hierarchical-select/hierarchical-select.component';
+import { DialectsSelectComponent as DialectsSelectComponent_1 } from '../../_components/dialects-select/dialects-select.component';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatInput } from '@angular/material/input';
+import { MatDivider } from '@angular/material/divider';
+import { MatButton } from '@angular/material/button';
+import { MatBadge } from '@angular/material/badge';
+import { MatOption } from '@angular/material/core';
+import { NgFor, NgIf } from '@angular/common';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
 
 class InnerCategory
 {
@@ -40,9 +53,11 @@ export enum FillSpecType {
 }
 
 @Component({
-	selector: 'lex-tab-sememes',
-	templateUrl: './tab-sememes.component.html',
-	styleUrls: ['./tab-sememes.component.scss']
+    selector: 'lex-tab-sememes',
+    templateUrl: './tab-sememes.component.html',
+    styleUrls: ['./tab-sememes.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, MatFormField, MatLabel, MatSelect, NgFor, NgIf, MatOption, MatBadge, MatButton, MatDivider, FormsModule, ReactiveFormsModule, MatInput, MatHint, MatSlideToggle, DialectsSelectComponent_1, MatSelectTrigger, HierarchicalSelectComponent_1, LexemeLinkComponent, SynGroupLinkComponent_1, LemmaComponentComponent]
 })
 export class TabSememesComponent implements OnInit, OnDestroy, SememeSupply
 {

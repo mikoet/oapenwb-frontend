@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Output, EventEmitter, isDevMode } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { FormControl, FormGroup, Validators, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 
-import { MatChipInputEvent } from '@angular/material/chips';
+import { MatChipInputEvent, MatChipGrid, MatChipRow, MatChipRemove, MatChipInput } from '@angular/material/chips';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -13,16 +13,26 @@ import { DataService } from '@app/admin/_services/data.service';
 import { TransferStop } from '../view/view.component';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { Lexeme } from '@app/admin/_models/admin-api';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelect } from '@angular/material/select';
 import { countErrors, doEnablingControl } from '@app/admin/_util/form-utils';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSlideToggleChange, MatSlideToggle } from '@angular/material/slide-toggle';
 import { LexemeLinkComponent } from '@app/admin/_components/lexeme-link/lexeme-link.component';
 import { SHOW_CHANGE_DATA } from '../editor/editor.component';
+import { MatIcon } from '@angular/material/icon';
+import { LexemeLinkComponent as LexemeLinkComponent_1 } from '../../_components/lexeme-link/lexeme-link.component';
+import { MatOption } from '@angular/material/core';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { DisableControlDirective } from '../../_directives/disable-control.directive';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
-	selector: 'lex-tab-general',
-	templateUrl: './tab-general.component.html',
-	styleUrls: ['./tab-general.component.scss']
+    selector: 'lex-tab-general',
+    templateUrl: './tab-general.component.html',
+    styleUrls: ['./tab-general.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, DisableControlDirective, NgFor, MatOption, LexemeLinkComponent_1, MatChipGrid, MatChipRow, NgIf, MatIcon, MatChipRemove, MatAutocompleteTrigger, MatChipInput, MatAutocomplete, MatSlideToggle, AsyncPipe]
 })
 export class TabGeneralComponent implements OnInit, OnDestroy
 {

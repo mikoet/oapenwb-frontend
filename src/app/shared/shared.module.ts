@@ -10,20 +10,18 @@ import { LemmaComponentComponent } from './_components/lemma-component/lemma-com
 import { MarkdownComponent } from './_components/markdown/markdown.component';
 
 @NgModule({
-	declarations: [
-		RoutingPipe,
-		LemmaComponentComponent,
-		MarkdownComponent,
-	],
-	imports: [
-		CommonModule,
-		TranslocoRootModule,
-		MarkdownModule.forRoot(),
-	],
-	exports: [
-		RoutingPipe,
-		LemmaComponentComponent,
-		MarkdownComponent,
-	]
+    imports: [
+        CommonModule,
+        TranslocoRootModule,
+        MarkdownModule.forRoot(),
+        RoutingPipe,
+        LemmaComponentComponent,
+        MarkdownComponent,
+    ],
+    exports: [
+        RoutingPipe,
+        LemmaComponentComponent,
+        MarkdownComponent,
+    ]
 })
 export class SharedModule { }

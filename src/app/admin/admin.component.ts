@@ -1,20 +1,29 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { MediaMatcher } from '@angular/cdk/layout';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, NgFor } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, isDevMode, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
 
 import { AccountService } from '@app/shared/_services/account.service';
-import { getRouteStrWithoutLang } from '@app/shared/_pipes/routing.pipe';
+import { getRouteStrWithoutLang, RoutingPipe } from '@app/shared/_pipes/routing.pipe';
 import { ROUTE_LOGIN } from '@app/routes';
+import { BlockUIModule } from 'ng-block-ui';
+import { SideMenuComponent } from './side-menu/side-menu.component';
+import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { MatToolbar } from '@angular/material/toolbar';
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+    selector: 'app-admin',
+    templateUrl: './admin.component.html',
+    styleUrls: ['./admin.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, MatToolbar, MatIconButton, MatIcon, RouterLink, MatMenuTrigger, MatMenu, MatMenuItem, NgFor, MatSidenavContainer, MatSidenav, SideMenuComponent, MatSidenavContent, BlockUIModule, RouterOutlet, RoutingPipe]
 })
 export class AdminComponent implements OnInit, OnDestroy
 {

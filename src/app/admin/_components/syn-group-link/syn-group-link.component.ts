@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectChange, MatSelect, MatSelectTrigger } from '@angular/material/select';
 import { ListComponent } from '@app/admin/lexemes/list/list.component';
 import { TabSememesComponent } from '@app/admin/lexemes/tab-3-sememes/tab-sememes.component';
 import { LexemeSlimPlus, LexemeSlimDTO, Sememe, SGSearchResult, SynGroup, SynGroupItem } from '@app/admin/_models/admin-api';
@@ -12,9 +12,13 @@ import { SynGroupQueryService } from '@app/admin/_services/syn-group-query.servi
 import { SCOPE_LEXEME_TYPES } from '@app/_base/ui-scopes';
 import { Response } from '@app/_models/response';
 import { LemmaService } from '@app/_services/lemma.service';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { debounceTime, tap, filter, takeUntil, switchMap } from 'rxjs/operators';
+import { AsyncPipe } from '@angular/common';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatOption, MatOptgroup } from '@angular/material/core';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 export type SelectionType = "SynGroup" | "Sememe";
 
@@ -29,16 +33,18 @@ export interface Selection
 const DEFAULT_HEIGHT: number = 2;
 
 @Component({
-	selector: 'admin-syn-group-link',
-	templateUrl: './syn-group-link.component.html',
-	styleUrls: ['./syn-group-link.component.scss'],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => SynGroupLinkComponent),
-			multi: true
-		}
-	]
+    selector: 'admin-syn-group-link',
+    templateUrl: './syn-group-link.component.html',
+    styleUrls: ['./syn-group-link.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SynGroupLinkComponent),
+            multi: true
+        }
+    ],
+    standalone: true,
+    imports: [TranslocoDirective, MatFormField, MatLabel, MatSelect, FormsModule, ReactiveFormsModule, MatSelectTrigger, MatOption, NgxMatSelectSearchModule, MatOptgroup, AsyncPipe]
 })
 export class SynGroupLinkComponent implements OnInit, OnDestroy, ControlValueAccessor
 {

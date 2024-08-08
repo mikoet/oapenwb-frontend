@@ -1,15 +1,12 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
-import {
-	ControlValueAccessor,
-	FormControl,
-	FormGroupDirective,
-	NgForm,
-	NG_VALIDATORS,
-	NG_VALUE_ACCESSOR
-} from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroupDirective, NgForm, NG_VALIDATORS, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher
 {
@@ -31,16 +28,18 @@ export class MyErrorStateMatcher implements ErrorStateMatcher
 // When it comes to implementing the interface ControlValueAccessor, this post was of help:
 // https://stackoverflow.com/a/62260210/8341158
 @Component({
-	selector: 'lexeme-form',
-	templateUrl: './lexeme-form.component.html',
-	styleUrls: ['./lexeme-form.component.scss'],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => LexemeFormComponent),
-			multi: true
-		}
-	]
+    selector: 'lexeme-form',
+    templateUrl: './lexeme-form.component.html',
+    styleUrls: ['./lexeme-form.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => LexemeFormComponent),
+            multi: true
+        }
+    ],
+    standalone: true,
+    imports: [TranslocoDirective, MatFormField, MatLabel, MatInput, FormsModule, MatTooltip, TranslocoPipe]
 })
 export class LexemeFormComponent implements OnInit, ControlValueAccessor
 {

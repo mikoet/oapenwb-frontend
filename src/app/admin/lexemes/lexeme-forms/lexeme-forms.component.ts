@@ -6,17 +6,13 @@ import {
 	OnInit,
 	ViewChild,
 } from '@angular/core';
-import {
-	FormArray,
-	FormControl,
-	FormGroup,
-	FormGroupDirective,
-	Validators,
-} from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormGroupDirective, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LexemeFormType, LexemeForm } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { NumericKeyMap } from '@app/util/hashmap';
 import { TransferStop } from '../view/view.component';
+import { LexemeFormComponent } from '../lexeme-form/lexeme-form.component';
+import { NgFor, NgIf } from '@angular/common';
 
 interface PositionedForm
 {
@@ -27,9 +23,11 @@ interface PositionedForm
 }
 
 @Component({
-	selector: 'lexeme-forms',
-	templateUrl: './lexeme-forms.component.html',
-	styleUrls: ['./lexeme-forms.component.scss']
+    selector: 'lexeme-forms',
+    templateUrl: './lexeme-forms.component.html',
+    styleUrls: ['./lexeme-forms.component.scss'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, NgFor, NgIf, LexemeFormComponent]
 })
 export class LexemeFormsComponent implements OnInit, OnDestroy
 {

@@ -1,20 +1,27 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 import { first } from 'rxjs/operators';
 
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLinkActive, RouterLink } from '@angular/router';
 import { isMessage } from '@app/_models/message';
 import { isUser } from '@app/_models/user';
 import { AccountService } from '@app/shared/_services/account.service';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
+import { RoutingPipe } from '@app/shared/_pipes/routing.pipe';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { SimpleCardFormComponent } from '../simple-card-form/simple-card-form.component';
 
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, SimpleCardFormComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, NgIf, MatError, RouterLinkActive, RouterLink, MatButton, RoutingPipe]
 })
 export class LoginComponent implements OnInit
 {

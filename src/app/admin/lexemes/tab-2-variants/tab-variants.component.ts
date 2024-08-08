@@ -1,20 +1,29 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, isDevMode, EventEmitter, Output } from '@angular/core';
-import { FormGroup, Validators, FormGroupDirective, FormControl } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
+import { FormGroup, Validators, FormGroupDirective, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectChange, MatSelect } from '@angular/material/select';
 import { LexemeForm, Variant, LemmaTemplate, Orthography, Lemma, MetaInfo } from '@app/admin/_models/admin-api';
 import { DataService, ExtLanguage } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { Subscription } from 'rxjs';
 import { TransferStop } from '../view/view.component';
 import { LexemeFormsComponent } from '../lexeme-forms/lexeme-forms.component';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
 import { ApiAction } from '@app/admin/_models/enums';
 import { countErrors, doEnablingControl } from '@app/admin/_util/form-utils';
 import { VariantSupply } from './variantSupply';
 import { SHOW_CHANGE_DATA } from '../editor/editor.component';
 import { DialectsSelectComponent } from '@app/admin/_components/dialects-select/dialects-select.component';
+import { MatInput } from '@angular/material/input';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { DialectsSelectComponent as DialectsSelectComponent_1 } from '../../_components/dialects-select/dialects-select.component';
+import { MatDivider } from '@angular/material/divider';
+import { MatButton } from '@angular/material/button';
+import { MatBadge } from '@angular/material/badge';
+import { MatOption, MatOptgroup } from '@angular/material/core';
+import { NgFor, NgIf } from '@angular/common';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 export class Dialect
 {
@@ -26,9 +35,11 @@ export class Dialect
 }
 
 @Component({
-	selector: 'lex-tab-variants',
-	templateUrl: './tab-variants.component.html',
-	styleUrls: ['./tab-variants.component.scss']
+    selector: 'lex-tab-variants',
+    templateUrl: './tab-variants.component.html',
+    styleUrls: ['./tab-variants.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, MatFormField, MatLabel, MatSelect, NgFor, NgIf, MatOption, MatBadge, MatButton, MatDivider, FormsModule, ReactiveFormsModule, DialectsSelectComponent_1, MatSlideToggle, MatOptgroup, MatInput, LexemeFormsComponent]
 })
 export class TabVariantsComponent implements OnInit, OnDestroy, VariantSupply
 {

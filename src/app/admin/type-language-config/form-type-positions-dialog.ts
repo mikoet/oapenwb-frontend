@@ -1,14 +1,17 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDropList, CdkDrag, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 import { FormTypePos, LexemeFormType } from '../_models/admin-api';
 import { DataService, Entities } from '../_services/data.service';
 import { Subscription } from 'rxjs';
 import { KeyMap } from '@app/util/hashmap';
-import { TranslocoService, TRANSLOCO_SCOPE } from '@jsverse/transloco';
+import { TranslocoService, TRANSLOCO_SCOPE, TranslocoDirective } from '@jsverse/transloco';
 import { DEFAULT_UI_LOCALE } from '@app/_config/config';
+import { MatButton } from '@angular/material/button';
+import { NgFor, NgClass, NgIf } from '@angular/common';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 
 export class DialogData
 {
@@ -18,13 +21,15 @@ export class DialogData
 }
 
 @Component({
-	selector: 'form-type-positions-dialog',
-	templateUrl: './form-type-positions-dialog.html',
-	styleUrls: ['./form-type-positions-dialog.scss'],
-	providers: [
-		{ provide: TRANSLOCO_SCOPE, useValue: 'dftpa', multi: true},
-		{ provide: TRANSLOCO_SCOPE, useValue: 'formType', multi: true}
-	]
+    selector: 'form-type-positions-dialog',
+    templateUrl: './form-type-positions-dialog.html',
+    styleUrls: ['./form-type-positions-dialog.scss'],
+    providers: [
+        { provide: TRANSLOCO_SCOPE, useValue: 'dftpa', multi: true },
+        { provide: TRANSLOCO_SCOPE, useValue: 'formType', multi: true }
+    ],
+    standalone: true,
+    imports: [TranslocoDirective, MatDialogTitle, CdkScrollable, MatDialogContent, CdkDropList, NgFor, CdkDrag, NgClass, CdkDragPlaceholder, NgIf, MatButton, MatDialogActions, MatDialogClose]
 })
 export class FormTypePositionsDialog implements OnInit, OnDestroy
 {

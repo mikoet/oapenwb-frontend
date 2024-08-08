@@ -24,8 +24,9 @@ export function getRouteStrWithoutLang(desc: RouteDesc): string
 }
 
 @Pipe({
-	name: 'route',
-	pure: true
+    name: 'route',
+    pure: true,
+    standalone: true
 })
 export class RoutingPipe implements PipeTransform
 {

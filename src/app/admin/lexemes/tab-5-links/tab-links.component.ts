@@ -3,9 +3,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'lex-tab-links',
-	templateUrl: './tab-links.component.html',
-	styleUrls: ['./tab-links.component.scss']
+    selector: 'lex-tab-links',
+    templateUrl: './tab-links.component.html',
+    styleUrls: ['./tab-links.component.scss'],
+    standalone: true
 })
 export class TabLinksComponent implements OnInit
 {

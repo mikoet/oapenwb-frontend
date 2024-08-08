@@ -18,10 +18,13 @@ import {
 	LexemeOrigin, LexemeService, SelectedLexeme, SnackMessage
 } from '@app/admin/_services/lexeme.service';
 import { ScopedBlocker } from '@app/util/scoped-blocker';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
 
 import { EditorComponent } from '../editor/editor.component';
 import { ListComponent } from '../list/list.component';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatToolbar } from '@angular/material/toolbar';
 
 export class TransferStop
 {
@@ -37,9 +40,11 @@ enum BlockScopes
 }
 
 @Component({
-	selector: 'app-view',
-	templateUrl: './view.component.html',
-	styleUrls: ['./view.component.scss']
+    selector: 'app-view',
+    templateUrl: './view.component.html',
+    styleUrls: ['./view.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, MatToolbar, MatButton, NgIf, ListComponent, EditorComponent]
 })
 export class ViewComponent implements OnInit, OnDestroy
 {

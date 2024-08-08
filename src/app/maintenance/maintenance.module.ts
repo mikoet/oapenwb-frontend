@@ -21,14 +21,12 @@ export class SignOnRoutingModule { }
 
 
 @NgModule({
-	declarations: [
-		InfoComponent
-	],
-	imports: [
-		CommonModule,
-		FontAwesomeModule,
-		RouterModule,
-		RouterModule.forChild(routes),
-	]
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        RouterModule,
+        RouterModule.forChild(routes),
+        InfoComponent,
+    ]
 })
 export class MaintenanceModule { }

@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatTabGroup } from '@angular/material/tabs';
+import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs';
 import { DataService } from '@app/admin/_services/data.service';
 import { LexemeService } from '@app/admin/_services/lexeme.service';
 import { Observable } from 'rxjs';
@@ -11,13 +11,17 @@ import { TabVariantsComponent } from '../tab-2-variants/tab-variants.component';
 import { TabSememesComponent } from '../tab-3-sememes/tab-sememes.component';
 import { TabMappingsComponent } from '../tab-4-mappings/tab-mappings.component';
 import { TransferStop } from '../view/view.component';
+import { MatBadge } from '@angular/material/badge';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 export let SHOW_CHANGE_DATA = false;
 
 @Component({
-  selector: 'admin-lexeme-editor',
-  templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.scss']
+    selector: 'admin-lexeme-editor',
+    templateUrl: './editor.component.html',
+    styleUrls: ['./editor.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, MatTabGroup, MatTab, MatTabLabel, MatBadge, TabGeneralComponent, TabVariantsComponent, TabSememesComponent, TabMappingsComponent]
 })
 export class EditorComponent implements OnInit, AfterViewInit
 {

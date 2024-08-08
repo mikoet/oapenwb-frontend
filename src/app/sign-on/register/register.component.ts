@@ -2,14 +2,19 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { first } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import {
-	AbstractControl, FormControl, FormGroup, ValidationErrors, Validators
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { isMessage } from '@app/_models/message';
 import { isUser } from '@app/_models/user';
 import { AccountService } from '@app/shared/_services/account.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { RoutingPipe } from '@app/shared/_pipes/routing.pipe';
+import { MatButton } from '@angular/material/button';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { NgIf } from '@angular/common';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatError, MatHint } from '@angular/material/form-field';
+import { SimpleCardFormComponent } from '../simple-card-form/simple-card-form.component';
 
 // custom validator to check that two fields match
 /*
@@ -37,9 +42,11 @@ export function mustMatch(controlName: string, matchingControlName: string)
 const EMAIL_PATTERN = "\\b[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*\\b";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    standalone: true,
+    imports: [SimpleCardFormComponent, FormsModule, ReactiveFormsModule, MatFormField, MatInput, NgIf, MatError, MatHint, MatCheckbox, MatButton, RouterLink, RoutingPipe]
 })
 export class RegisterComponent implements OnInit {
 	readonly form = new FormGroup({

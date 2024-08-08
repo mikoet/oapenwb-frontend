@@ -3,10 +3,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'lemma',
-	templateUrl: './lemma-component.component.html',
-	styleUrls: ['./lemma-component.component.scss'],
-	providers: []
+    selector: 'lemma',
+    templateUrl: './lemma-component.component.html',
+    styleUrls: ['./lemma-component.component.scss'],
+    providers: [],
+    standalone: true
 })
 export class LemmaComponentComponent implements OnInit {
 	@Input()

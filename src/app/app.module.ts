@@ -52,22 +52,12 @@ const material = [
 ];
 
 @NgModule({
-	declarations: [
-        AppComponent,
-        MainComponent,
-        TableViewComponent,
-        ResultTableComponent,
-        LangPairSelectComponent,
-        DirectionSelectComponent,
-        FooterComponent,
-        HeaderComponent,
-        ImprintComponent
-    ],
+    declarations: [AppComponent],
     bootstrap: [
-		AppComponent,
-	],
-	imports: [
-		BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        AppComponent,
+    ],
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
         BlockUIModule.forRoot({
             delayStart: 500,
             /*delayStop: 500*/
@@ -79,9 +69,18 @@ const material = [
         material,
         ReactiveFormsModule,
         TranslocoRootModule,
-        SharedModule
-	],
-	providers: [
-		provideHttpClient(withInterceptorsFromDi()),
-	] })
+        SharedModule,
+        MainComponent,
+        TableViewComponent,
+        ResultTableComponent,
+        LangPairSelectComponent,
+        DirectionSelectComponent,
+        FooterComponent,
+        HeaderComponent,
+        ImprintComponent
+    ],
+    providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+    ]
+})
 export class AppModule { }

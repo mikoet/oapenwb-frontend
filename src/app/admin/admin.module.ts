@@ -138,7 +138,18 @@ const material = [
 ];
 
 @NgModule({
-	declarations: [
+    imports: [
+        BlockUIModule.forRoot({
+            delayStart: 500,
+            /*delayStop: 500*/
+        }),
+        CommonModule,
+        AdminRoutingModule,
+        material,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedModule,
+        TranslocoRootModule,
         // Directives
         DisableControlDirective,
         // Components
@@ -183,22 +194,9 @@ const material = [
         SynGroupLinkComponent,
         SememeLinkComponent,
         HierarchicalSelectComponent,
-        DialectsSelectComponent,
+        DialectsSelectComponent
     ],
-	imports: [
-		BlockUIModule.forRoot({
-            delayStart: 500,
-            /*delayStop: 500*/
-        }),
-        CommonModule,
-        AdminRoutingModule,
-        material,
-        FormsModule,
-        ReactiveFormsModule,
-        SharedModule,
-        TranslocoRootModule
-	],
-	providers: [
+    providers: [
         httpInterceptorProviders,
         { provide: TRANSLOCO_SCOPE, useValue: 'admin' },
         DataService,
