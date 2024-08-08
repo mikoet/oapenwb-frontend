@@ -6,7 +6,7 @@ import { DOCUMENT } from '@angular/common';
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 
 import { DEFAULT_UI_LOCALE } from './_config/config';
@@ -18,9 +18,11 @@ import { DEFAULT_UI_LOCALE } from './_config/config';
  * 3. Will add / update meta tags to the head tag of index.html. The tags will be taken from UI translation scope 'metaTags'.
  */
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: true,
+    imports: [RouterOutlet]
 })
 export class AppComponent implements OnInit, OnDestroy
 {

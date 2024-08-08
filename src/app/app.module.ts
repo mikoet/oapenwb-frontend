@@ -51,7 +51,8 @@ const material = [
 	MatTooltipModule,
 ];
 
-@NgModule({
+@NgModule(/* TODO(standalone-migration): clean up removed NgModule class manually. 
+{
     declarations: [AppComponent],
     bootstrap: [
         AppComponent,
@@ -60,7 +61,7 @@ const material = [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
         BlockUIModule.forRoot({
             delayStart: 500,
-            /*delayStop: 500*/
+            //delayStop: 500
         }),
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -82,5 +83,5 @@ const material = [
     providers: [
         provideHttpClient(withInterceptorsFromDi()),
     ]
-})
+} */)
 export class AppModule { }
