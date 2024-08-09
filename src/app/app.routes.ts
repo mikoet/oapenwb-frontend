@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+
+import { Routes } from '@angular/router';
 
 import { MainComponent } from './dict/main/main.component';
 import { TableViewComponent } from './dict/table-view/table-view.component';
@@ -11,7 +11,7 @@ import { ADMIN_AUTH_FN } from '@app/shared/_helpers/auth.guard';
 import { ImprintComponent } from './dict/duty/imprint/imprint.component';
 import { DEFAULT_UI_LOCALE } from './_config/config';
 
-const routes: Routes = [
+export const APP_ROUTES: Routes = [
 	/*{
 		path: '',
 		component: StartComponent
@@ -61,11 +61,3 @@ const routes: Routes = [
 		]
 	},
 ];
-
-@NgModule({
-	imports: [RouterModule.forRoot(routes, {
-		initialNavigation: 'enabledNonBlocking',
-})],
-	exports: [RouterModule]
-})
-export class AppRoutingModule { }

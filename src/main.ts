@@ -18,10 +18,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app/app-routing.module';
 import { BlockUIModule } from 'ng-block-ui';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
+import { APP_ROUTES } from '@app/app.routes';
 
 const material = [
 	MatAutocompleteModule,
@@ -48,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
 					delayStart: 500,
 					//delayStop: 500,
 				}),
-				AppRoutingModule,
 				FontAwesomeModule,
 				FormsModule,
 				material,
@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			),
 			provideHttpClient(withInterceptorsFromDi()),
 			provideAnimations(),
+			provideRouter(APP_ROUTES, withEnabledBlockingInitialNavigation()),
 		]
 	}).catch(err => console.error(err));
 });
