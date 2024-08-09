@@ -1,11 +1,7 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
-import { enableProdMode, importProvidersFrom } from '@angular/core';
 
-import { environment } from './environments/environment';
-import { AppComponent } from './app/app.component';
-import { SharedModule } from '@app/shared/shared.module';
-import { TranslocoRootModule } from './app/transloco-root.module';
+import { enableProdMode, importProvidersFrom, isDevMode } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
@@ -22,7 +18,14 @@ import { BlockUIModule } from 'ng-block-ui';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
+import { provideTransloco } from '@jsverse/transloco';
+
+import { AppComponent } from '@app/app.component';
+import { SharedModule } from '@app/shared/shared.module';
+import { TranslocoHttpLoader } from '@app/transloco-http-loader';
 import { APP_ROUTES } from '@app/app.routes';
+import { DEFAULT_UI_LOCALE } from '@app/_config/config';
+import { environment } from '@environments/environment';
 
 const material = [
 	MatAutocompleteModule,
@@ -53,10 +56,18 @@ document.addEventListener('DOMContentLoaded', () => {
 				FormsModule,
 				material,
 				ReactiveFormsModule,
-				TranslocoRootModule,
 				SharedModule,
 			),
 			provideHttpClient(withInterceptorsFromDi()),
+			provideTransloco({
+				config: {
+					availableLangs: ['nds', 'de', 'en'],
+					defaultLang: DEFAULT_UI_LOCALE,
+					reRenderOnLangChange: true,
+					prodMode: !isDevMode(),
+				},
+				loader: TranslocoHttpLoader,
+			}),
 			provideAnimations(),
 			provideRouter(APP_ROUTES, withEnabledBlockingInitialNavigation()),
 		]

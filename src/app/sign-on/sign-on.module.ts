@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TRANSLOCO_SCOPE } from '@jsverse/transloco';
 
-import { TranslocoRootModule } from '@app/transloco-root.module';
 import { SignOnRoutingModule } from './sign-on-routing.module';
 import { SharedModule } from '@app/shared/shared.module';
 
@@ -36,7 +35,6 @@ const material = [
     imports: [
         CommonModule,
         material,
-        TranslocoRootModule,
         SharedModule,
         SignOnRoutingModule,
         FormsModule,

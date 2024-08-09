@@ -4,24 +4,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MarkdownModule } from 'ngx-markdown';
 
-import { TranslocoRootModule } from '@app/transloco-root.module';
 import { RoutingPipe } from '@app/shared/_pipes/routing.pipe';
 import { LemmaComponentComponent } from './_components/lemma-component/lemma-component.component';
 import { MarkdownComponent } from './_components/markdown/markdown.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslocoRootModule,
-        MarkdownModule.forRoot(),
-        RoutingPipe,
-        LemmaComponentComponent,
-        MarkdownComponent,
-    ],
-    exports: [
-        RoutingPipe,
-        LemmaComponentComponent,
-        MarkdownComponent,
-    ]
+	imports: [
+		CommonModule,
+		MarkdownModule.forRoot(),
+		RoutingPipe,
+		LemmaComponentComponent,
+		MarkdownComponent,
+	],
+	exports: [
+		RoutingPipe,
+		LemmaComponentComponent,
+		MarkdownComponent,
+	]
 })
 export class SharedModule { }
