@@ -10,7 +10,8 @@
 		"lint": "ng lint",
 		"e2e": "ng e2e",
 		"i18n:extract": "transloco-keys-manager extract",
-		"i18n:find": "transloco-keys-manager find"
+		"i18n:find": "transloco-keys-manager find",
+		"prepare": "husky"
 	},
 	"private": true,
 	"dependencies": {
@@ -58,6 +59,7 @@
 		"eslint-plugin-import": "2.22.1",
 		"eslint-plugin-jsdoc": "30.7.6",
 		"eslint-plugin-prefer-arrow": "1.2.2",
+		"husky": "^9.1.4",
 		"jasmine-core": "~3.7.1",
 		"jasmine-spec-reporter": "~7.0.0",
 		"karma": "~6.3.3",
@@ -65,9 +67,13 @@
 		"karma-coverage-istanbul-reporter": "~3.0.2",
 		"karma-jasmine": "~4.0.0",
 		"karma-jasmine-html-reporter": "^1.5.4",
+		"lint-staged": "^15.2.8",
 		"ngx-build-plus": "^18.0.0",
 		"prettier": "3.3.3",
 		"ts-node": "~8.3.0",
 		"typescript": "~5.4.5"
+	},
+	"lint-staged": {
+		"**/*": "prettier --write --ignore-unknown"
 	}
 }
