@@ -159,6 +159,9 @@ importers:
       ngx-build-plus:
         specifier: ^18.0.0
         version: 18.0.0(@angular-devkit/build-angular@18.1.2(@angular/compiler-cli@18.1.2(@angular/compiler@18.1.2(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7)))(typescript@5.4.5))(@angular/platform-server@18.1.2(@angular/animations@18.1.2(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7)))(@angular/common@18.1.2(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7))(rxjs@7.8.1))(@angular/compiler@18.1.2(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7)))(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7))(@angular/platform-browser@18.1.2(@angular/animations@18.1.2(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7)))(@angular/common@18.1.2(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7))(rxjs@7.8.1))(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7))))(@types/node@18.19.39)(chokidar@3.6.0)(karma@6.3.20)(protractor@7.0.0)(typescript@5.4.5))(chokidar@3.6.0)(rxjs@7.8.1)
+      prettier:
+        specifier: 3.3.3
+        version: 3.3.3
       ts-node:
         specifier: ~8.3.0
         version: 8.3.0(typescript@5.4.5)
@@ -5078,6 +5081,11 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   pretty-format@29.7.0:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -6624,7 +6632,7 @@ snapshots:
       '@angular/compiler': 18.1.2(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7))
       '@angular/core': 18.1.2(rxjs@7.8.1)(zone.js@0.14.7)
       '@angular/platform-browser': 18.1.2(@angular/animations@18.1.2(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7)))(@angular/common@18.1.2(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7))(rxjs@7.8.1))(@angular/core@18.1.2(rxjs@7.8.1)(zone.js@0.14.7))
-      tslib: 2.6.2
+      tslib: 2.6.3
       xhr2: 0.2.1
     optional: true
 
@@ -12106,6 +12114,8 @@ snapshots:
       source-map-js: 1.2.0
 
   prelude-ls@1.2.1: {}
+
+  prettier@3.3.3: {}
 
   pretty-format@29.7.0:
     dependencies:
