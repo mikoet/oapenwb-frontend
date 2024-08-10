@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	bootstrapApplication(AppComponent, {
 		providers: [
 			importProvidersFrom(
-				BrowserModule.withServerTransition({ appId: 'serverApp' }),
+				BrowserModule,
 				BlockUIModule.forRoot({
 					delayStart: 500,
 					//delayStop: 500,
