@@ -7,19 +7,39 @@
 				<div class="lcolumn">
 					<ul>
 						<h5>{{ t('footer.runsWith') }}</h5>
-						<li><a href="https://github.com/mikoet" target="_blank">
-							<img src="/assets/img/oapenwb.png" srcset="/assets/img/oapenwb@2x.png 2x" title="oapen wöördebook" alt="oapen wöördebook" />
-						</a></li>
+						<li>
+							<a
+								href="https://github.com/mikoet"
+								target="_blank"
+							>
+								<img
+									src="/assets/img/oapenwb.png"
+									srcset="/assets/img/oapenwb@2x.png 2x"
+									title="oapen wöördebook"
+									alt="oapen wöördebook"
+								/>
+							</a>
+						</li>
 					</ul>
 				</div>
 				<div class="column">
 					<h5>{{ t('footer.pages') }}</h5>
 					<ul>
-						<li><a [routerLink]="'table' | route: transloco.getActiveLang()">{{ t('nav.search') }}</a></li>
-						<li><a [routerLink]="'about' | route: transloco.getActiveLang()">{{ t('nav.about') }}</a></li>
-						<li><a [routerLink]="'faq' | route: transloco.getActiveLang()">{{ t('nav.faq') }}</a></li>
-						<li><a [routerLink]="'contact' | route: transloco.getActiveLang()">{{ t('nav.contact') }}</a></li>
-						<li><a [routerLink]="'admin' | route: transloco.getActiveLang()">{{ t('nav.admin') }}</a></li>
+						<li>
+							<a [routerLink]="'table' | route: transloco.getActiveLang()">{{ t('nav.search') }}</a>
+						</li>
+						<li>
+							<a [routerLink]="'about' | route: transloco.getActiveLang()">{{ t('nav.about') }}</a>
+						</li>
+						<li>
+							<a [routerLink]="'faq' | route: transloco.getActiveLang()">{{ t('nav.faq') }}</a>
+						</li>
+						<li>
+							<a [routerLink]="'contact' | route: transloco.getActiveLang()">{{ t('nav.contact') }}</a>
+						</li>
+						<li>
+							<a [routerLink]="'admin' | route: transloco.getActiveLang()">{{ t('nav.admin') }}</a>
+						</li>
 					</ul>
 				</div>
 				<!--
@@ -28,15 +48,19 @@
 				<div class="column">
 					<h5>{{ t('footer.duty') }}</h5>
 					<ul class="no-trailing-space">
-						<li><a [routerLink]="'dataPrivacy' | route: transloco.getActiveLang()">{{ t('duty.privacy') }}</a></li>
-						<li><a [routerLink]="'termsOfUse' | route: transloco.getActiveLang()">{{ t('duty.termsOfUse') }}</a></li>
-						<li><a [routerLink]="'imprint' | route: transloco.getActiveLang()">{{ t('duty.imprint') }}</a></li>
+						<li>
+							<a [routerLink]="'dataPrivacy' | route: transloco.getActiveLang()">{{ t('duty.privacy') }}</a>
+						</li>
+						<li>
+							<a [routerLink]="'termsOfUse' | route: transloco.getActiveLang()">{{ t('duty.termsOfUse') }}</a>
+						</li>
+						<li>
+							<a [routerLink]="'imprint' | route: transloco.getActiveLang()">{{ t('duty.imprint') }}</a>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div>
-		&copy; 2022 <strong>ULE.DK</strong>
-	</div>
+	<div>&copy; 2022–{{ currentYear }} <strong>ULE.DK</strong></div>
 </footer>
