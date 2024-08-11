@@ -1,17 +1,40 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
+
 <simple-card-form *transloco="let t; read: 'son'">
 	<h2>{{ t('forgotPw') }}</h2>
-	<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<form
+		[formGroup]="form"
+		(ngSubmit)="onSubmit()"
+	>
 		<p>{{ t('fpwExplain') }}</p>
 		<mat-form-field class="full-width margin-bottom">
-			<input matInput type="email" [formControl]="form.get('email')" placeholder="{{ t('emailOrUser') }}" autocomplete="username">
-			<mat-error *ngIf="form.get('email').hasError('required')">
-				{{ t('errEmailUser') }}.
-			</mat-error>
+			<input
+				matInput
+				type="email"
+				[formControl]="form.get('email')"
+				placeholder="{{ t('emailOrUser') }}"
+				autocomplete="username"
+			/>
+			<mat-error *ngIf="form.get('email').hasError('required')"> {{ t('errEmailUser') }}. </mat-error>
 		</mat-form-field>
-		<mat-error class="error" *ngIf="errorMsg">{{ errorMsg }}</mat-error>
-		<button mat-raised-button type="submit" color="primary" class="full-width" [disabled]="form.invalid">{{ t('resetPw') }}</button>
+		<mat-error
+			class="error"
+			*ngIf="errorMsg"
+			>{{ errorMsg }}</mat-error
+		>
+		<button
+			mat-raised-button
+			type="submit"
+			color="primary"
+			class="full-width"
+			[disabled]="form.invalid"
+		>
+			{{ t('resetPw') }}
+		</button>
 	</form>
-	<p class="register-text">{{ t('knowPw') }} <a [routerLink]="'login' | route">{{ t('signOnHere') }}</a>.</p>
+	<p class="register-text">
+		{{ t('knowPw') }} <a [routerLink]="'login' | route">{{ t('signOnHere') }}</a
+		>.
+	</p>
 </simple-card-form>

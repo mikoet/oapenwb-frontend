@@ -20,6 +20,7 @@ import {
 import { ADMIN_AUTH_FN } from '@app/shared/_helpers/auth.guard'
 import { ImprintComponent } from './dict/duty/imprint/imprint.component'
 import { DEFAULT_UI_LOCALE } from './_config/config'
+import { TRANSLOCO_SCOPE } from '@jsverse/transloco'
 
 export const APP_ROUTES: Routes = [
 	/*{
@@ -70,9 +71,10 @@ export const APP_ROUTES: Routes = [
 				loadComponent: () => import('./maintenance/info.component').then((m) => m.InfoComponent),
 			},
 			{
-				// Lazy load the SignOn module
+				// Lazy load the SignOn routes and components
 				path: ROUTE_SIGN_ON.path,
-				loadChildren: () => import('./sign-on/sign-on.module').then((m) => m.SignOnModule),
+				loadChildren: () => import('./sign-on/sign-on.routes').then((m) => m.SIGN_ON_ROUTES),
+				providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'son' }],
 			},
 			{
 				// Lazy load the Admin module
