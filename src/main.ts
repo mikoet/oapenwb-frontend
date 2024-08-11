@@ -16,16 +16,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { BlockUIModule } from 'ng-block-ui'
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser'
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router'
 import { provideTransloco } from '@jsverse/transloco'
+import { provideMarkdown } from 'ngx-markdown'
 
 import { AppComponent } from '@app/app.component'
 import { TranslocoHttpLoader } from '@app/transloco-http-loader'
 import { APP_ROUTES } from '@app/app.routes'
 import { DEFAULT_UI_LOCALE } from '@app/_config/config'
+import { JwtInterceptor } from '@app/shared/_helpers/jwt.interceptor'
 import { environment } from '@environments/environment'
-import { provideMarkdown } from 'ngx-markdown'
 
 const material = [
 	MatAutocompleteModule,
@@ -38,6 +39,9 @@ const material = [
 	MatMenuModule,
 	MatTooltipModule,
 ]
+
+/** Http interceptor providers in outside-in order */
+const httpInterceptorProviders = [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }]
 
 if (environment.production) {
 	enableProdMode()
@@ -57,6 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				material,
 				ReactiveFormsModule,
 			),
+			// TODO Interceptor could be rewritten to be functional and provided as param of provideHttpClient()
+			httpInterceptorProviders,
 			provideHttpClient(withInterceptorsFromDi()),
 			provideTransloco({
 				config: {

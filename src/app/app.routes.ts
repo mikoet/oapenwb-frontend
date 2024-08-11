@@ -77,10 +77,10 @@ export const APP_ROUTES: Routes = [
 				providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'son' }],
 			},
 			{
-				// Lazy load the Admin module
+				// Lazy load the Admin routes and components
 				path: ROUTE_ADMIN.path,
 				canActivate: [ADMIN_AUTH_FN],
-				loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
+				loadChildren: () => import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES),
 			},
 			// todo { path: '**', component: PageNotFoundComponent }
 		],
