@@ -1,13 +1,17 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, Component, forwardRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NumericKeyMap } from '@app/util/hashmap';
 import { DataService, ExtLanguage } from '@app/admin/_services/data.service';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { MatSelect, MatSelectChange, MatSelectTrigger } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 import { Item } from '../hierarchical-select/hierarchical-select.component';
+import { MatOption } from '@angular/material/core';
+import { NgIf, NgFor } from '@angular/common';
+import { TranslocoDirective } from '@jsverse/transloco';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 /**
  * Premisses:
@@ -15,16 +19,18 @@ import { Item } from '../hierarchical-select/hierarchical-select.component';
  * - These items do have a full and an abbreviated caption text that is each stored via an uitID
  */
 @Component({
-	selector: 'admin-dialects-select',
-	templateUrl: './dialects-select.component.html',
-	styleUrls: ['./dialects-select.component.scss'],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => DialectsSelectComponent),
-			multi: true
-		}
-	]
+    selector: 'admin-dialects-select',
+    templateUrl: './dialects-select.component.html',
+    styleUrls: ['./dialects-select.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DialectsSelectComponent),
+            multi: true
+        }
+    ],
+    standalone: true,
+    imports: [MatFormField, TranslocoDirective, MatLabel, MatSelect, FormsModule, ReactiveFormsModule, MatSelectTrigger, NgIf, NgFor, MatOption]
 })
 export class DialectsSelectComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor
 {

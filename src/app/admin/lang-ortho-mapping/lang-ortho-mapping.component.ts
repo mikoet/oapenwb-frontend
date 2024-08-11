@@ -2,22 +2,33 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { catchError, map, retry } from 'rxjs/operators';
 import { Response } from '@app/_models/response';
 
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 import { LangOrthoMapping, Language, Orthography } from '../_models/admin-api';
 import { langApiPath, loMappingApiPath, orthoApiPath } from '../_models/admin-api-paths';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatInput } from '@angular/material/input';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatError, MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-	selector: 'app-lang-ortho-mapping',
-	templateUrl: './lang-ortho-mapping.component.html',
-	styleUrls: ['./lang-ortho-mapping.component.scss']
-  })
+    selector: 'app-lang-ortho-mapping',
+    templateUrl: './lang-ortho-mapping.component.html',
+    styleUrls: ['./lang-ortho-mapping.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, NgIf, MatCard, MatCardContent, MatIconButton, MatIcon, NgFor, MatError, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatInput, MatButton, MatSuffix, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
+})
   export class LangOrthoMappingComponent extends AbstractSEC<LangOrthoMapping>
   {
 	langs: Language[] = [];

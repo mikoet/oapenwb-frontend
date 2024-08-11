@@ -4,11 +4,15 @@ import { Component, OnInit } from '@angular/core';
 import { DEFAULT_UI_LOCALE } from '@app/_config/config';
 import { LemmaService } from '@app/_services/lemma.service';
 import { SearchService } from '@app/_services/search.service';
+import { TranslocoDirective } from '@jsverse/transloco';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-	selector: 'dict-result-table',
-	templateUrl: './result-table.component.html',
-	styleUrls: ['./result-table.component.scss']
+    selector: 'dict-result-table',
+    templateUrl: './result-table.component.html',
+    styleUrls: ['./result-table.component.scss'],
+    standalone: true,
+    imports: [NgIf, NgFor, TranslocoDirective, AsyncPipe]
 })
 export class ResultTableComponent implements OnInit
 {

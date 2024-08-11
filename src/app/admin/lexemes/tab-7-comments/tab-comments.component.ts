@@ -3,9 +3,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'lex-tab-comments',
-	templateUrl: './tab-comments.component.html',
-	styleUrls: ['./tab-comments.component.scss']
+    selector: 'lex-tab-comments',
+    templateUrl: './tab-comments.component.html',
+    styleUrls: ['./tab-comments.component.scss'],
+    standalone: true
 })
 export class TabCommentsComponent implements OnInit
 {

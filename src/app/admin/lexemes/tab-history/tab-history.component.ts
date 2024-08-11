@@ -3,9 +3,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'app-tab-history',
-	templateUrl: './tab-history.component.html',
-	styleUrls: ['./tab-history.component.scss']
+    selector: 'app-tab-history',
+    templateUrl: './tab-history.component.html',
+    styleUrls: ['./tab-history.component.scss'],
+    standalone: true
 })
 export class TabHistoryComponent implements OnInit
 {

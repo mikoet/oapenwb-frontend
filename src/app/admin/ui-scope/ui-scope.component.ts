@@ -2,18 +2,29 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AbstractSEC } from '../abstract/abstract-simple-entity';
 
-import { TranslocoService } from '@jsverse/transloco'
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco'
 import { UiTranslationScope } from '../_models/admin-api';
 import { uiScopeApiPath } from '../_models/admin-api-paths';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { DisableControlDirective } from '../_directives/disable-control.directive';
+import { MatInput } from '@angular/material/input';
+import { MatError, MatFormField, MatHint, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-ui-scope',
-  templateUrl: './ui-scope.component.html',
-  styleUrls: ['./ui-scope.component.scss']
+    selector: 'app-ui-scope',
+    templateUrl: './ui-scope.component.html',
+    styleUrls: ['./ui-scope.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, NgIf, MatCard, MatCardContent, MatIconButton, MatIcon, NgFor, MatError, FormsModule, ReactiveFormsModule, MatFormField, MatInput, DisableControlDirective, MatHint, MatButton, MatLabel, MatSuffix, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatCheckbox, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class UiScopeComponent extends AbstractSEC<UiTranslationScope>
 {

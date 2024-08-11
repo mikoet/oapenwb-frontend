@@ -7,28 +7,39 @@ import {
 	debounceTime, distinctUntilChanged, startWith, switchMap, take, takeUntil
 } from 'rxjs/operators';
 
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
 	Component, HostListener, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, ViewChild
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MatFormField } from '@angular/material/form-field';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Direction } from '@app/_models/dict-api';
 import { LemmaService } from '@app/_services/lemma.service';
 import { SearchService } from '@app/_services/search.service';
 import { QP_TABLE_VIEW_DIRECTION, QP_TABLE_VIEW_PAIR, QP_TABLE_VIEW_TERM } from '@app/routes';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
+import { ResultTableComponent } from './result-table/result-table.component';
+import { MatOption } from '@angular/material/core';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { DirectionSelectComponent } from './direction-select/direction-select.component';
+import { LangPairSelectComponent } from './lang-pair-select/lang-pair-select.component';
 
 function isDirection(str: string): str is Direction {
 	return ['Both', 'Left', 'Right'].includes(str);
 }
 
 @Component({
-	selector: 'app-table-view',
-	templateUrl: './table-view.component.html',
-	styleUrls: ['./table-view.component.scss']
+    selector: 'app-table-view',
+    templateUrl: './table-view.component.html',
+    styleUrls: ['./table-view.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, NgIf, LangPairSelectComponent, DirectionSelectComponent, MatButton, MatTooltip, MatMenuTrigger, MatMenu, MatMenuItem, MatFormField, MatLabel, MatInput, FormsModule, MatAutocompleteTrigger, ReactiveFormsModule, MatIconButton, MatSuffix, MatIcon, MatAutocomplete, NgFor, MatOption, ResultTableComponent, AsyncPipe]
 })
 export class TableViewComponent implements OnInit, OnDestroy
 {

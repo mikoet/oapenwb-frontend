@@ -1,12 +1,16 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, Component, forwardRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NumericKeyMap } from '@app/util/hashmap';
 import { DataService, ExtCategory } from '@app/admin/_services/data.service';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { MatSelect, MatSelectChange, MatSelectTrigger } from '@angular/material/select';
 import { Subscription } from 'rxjs';
+import { MatOption } from '@angular/material/core';
+import { NgIf, NgFor } from '@angular/common';
+import { TranslocoDirective } from '@jsverse/transloco';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 export type ItemType = "Category";
 
@@ -24,16 +28,18 @@ export class Item
  * - These items do have a full and an abbreviated caption text that is each stored via an uitID
  */
 @Component({
-	selector: 'admin-hierarchical-select',
-	templateUrl: './hierarchical-select.component.html',
-	styleUrls: ['./hierarchical-select.component.scss'],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => HierarchicalSelectComponent),
-			multi: true
-		}
-	]
+    selector: 'admin-hierarchical-select',
+    templateUrl: './hierarchical-select.component.html',
+    styleUrls: ['./hierarchical-select.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => HierarchicalSelectComponent),
+            multi: true
+        }
+    ],
+    standalone: true,
+    imports: [MatFormField, TranslocoDirective, MatLabel, MatSelect, FormsModule, ReactiveFormsModule, MatSelectTrigger, NgIf, NgFor, MatOption]
 })
 export class HierarchicalSelectComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor
 {

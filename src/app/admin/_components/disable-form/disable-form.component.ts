@@ -6,8 +6,8 @@ import { Component, Input } from '@angular/core';
  * To use this directive put the attribut '[disableForm]="isDisabled"' into an html tag.
  */
 @Component({
-	selector: '[disableForm]',
-	styles: [`
+    selector: '[disableForm]',
+    styles: [`
 	  fieldset {
 		display: block;
 		margin: unset;
@@ -15,11 +15,12 @@ import { Component, Input } from '@angular/core';
 		border: unset;
 	  }
 	`],
-	template: `
+    template: `
 	  <fieldset [disabled]="disableForm">
 		<ng-content></ng-content>
 	  </fieldset>
-	`
+	`,
+    standalone: true
 })
 export class DisableFormComponent {
 	@Input('disableForm') disableForm: boolean;

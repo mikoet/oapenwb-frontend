@@ -1,24 +1,32 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListComponent } from '@app/admin/lexemes/list/list.component';
 import { LexemeSlimDTO } from '@app/admin/_models/admin-api';
 import { LexemeQueryService } from '@app/admin/_services/lexeme-query.service';
 import { ReplaySubject } from 'rxjs';
 import { debounceTime, tap, filter, takeUntil, switchMap } from 'rxjs/operators';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
-	selector: 'admin-lexeme-link',
-	templateUrl: './lexeme-link.component.html',
-	styleUrls: ['./lexeme-link.component.scss'],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => LexemeLinkComponent),
-			multi: true
-		}
-	]
+    selector: 'admin-lexeme-link',
+    templateUrl: './lexeme-link.component.html',
+    styleUrls: ['./lexeme-link.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => LexemeLinkComponent),
+            multi: true
+        }
+    ],
+    standalone: true,
+    imports: [TranslocoDirective, MatFormField, MatLabel, MatSelect, FormsModule, ReactiveFormsModule, MatOption, NgxMatSelectSearchModule, NgFor, AsyncPipe]
 })
 export class LexemeLinkComponent implements OnInit, OnDestroy, ControlValueAccessor
 {

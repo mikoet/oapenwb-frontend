@@ -2,12 +2,18 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, Input, OnChanges } from '@angular/core';
 import { NavigationNode } from '@app/admin/navigation/navigation.model';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
+import { RoutingPipe } from '@app/shared/_pipes/routing.pipe';
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgClass, NgFor } from '@angular/common';
 
 @Component({
-	selector: 'app-nav-item',
-	templateUrl: './nav-item.component.html',
-	styleUrls: ['./nav-item.component.scss']
+    selector: 'app-nav-item',
+    templateUrl: './nav-item.component.html',
+    styleUrls: ['./nav-item.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, NgIf, RouterLink, NgClass, MatIcon, NgFor, RoutingPipe]
 })
 export class NavItemComponent implements OnChanges {
 	@Input() isWide = false;

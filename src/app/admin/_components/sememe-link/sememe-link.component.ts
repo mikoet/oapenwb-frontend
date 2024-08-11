@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectChange, MatSelect, MatSelectTrigger } from '@angular/material/select';
 import { ListComponent } from '@app/admin/lexemes/list/list.component';
 import { TabSememesComponent } from '@app/admin/lexemes/tab-3-sememes/tab-sememes.component';
 import { LexemeSlimPlus, LexemeSlimDTO, SSearchResult, SememeSlim } from '@app/admin/_models/admin-api';
@@ -10,23 +10,29 @@ import { DataService } from '@app/admin/_services/data.service';
 import { SememeService } from '@app/admin/_services/sememe.service';
 import { SCOPE_LEXEME_TYPES } from '@app/_base/ui-scopes';
 import { Response } from '@app/_models/response';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { debounceTime, tap, filter, takeUntil, switchMap } from 'rxjs/operators';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatOption, MatOptgroup } from '@angular/material/core';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 const DEFAULT_HEIGHT: number = 2;
 
 @Component({
-	selector: 'admin-sememe-link',
-	templateUrl: './sememe-link.component.html',
-	styleUrls: ['./sememe-link.component.scss'],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => SememeLinkComponent),
-			multi: true
-		}
-	]
+    selector: 'admin-sememe-link',
+    templateUrl: './sememe-link.component.html',
+    styleUrls: ['./sememe-link.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SememeLinkComponent),
+            multi: true
+        }
+    ],
+    standalone: true,
+    imports: [TranslocoDirective, MatFormField, MatLabel, MatSelect, FormsModule, ReactiveFormsModule, MatSelectTrigger, MatOption, NgxMatSelectSearchModule, NgIf, MatOptgroup, NgFor, AsyncPipe]
 })
 export class SememeLinkComponent implements OnInit, OnDestroy, ControlValueAccessor
 {

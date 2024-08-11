@@ -1,15 +1,15 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 import { AfterViewInit, ChangeDetectorRef, Component, isDevMode, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { FormControl, FormGroup, FormGroupDirective, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectChange, MatSelect } from '@angular/material/select';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { LangPair, Mapping, Sememe } from '@app/admin/_models/admin-api';
 import { DataService } from '@app/admin/_services/data.service';
 import { LexemeOrigin, LexemeService } from '@app/admin/_services/lexeme.service';
 import { KeyMap } from '@app/util/hashmap';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
 import { Subscription } from 'rxjs';
 import { SememeSupply } from '../tab-3-sememes/sememeSupply';
 import { TransferStop } from '../view/view.component';
@@ -17,11 +17,21 @@ import { SememeService } from '@app/admin/_services/sememe.service';
 import { ExtMapping, ThisThatMapping } from './ext-mapping';
 import { TabSememesComponent } from '../tab-3-sememes/tab-sememes.component';
 import { SHOW_CHANGE_DATA } from '../editor/editor.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatDivider } from '@angular/material/divider';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { DisableControlDirective } from '../../_directives/disable-control.directive';
+import { SememeLinkComponent } from '../../_components/sememe-link/sememe-link.component';
+import { MatOption } from '@angular/material/core';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-	selector: 'lex-tab-mappings',
-	templateUrl: './tab-mappings.component.html',
-	styleUrls: ['./tab-mappings.component.scss']
+    selector: 'lex-tab-mappings',
+    templateUrl: './tab-mappings.component.html',
+    styleUrls: ['./tab-mappings.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, FormsModule, ReactiveFormsModule, NgIf, MatFormField, MatLabel, MatSelect, NgFor, MatOption, SememeLinkComponent, DisableControlDirective, MatButton, MatDivider, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatSortHeader, MatIconButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class TabMappingsComponent implements OnInit, OnDestroy, AfterViewInit
 {

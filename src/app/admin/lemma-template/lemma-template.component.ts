@@ -2,21 +2,33 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
 
 import { LemmaTemplate } from '../_models/admin-api';
 import { lemmaTemplatesApiPath } from '../_models/admin-api-paths';
 import { DataService, Entities } from '../_services/data.service';
 import { KeyMap } from '@app/util/hashmap';
 import { AbstractSECPlus } from '../abstract/abstract-simple-entity-plus';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { DialectsSelectComponent } from '../_components/dialects-select/dialects-select.component';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatError, MatFormField, MatHint, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-	selector: 'app-lemma-template',
-	templateUrl: './lemma-template.component.html',
-	styleUrls: ['./lemma-template.component.scss']
-  })
+    selector: 'app-lemma-template',
+    templateUrl: './lemma-template.component.html',
+    styleUrls: ['./lemma-template.component.scss'],
+    standalone: true,
+    imports: [TranslocoDirective, NgIf, MatCard, MatCardContent, MatIconButton, MatIcon, NgFor, MatError, FormsModule, ReactiveFormsModule, MatFormField, MatInput, MatHint, MatLabel, MatSelect, MatOption, DialectsSelectComponent, MatButton, MatSuffix, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
+})
 export class LemmaTemplateComponent extends AbstractSECPlus<LemmaTemplate>
 {
 	// table attributes

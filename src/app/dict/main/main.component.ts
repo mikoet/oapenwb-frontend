@@ -6,8 +6,11 @@ import { DOCUMENT } from '@angular/common';
 // SPDX-License-Identifier: AGPL-3.0-only
 import { Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { TranslocoService } from '@jsverse/transloco';
+import { Router, RouterOutlet } from '@angular/router';
+import { TranslocoService, TranslocoDirective } from '@jsverse/transloco';
+import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../header/header.component';
+import { BlockUIModule } from 'ng-block-ui';
 
 /**
  * The MainComponent is the main component of the dictionary's visitor view.
@@ -15,9 +18,11 @@ import { TranslocoService } from '@jsverse/transloco';
  * 1. Translation of the page title when the language changes.
  */
 @Component({
-	selector: 'dict-main',
-	templateUrl: './main.component.html',
-	styleUrls: ['./main.component.scss']
+    selector: 'dict-main',
+    templateUrl: './main.component.html',
+    styleUrls: ['./main.component.scss'],
+    standalone: true,
+    imports: [BlockUIModule, TranslocoDirective, HeaderComponent, RouterOutlet, FooterComponent]
 })
 export class MainComponent implements OnInit, OnDestroy
 {
