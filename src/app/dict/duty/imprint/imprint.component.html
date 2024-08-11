@@ -1,11 +1,18 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
-<div *transloco="let t" class="textual-content">
+
+<div
+	*transloco="let t"
+	class="textual-content"
+>
 	<h1>{{ t('imprint') }}</h1>
 	<ng-container *ngIf="transloco.getActiveLang() !== 'de'">
 		<p>{{ t('imprint.note') }}</p>
-		<br>
+		<br />
 	</ng-container>
-	<!--<oapenwb-markdown locale="de" src="/assets/md/imprint"></oapenwb-markdown>-->
-	<oapenwb-markdown locale="de" src="/assets/md/imprint"></oapenwb-markdown>
+
+	<oapenwb-markdown
+		locale="de"
+		src="/assets/md/imprint"
+	></oapenwb-markdown>
 </div>
