@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import { HttpClient } from '@angular/common/http'
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core'
+import { Component, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core'
 import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons'
 import { ReplaySubject, timer } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
@@ -12,6 +12,7 @@ import { ROUTE_TABLE_VIEW } from '@app/routes'
 import { getRouteStrWithoutLang } from '@app/shared/_pipes/routing.pipe'
 import { DEFAULT_UI_LOCALE } from '@app/_config/config'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { isPlatformBrowser } from '@angular/common'
 
 const sentences = [
 	{
@@ -73,6 +74,7 @@ export class InfoComponent implements OnInit, OnDestroy {
 		private http: HttpClient,
 		private zone: NgZone,
 		private router: Router,
+		@Inject(PLATFORM_ID) private platformId: any,
 	) {}
 
 	ngOnInit(): void {
@@ -90,24 +92,25 @@ export class InfoComponent implements OnInit, OnDestroy {
 			})
 
 		// Make a small http request to see if the backend is back
-		timer(500, 8_000)
-			.pipe(takeUntil(this.destroy$))
-			.subscribe((val) => {
-				this.http
-					.get<number>(`${environment.apiUrl}/alive`)
-					.pipe(takeUntil(this.destroy$))
-					.subscribe((alive: number) => {
-						if (alive == 1) {
-							const url = `/${DEFAULT_UI_LOCALE}/` + getRouteStrWithoutLang(ROUTE_TABLE_VIEW)
-							this.zone.run(() => {
-								this.router.navigateByUrl(url).then(() => {
-									// FIXME Angular Universal?
-									window.location.reload()
+		if (isPlatformBrowser(this.platformId)) {
+			timer(500, 8_000)
+				.pipe(takeUntil(this.destroy$))
+				.subscribe((val) => {
+					this.http
+						.get<number>(`${environment.apiUrl}/alive`)
+						.pipe(takeUntil(this.destroy$))
+						.subscribe((alive: number) => {
+							if (alive == 1) {
+								const url = `/${DEFAULT_UI_LOCALE}/` + getRouteStrWithoutLang(ROUTE_TABLE_VIEW)
+								this.zone.run(() => {
+									this.router.navigateByUrl(url).then(() => {
+										window.location.reload()
+									})
 								})
-							})
-						}
-					})
-			})
+							}
+						})
+				})
+		}
 	}
 
 	ngOnDestroy(): void {
