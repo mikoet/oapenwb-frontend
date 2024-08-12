@@ -1,16 +1,25 @@
 <!-- SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
-<main *transloco="let t" (window:resize)="onResize($event)">
-	<div class="top-section" [class.top-section-row]="performedSearch && hasDesktopWidth" [class.top-section-column]="!performedSearch || !hasDesktopWidth">
-
+<main *transloco="let t">
+	<div
+		class="top-section"
+		[class.top-section-row]="performedSearch && hasDesktopWidth"
+		[class.top-section-column]="!performedSearch || !hasDesktopWidth"
+	>
 		<div class="logo-section">
 			<div [className]="performedSearch && hasDesktopWidth ? 'logo-small' : 'logo-big'"></div>
-			<h4 class="hide-mobile" *ngIf="!performedSearch">
+			<h4
+				class="hide-mobile"
+				*ngIf="!performedSearch"
+			>
 				{{ t('search.subtitle') }}
 			</h4>
 		</div>
 
-		<div #searchAreal class="grid-container input-area">
+		<div
+			#searchAreal
+			class="grid-container input-area"
+		>
 			<div class="grid-container upper-area">
 				<app-lang-pair-select></app-lang-pair-select>
 				<app-direction-select></app-direction-select>
@@ -24,17 +33,47 @@
 						matTooltipPosition="above"
 						matTooltipShowDelay="50"
 						[matMenuTriggerFor]="specialChars"
-					>Abc</button>
-					<mat-menu #specialChars="matMenu" xPosition="before">
-						<button mat-menu-item (click)="addTextAtCaret('searchText','å'); false">å</button>
-						<button mat-menu-item (click)="addTextAtCaret('searchText','ä'); false">ä</button>
-						<button mat-menu-item (click)="addTextAtCaret('searchText','ö'); false">ö</button>
-						<button mat-menu-item (click)="addTextAtCaret('searchText','ü'); false">ü</button>
-						<button mat-menu-item (click)="addTextAtCaret('searchText','ß'); false">ß</button>
+					>
+						Abc
+					</button>
+					<mat-menu
+						#specialChars="matMenu"
+						xPosition="before"
+					>
+						<button
+							mat-menu-item
+							(click)="addTextAtCaret('searchText','å'); false"
+						>
+							å
+						</button>
+						<button
+							mat-menu-item
+							(click)="addTextAtCaret('searchText','ä'); false"
+						>
+							ä
+						</button>
+						<button
+							mat-menu-item
+							(click)="addTextAtCaret('searchText','ö'); false"
+						>
+							ö
+						</button>
+						<button
+							mat-menu-item
+							(click)="addTextAtCaret('searchText','ü'); false"
+						>
+							ü
+						</button>
+						<button
+							mat-menu-item
+							(click)="addTextAtCaret('searchText','ß'); false"
+						>
+							ß
+						</button>
 					</mat-menu>
 				</div>
 			</div>
-	
+
 			<div class="searchArea">
 				<mat-form-field
 					#searchFormField
@@ -77,7 +116,10 @@
 						<mat-icon>search</mat-icon>
 					</button>
 
-					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="executeSearch(searchInput)">
+					<mat-autocomplete
+						#auto="matAutocomplete"
+						(optionSelected)="executeSearch(searchInput)"
+					>
 						<mat-option
 							stretch-item
 							*ngFor="let option of search.autocompletion | async"
@@ -95,11 +137,9 @@
 					</mat-autocomplete>
 				</mat-form-field>
 			</div>
-
 		</div>
-
 	</div>
-	<div class="full-width-container">	
+	<div class="full-width-container">
 		<dict-result-table></dict-result-table>
 	</div>
 </main>

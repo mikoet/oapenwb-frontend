@@ -25,7 +25,7 @@ import { Direction } from '@app/_models/dict-api'
 import { LemmaService } from '@app/_services/lemma.service'
 import { SearchService } from '@app/_services/search.service'
 import { QP_TABLE_VIEW_DIRECTION, QP_TABLE_VIEW_PAIR, QP_TABLE_VIEW_TERM } from '@app/routes'
-import { TranslocoService, TranslocoDirective } from '@jsverse/transloco'
+import { TranslocoDirective } from '@jsverse/transloco'
 import { ResultTableComponent } from './result-table/result-table.component'
 import { MatOption } from '@angular/material/core'
 import { MatIcon } from '@angular/material/icon'
@@ -95,7 +95,6 @@ export class TableViewComponent implements OnInit, OnDestroy {
 		public lemma: LemmaService,
 		private deviceService: DeviceDetectorService,
 		@Inject(PLATFORM_ID) private platformId: any,
-		private transloco: TranslocoService,
 		private route: ActivatedRoute,
 		private router: Router,
 		private zone: NgZone,
