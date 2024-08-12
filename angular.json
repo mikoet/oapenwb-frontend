@@ -25,15 +25,10 @@
 							"base": "dist/oapenWB"
 						},
 						"index": "src/index.html",
-						"polyfills": [
-							"src/polyfills.ts"
-						],
+						"polyfills": ["src/polyfills.ts"],
 						"tsConfig": "tsconfig.app.json",
 						"aot": true,
-						"assets": [
-							"src/favicon.ico",
-							"src/assets"
-						],
+						"assets": ["src/favicon.ico", "src/assets"],
 						"styles": [
 							"src/styles.scss",
 							"src/assets/fonts/material-icons.css",
@@ -44,7 +39,12 @@
 							}
 						],
 						"scripts": [],
-						"browser": "src/main.ts"
+						"browser": "src/main.ts",
+						"server": "src/main.server.ts",
+						"prerender": true,
+						"ssr": {
+							"entry": "server.ts"
+						}
 					},
 					"configurations": {
 						"production": {
@@ -138,24 +138,15 @@
 						"polyfills": "src/polyfills.ts",
 						"tsConfig": "tsconfig.spec.json",
 						"karmaConfig": "karma.conf.js",
-						"assets": [
-							"src/favicon.ico",
-							"src/assets"
-						],
-						"styles": [
-							"src/styles.scss",
-							"src/assets/fonts/material-icons.css"
-						],
+						"assets": ["src/favicon.ico", "src/assets"],
+						"styles": ["src/styles.scss", "src/assets/fonts/material-icons.css"],
 						"scripts": []
 					}
 				},
 				"lint": {
 					"builder": "@angular-eslint/builder:lint",
 					"options": {
-						"lintFilePatterns": [
-							"src/**/*.ts",
-							"src/**/*.html"
-						]
+						"lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
 					}
 				},
 				"e2e": {
