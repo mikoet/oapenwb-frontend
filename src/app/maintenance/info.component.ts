@@ -78,21 +78,23 @@ export class InfoComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		// Change the displaced sentence every 5s
-		timer(5_000, 5_000)
-			.pipe(takeUntil(this.destroy$))
-			.subscribe((val) => {
-				if (this.pointer < sentences.length - 1) {
-					this.pointer++
-				} else {
-					this.pointer = 0
-				}
-				this.lang = sentences[this.pointer].lang
-				this.text = sentences[this.pointer].text
-			})
-
-		// Make a small http request to see if the backend is back
 		if (isPlatformBrowser(this.platformId)) {
+			// Browser only: change the displaced sentence every 5s
+			timer(5_000, 5_000)
+				.pipe(takeUntil(this.destroy$))
+				.subscribe((val) => {
+					if (this.pointer < sentences.length - 1) {
+						this.pointer++
+					} else {
+						this.pointer = 0
+					}
+					this.lang = sentences[this.pointer].lang
+					this.text = sentences[this.pointer].text
+				})
+		}
+
+		if (isPlatformBrowser(this.platformId)) {
+			// Browser only: make a small http request to see if the backend is back
 			timer(500, 8_000)
 				.pipe(takeUntil(this.destroy$))
 				.subscribe((val) => {
