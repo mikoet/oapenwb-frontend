@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
 // SPDX-License-Identifier: AGPL-3.0-only
+
 @import "theme/admin-variables";
 
 /** Grid classes */
@@ -12,6 +13,7 @@
 	grid-template-columns: auto 160px 160px;
 	margin-top: 12px;
 }
+
 // Grid end
 
 // mat-option of mat-select begin
@@ -21,6 +23,7 @@
 		padding-left: 16px + $i * 28px !important;
 	}
 }
+
 // mat-option of mat-select end
 
 // Begin: Simple Entity
@@ -82,10 +85,12 @@
 	min-width: 72px !important;
 	padding: 0 32px !important;
 }
+
 // End: Lexeme Editor
 
 //$main-font: "Times New Roman", "Roboto", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$main-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+$main-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+	"Droid Sans", "Helvetica Neue", sans-serif;
 
 $accentblue: #1e88e5;
 $white: #ffffff;
@@ -127,14 +132,17 @@ app-nav-menu {
 	a {
 		margin: 0;
 	}
-	a:link, a:visited {
-		color: $mediumgray
+
+	a:link,
+	a:visited {
+		color: $mediumgray;
 	}
+
 	/*a:hover {
 		color: #c2d7f2;
 	}*/
 	a:active {
-		color: $mediumgray
+		color: $mediumgray;
 	}
 
 	&:first-child {
@@ -248,7 +256,10 @@ button.vertical-menu-item {
 		opacity: 1;
 		padding-left: 0;
 		max-height: 4000px; // Arbitrary max-height. Can increase if needed. Must have measurement to transition height.
-		transition: visibility 500ms, opacity 500ms, max-height 500ms;
+		transition:
+			visibility 500ms,
+			opacity 500ms,
+			max-height 500ms;
 		-webkit-transition-timing-function: ease-in-out;
 		transition-timing-function: ease-in-out;
 	}
@@ -259,7 +270,10 @@ button.vertical-menu-item {
 		padding-left: 0;
 		opacity: 0;
 		max-height: 1px; // Must have measurement to transition height.
-		transition: visibility 275ms, opacity 275ms, max-height 280ms;
+		transition:
+			visibility 275ms,
+			opacity 275ms,
+			max-height 280ms;
 		-webkit-transition-timing-function: ease-out;
 		transition-timing-function: ease-out;
 	}

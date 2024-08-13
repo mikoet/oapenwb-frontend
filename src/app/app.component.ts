@@ -1,9 +1,10 @@
 // SPDX-FileCopyrightText: © 2022 Michael Köther <mkoether38@gmail.com>
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { ReplaySubject } from 'rxjs'
 import { take, takeUntil } from 'rxjs/operators'
 
 import { DOCUMENT } from '@angular/common'
-// SPDX-License-Identifier: AGPL-3.0-only
 import { Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core'
 import { Meta } from '@angular/platform-browser'
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router'
@@ -19,8 +20,15 @@ import { DEFAULT_UI_LOCALE } from './_config/config'
  */
 @Component({
 	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
+	template: `
+		<router-outlet></router-outlet>
+	`,
+	styles: `
+		:host {
+			height: 100%;
+			display: block;
+		}
+	`,
 	standalone: true,
 	imports: [RouterOutlet],
 })
