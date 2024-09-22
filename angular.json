@@ -41,7 +41,10 @@
 						"scripts": [],
 						"browser": "src/main.ts",
 						"server": "src/main.server.ts",
-						"prerender": false,
+						"prerender": {
+							"discoverRoutes": false,
+							"routesFile": "routes.txt"
+						},
 						"ssr": {
 							"entry": "server.ts"
 						}
@@ -105,7 +108,7 @@
 								}
 							]
 						},
-						"development": {
+						"docker": {
 							"optimization": false,
 							"sourceMap": true
 						}
